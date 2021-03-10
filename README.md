@@ -1,7 +1,6 @@
 # describe-that
 
-* Getting started with local dev
-From root directory, run:
+To get started with local dev, from root directory, run:
 ```
 $ bundle install
 $ bundle exec rake webpacker:install
