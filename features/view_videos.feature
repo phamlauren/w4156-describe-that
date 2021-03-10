@@ -14,3 +14,5 @@ Scenario: access audio descriptions for the video I found (happy path)
 
 Scenario: request audio descriptions for the video I found (sad path)
 
+Scenario: upvote / downvote a video
+
