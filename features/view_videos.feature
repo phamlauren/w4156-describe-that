@@ -16,3 +16,5 @@ Scenario: request audio descriptions for the video I found (sad path)
 
 Scenario: upvote / downvote a video
 
+Scenario: upvote / downvote a video request
+
