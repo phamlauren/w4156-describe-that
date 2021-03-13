@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: one
+  audio_file_loc: MyString
+  description_text: MyText
+  voice: one
+  tts_speed: 1.5
+
+two:
+  description: two
+  audio_file_loc: MyString
+  description_text: MyText
+  voice: two
+  tts_speed: 1.5
