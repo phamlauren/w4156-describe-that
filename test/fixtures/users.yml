@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  password: MyString
+  creation_time: 2021-03-12 22:47:23
+  options: 
+
+two:
+  email: MyString
+  password: MyString
+  creation_time: 2021-03-12 22:47:23
+  options: 
