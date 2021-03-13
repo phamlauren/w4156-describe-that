@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_051417) do
+ActiveRecord::Schema.define(version: 2021_03_13_055109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2021_03_13_051417) do
   create_table "description_tracks", force: :cascade do |t|
     t.bigint "video_id", null: false
     t.bigint "track_author_id", null: false
-    t.string "lang", limit: 2
-    t.boolean "is_generated"
+    t.string "lang", limit: 2, default: "en", null: false
+    t.boolean "is_generated", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["track_author_id"], name: "index_description_tracks_on_track_author_id"
@@ -28,49 +28,49 @@ ActiveRecord::Schema.define(version: 2021_03_13_051417) do
 
   create_table "descriptions", force: :cascade do |t|
     t.bigint "desc_track_id", null: false
-    t.float "start_time_sec"
-    t.boolean "pause_at_start_time"
+    t.float "start_time_sec", null: false
+    t.boolean "pause_at_start_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["desc_track_id"], name: "index_descriptions_on_desc_track_id"
   end
 
   create_table "generated_descriptions", primary_key: "description_id", force: :cascade do |t|
-    t.string "audio_file_loc"
-    t.text "description_text"
+    t.string "audio_file_loc", null: false
+    t.text "description_text", null: false
     t.bigint "tts_voice_id", null: false
-    t.float "tts_speed"
+    t.float "tts_speed", default: 1.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tts_voice_id"], name: "index_generated_descriptions_on_tts_voice_id"
   end
 
   create_table "recorded_descriptions", primary_key: "description_id", force: :cascade do |t|
-    t.string "audio_file_loc"
+    t.string "audio_file_loc", null: false
     t.text "description_text"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password"
-    t.json "options"
+    t.string "email", null: false
+    t.string "password", null: false
+    t.jsonb "options", default: {"default_lang"=>"en"}, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "videos", force: :cascade do |t|
-    t.string "yt_video_id"
-    t.boolean "deleted"
+    t.string "yt_video_id", null: false
+    t.boolean "deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "voices", force: :cascade do |t|
-    t.string "common_name"
-    t.string "system_name"
-    t.string "provider"
+    t.string "common_name", null: false
+    t.string "system_name", null: false
+    t.string "provider", null: false
   end
 
   add_foreign_key "description_tracks", "users", column: "track_author_id"
