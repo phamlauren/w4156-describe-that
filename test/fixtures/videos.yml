@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  yt_video_id: MyString
+  deleted: false
+
+two:
+  yt_video_id: MyString
+  deleted: false
