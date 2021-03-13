@@ -2,12 +2,12 @@
 
 one:
   video: one
-  user: one
+  track_author: one
   lang: en
   is_generated: false
 
 two:
   video: two
-  user: two
+  track_author: two
   lang: en
   is_generated: false

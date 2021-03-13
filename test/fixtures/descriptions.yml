@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  desc_track: one
+  start_time_sec: 1.5
+  pause_at_start_time: false
+
+two:
+  desc_track: two
+  start_time_sec: 1.5
+  pause_at_start_time: false
