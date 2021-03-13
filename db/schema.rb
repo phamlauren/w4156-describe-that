@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_040408) do
+ActiveRecord::Schema.define(version: 2021_03_13_041345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "description_tracks", force: :cascade do |t|
+    t.bigint "video_id", null: false
+    t.bigint "track_author_id", null: false
+    t.string "lang", limit: 2
+    t.boolean "is_generated"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["track_author_id"], name: "index_description_tracks_on_track_author_id"
+    t.index ["video_id"], name: "index_description_tracks_on_video_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -30,4 +41,6 @@ ActiveRecord::Schema.define(version: 2021_03_13_040408) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "description_tracks", "users", column: "track_author_id"
+  add_foreign_key "description_tracks", "videos"
 end

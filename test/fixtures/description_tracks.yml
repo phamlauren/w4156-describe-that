@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  video: one
+  user: one
+  lang: en
+  is_generated: false
+
+two:
+  video: two
+  user: two
+  lang: en
+  is_generated: false
