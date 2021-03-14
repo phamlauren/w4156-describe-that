@@ -3,9 +3,9 @@
 A SaaS product created for [W4156 Advanced Software Engineering](http://www.cs.columbia.edu/~junfeng/21sp-w4156/) at Columbia University in spring 2021.
 
 Team members:
-lyp2106, Lauren Pham
-vn2287, Vishnu Nair
-xw2765, Sheron Wang
+- lyp2106, Lauren Pham
+- vn2287, Vishnu Nair
+- xw2765, Sheron Wang
 
 [Link](https://describe-that.herokuapp.com) to app on Heroku.
 [Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.
