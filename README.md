@@ -7,7 +7,7 @@ Team members:
 - vn2287, Vishnu Nair
 - xw2765, Sheron Wang
 
-[Link](https://describe-that.herokuapp.com) to app on Heroku.
+[Link](https://describe-that.herokuapp.com) to app on Heroku.  
 [Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.
 
 1. Run DescribeThat! locally
