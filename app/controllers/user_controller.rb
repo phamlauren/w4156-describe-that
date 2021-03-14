@@ -16,7 +16,7 @@ class UserController < ApplicationController
   end
 
   def login
-    @user = User.find_by :email => user_params['email']
+    @user = User.find_by('email': user_params['email'])
     if @user.nil?
       @err = "A user does not yet exist for this email."
       render "err"
