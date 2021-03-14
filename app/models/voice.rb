@@ -1,5 +1,5 @@
 class Voice < ApplicationRecord
-  has_many :generated_descriptions
+  has_many :descriptions
 
   def self.get_all_voices_for_provider(provider)
     Voice.where(provider: provider).to_a

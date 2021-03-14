@@ -4,16 +4,6 @@ class DescriptionTrack < ApplicationRecord
   has_many :descriptions
 
   def get_all_descriptions
-    if is_generated # if generated descriptions...
-      Description
-        .joins("INNER JOIN generated_descriptions ON generated_descriptions.description_id = descriptions.id")
-        .order('start_time_sec ASC')
-        .to_a
-    else # if recorded descriptions...
-      Description
-        .joins("INNER JOIN recorded_descriptions ON recorded_descriptions.description_id = descriptions.id")
-        .order('start_time_sec ASC')
-        .to_a
-    end
+    Description.where(desc_track_id: id).order('start_time_sec ASC').to_a
   end
 end
