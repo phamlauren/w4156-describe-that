@@ -4,7 +4,13 @@ Feature: log in as a user
   So that I can add audio descriptions for my friends
   I want to log into describe-that
 
-Background:
+Background: users in databse
+
+  Given the following users exist:
+  | email                    | password          | options                |
+  | vishnu.nair@columbia.edu | password          | {"default_lang": "en"} |
+  | xw2765@columbia.edu      | drowssap          | {"default_lang": "en"} |
+  | lyp2106@barnard.edu      | thisIsMyPassword! | {"default_lang": "en"} |
 
 Scenario: create myself as a user
   When I go to the new user page
@@ -16,14 +22,14 @@ Scenario: create myself as a user
 
 Scenario: log in (happy path)
   When I go to the user login page
-  And I fill in the "email" field with "lyk.pham@gmail.com"
+  And I fill in the "email" field with "lyp2106@barnard.edu"
   And I fill in the "password" field with "thisIsMyPassword!"
   And I press "Log in"
-  Then I should see "lyk.pham@gmail.com"
+  Then I should see "lyp2106@barnard.edu"
 
 Scenario: log in (sad path: incorrect password)
   When I go to the user login page
-  And I fill in the "email" field with "lyk.pham@gmail.com"
+  And I fill in the "email" field with "lyp2106@barnard.edu"
   And I fill in the "password" field with "thisIsNotMyPassword!"
   And I press "Log in"
   Then I should see "You have entered an incorrect password for this email"
