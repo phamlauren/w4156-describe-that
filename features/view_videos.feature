@@ -12,7 +12,6 @@ Background: existing YouTube videos
     | 2           |
     | 3           |
     | 4           |
-
     Given the following description tracks exist:
     | video_id | track_author_id | lang | is_generated |
     | 1        | 1               | en   | true         |
@@ -24,6 +23,7 @@ Background: existing YouTube videos
     | 1              | 1            | 1         | loc1           | This is AD for video 1 |
     | 2              | 2            | 2         | loc2           | This is AD for video 2 |
     | 3              | 3            | 3         | loc3           | This is AD for video 3 |
+
 
 # Checks that we can find the video through the YouTube API
 # Scenario: find the video I want
@@ -41,7 +41,7 @@ Scenario: find a video with AD (happy path)
 Scenario: find a video without AD (sad) which I can then request (happy)
   When I am on the page for "yt_video_id: \"4\""
   Then I should see "This video does not yet have audio descriptions"
-  AAnd I press "Request AD for this video"
+  And I press "Request AD for this video"
   Then I should see "You have successfully requested AD for this video"
 
 Scenario: upvote / downvote a video
