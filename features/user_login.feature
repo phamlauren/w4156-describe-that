@@ -37,3 +37,5 @@ Scenario: log in (sad path: user does not exist)
   And I press 'Log in'
   Then I should be on the incorrect login page
   And I should see 'A user does not yet exist for this email'
+
+Scenario: edit user login info
