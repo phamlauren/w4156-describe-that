@@ -1,1 +1,24 @@
+/* Global styling */
 @import "bootstrap";
+
+$primary-font: Helvetica, sans-serif;
+$primary-color: #9bddff;
+
+html {
+    font: $primary-font;
+    background-color: $primary-color;
+}
+
+#main-wrapper {
+    margin: 20px;
+}
+
+#main-wrapper > #content {
+    padding: 20px;
+    height: 80%;
+}
+
+.page-title {
+    text-align: center;
+    color: $primary-color;
+}
