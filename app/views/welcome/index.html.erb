@@ -2,3 +2,8 @@
 <p>
   The time is now: <%= Time.now %>
 </p>
+<%= form_with url: new_description_track_path, method: :get do |form| %>
+  <%= form.label :yt_url, "Enter YouTube URL: " %>
+  <%= form.text_field :yt_url %>
+  <%= form.submit "Describe" %>
+<% end %>
