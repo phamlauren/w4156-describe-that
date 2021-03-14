@@ -16,7 +16,7 @@ Scenario: create myself as a user
 
 Scenario: log in (happy path)
   When I go to the user login page
-  And I fill in the "email" field with "lyp2106@barnard.edu"
+  And I fill in the "email" field with "lyk.pham@gmail.com"
   And I fill in the "password" field with "thisIsMyPassword!"
   And I press "Log in"
   Then I should be on the Users index page
@@ -24,7 +24,7 @@ Scenario: log in (happy path)
 
 Scenario: log in (sad path: incorrect password)
   When I go to the user login page
-  And I fill in the "email" field with "lyp2106@barnard.edu"
+  And I fill in the "email" field with "lyk.pham@gmail.com"
   And I fill in the "password" field with "thisIsNotMyPassword!"
   And I press "Log in"
   Then I should be on the incorrect login page

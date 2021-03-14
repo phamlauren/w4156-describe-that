@@ -15,7 +15,7 @@ module NavigationHelpers
   
       when /^the Users index page$/ then '/user'
       when /^the new user page$/ then '/user/new'
-      when /^the user login page$/ then '/user/new'
+      when /^the user login page$/ then '/user/login'
       when /^the incorrect login page$/ then '/user/err'
         
       else

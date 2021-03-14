@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   get '/user', to: 'user#index'
   get '/user/new', to: 'user#new'
   post '/user', to: 'user#create'
+  get '/user/login', to: 'user#login_page'
   post '/user/login', to: 'user#login'
 end
