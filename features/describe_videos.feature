@@ -41,4 +41,30 @@ Scenario: enter an invalid URL to share
 
     Then I should see "Invalid YouTube URL"
 
-Scenario: add audio descriptions for the video I found
+Scenario: go back to home page if no URL in params
+
+    When I am on the new description_track page
+
+    And no params for URL
+
+    Then I am on the home page
+
+Scenario: add one description for the video I found
+    
+    When I am on the new description_track page for "Transitions"
+
+    And I fill in "time" with "0:01"
+
+    And I fill in "description" with "people walking around"
+
+    And I click "Add One Description"
+
+    Then I should see "people walking around at 0:01"
+
+    Then I click "Submit"
+
+    Then I am on the description_track page
+
+    And I should see "Transitions"
+
+    And I should see "people walking around at 0:01"
