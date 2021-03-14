@@ -1,6 +1,7 @@
 class DescriptionTrack < ApplicationRecord
   belongs_to :video
   belongs_to :user
+  has_many :descriptions
 
   def get_all_descriptions
     if is_generated # if generated descriptions...
