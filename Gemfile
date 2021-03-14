@@ -21,6 +21,11 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+# Use Bootstrap
+# https://github.com/twbs/bootstrap-rubygem
+gem 'bootstrap', '~> 5.0.0.beta2'
+gem 'jquery-rails'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -31,6 +36,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 4.1.0'
 end
 
 group :development do
@@ -50,6 +56,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # User SimpleCov code coverage tool
+  # https://github.com/simplecov-ruby/simplecov
+  gem 'simplecov', require: false
 end
 
 group :test do
