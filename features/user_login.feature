@@ -1,13 +1,31 @@
 Feature: log in as a user
 
   As a random Internet surfer
-  So that I contribute to the platform
+  So that I can add audio descriptions for my friends
   I want to log into describe-that
 
 Background:
 
-Scenario: create user
+Scenario: create myself as a user
+  When I go to the new user page
+  And I fill in the 'email' field with 'lyp2106@barnard.edu'
+  And I fill in the 'password' field with 'thisIsMyPassword!'
+  And I press 'Create account'
+  Then I should be on the Users index page
+  And I should see 'lyp2106@barnard.edu'
 
-Scenario: log in
+Scenario: log in (happy path)
+  When I go to the user login page
+  And I fill in the 'email' field with 'lyp2106@barnard.edu'
+  And I fill in the 'password' field with 'thisIsMyPassword!'
+  And I press 'Log in'
+  Then I should be on the Users index page
+  And I should see 'lyp2106@barnard.edu'
 
-Scenario: log in for the first time
+Scenario: log in (sad path)
+  When I go to the user login page
+  And I fill in the 'email' field with 'lyp2106@barnard.edu'
+  And I fill in the 'password' field with 'thisIsNotMyPassword!'
+  And I press 'Log in'
+  Then I should be on the incorrect login page
+  And I should see 'lyp2106@barnard.edu'
