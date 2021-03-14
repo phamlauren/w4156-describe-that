@@ -3,4 +3,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/user', to: 'user#index'
+  get '/user/new', to: 'user#new'
+  post '/user', to: 'user#create'
+  post '/user/login', to: 'user#login'
 end
