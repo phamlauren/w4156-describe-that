@@ -12,17 +12,18 @@ Background: existing YouTube videos
     | 2           |
     | 3           |
     | 4           |
+    
     Given the following description tracks exist:
     | video_id | track_author_id | lang | is_generated |
     | 1        | 1               | en   | true         |
     | 2        | 2               | en   | true         |
     | 3        | 3               | en   | true         |
 
-    Given the following generated descriptions exist:
-    | description_id | tts_voice_id | tts_speed | audio_file_loc | description_text       |
-    | 1              | 1            | 1         | loc1           | This is AD for video 1 |
-    | 2              | 2            | 2         | loc2           | This is AD for video 2 |
-    | 3              | 3            | 3         | loc3           | This is AD for video 3 |
+    Given the following descriptions exist:
+    | desc_track_id | start_time_sec | pause_at_start_time | audio_file_loc | desc_text              | voice_id | voice_speed | desc_type |
+    | 1             | 1              | true                | loc1           | This is AD for video 1 | 1        | 1           | generated |
+    | 2             | 2              | false               | loc2           | This is AD for video 2 | 2        | 2           | generated |
+    | 3             | 3              | true                | loc3           | This is AD for video 3 | 3        | 3           | generated |
 
 
 # Checks that we can find the video through the YouTube API

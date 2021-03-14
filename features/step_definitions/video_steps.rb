@@ -10,8 +10,8 @@ Given /the following description tracks exist/ do |description_tracks_table|
     end
 end
 
-Given /the following generated descriptions exist/ do |generated_descriptions_table|
-    generated_descriptions_table.hashes.each do |generated_description|
-      GeneratedDescription.create generated_description
+Given /the following descriptions exist/ do |descriptions_table|
+    descriptions_table.hashes.each do |description|
+      Description.create description
     end
 end
