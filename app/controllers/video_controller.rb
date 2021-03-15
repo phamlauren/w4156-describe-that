@@ -10,6 +10,7 @@ class VideoController < ApplicationController
     @descriptions =  Description.where('desc_track_id': @desc_track_ids)
     if @descriptions.empty?
       @err = "This video does not yet have audio descriptions."
+      @video_id = @video.id
       render "err"
     end
     # renders app/view/video/show.html.erb by default
@@ -33,6 +34,11 @@ class VideoController < ApplicationController
     # TO DO: then redirect to show path for this video
   end
 
+  def request_video
+    @video = Video.find(params[:id])
+    flash[:notice] = "You have successfully requested AD for this video."
+    redirect_to video_path
+  end
 
 end
   
