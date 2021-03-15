@@ -29,6 +29,8 @@ gem 'jquery-rails'
 # Use AWS S3 SDK for Ruby
 gem 'aws-sdk-s3', '~> 1'
 
+# Use HTTParty for external requests
+gem "httparty"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

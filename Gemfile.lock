@@ -150,6 +150,9 @@ GEM
     ffi (1.14.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    httparty (0.18.1)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -180,6 +183,7 @@ GEM
     minitest (5.14.4)
     msgpack (1.4.2)
     multi_test (0.1.2)
+    multi_xml (0.6.0)
     nio4r (2.5.7)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
@@ -321,6 +325,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   cucumber-rails
   database_cleaner
+  httparty
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.3)
