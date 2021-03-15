@@ -20,9 +20,15 @@ module NavigationHelpers
       when /^the new description page for "(.+)"$/ then "/description_track/new?yt_url=#{$1}"
   
 
+      # For users
       when /^the Users index page$/ then '/user'
       when /^the new user page$/ then '/user/new'
       when /^the user login page$/ then '/user/login'
+
+      # For videos
+      # Since we don't store the YouTube id, we will need to GET the yt_video_id
+      # and then pass the yt_video_id to /video/yt_video_id
+      when /^the view page for the YouTube link "(.*)"$/ then "/video/#{$1}"
         
       else
         begin

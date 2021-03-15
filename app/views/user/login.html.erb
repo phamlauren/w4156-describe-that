@@ -1,4 +1,5 @@
 <h2>Log in</h2>
+  <%= link_to "Actually, I'm new here! Create an account", user_new_path, :class => 'btn btn-primary' %>
 <%= form_tag '/user/login', :method => :post do %>
 <%= csrf_meta_tags %>
   <%= label :user, :email, 'Email', :class => 'col-form-label' %>

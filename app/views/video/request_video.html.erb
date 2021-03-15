@@ -1,0 +1,5 @@
+<h2>This video does not yet have audio descriptions.</h2>
+<%= form_tag "/video/#{@video.id}/request", :method => :post do %>
+<%= csrf_meta_tags %>
+  <%= submit_tag 'Request AD for this video', :class => 'btn btn-primary' %>
+<% end %>
