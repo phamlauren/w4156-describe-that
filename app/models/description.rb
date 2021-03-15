@@ -1,7 +1,8 @@
 require 'securerandom'
 
 class Description < ApplicationRecord
-  belongs_to :description_track, optional: true # optional: true is temporary for cucumber
+  belongs_to :description_track, # optional: true # optional: true is temporary for cucumber
+                                                # remove for deploy and prod
   belongs_to :voice, optional: true
   enum desc_type: { recorded: "recorded", generated: "generated" }
 
