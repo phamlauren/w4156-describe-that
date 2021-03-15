@@ -35,9 +35,9 @@ While other platforms providing AD for YouTube videos exist, **DescribeThat!** u
 > The option to write text descriptions to be generated into audio by Google TTS does not exclude potential describers due to lack of equipment, differing verbal ability, or plain preference.
 
 ## 3. User stories
-There are two users which have different stories: **viewers** and **describers**
+There are two users which have different stories: **VIPs** (visually impaired persons) and **describers**
 
-### The viewer story
+### The **VIP** story
 
 ### The describer story
 
@@ -54,6 +54,6 @@ Items in the following lists will be implemented for proj-iter-2.
 2. Google TTS. The current implementation allows for text descriptions to be saved, but audio is yet to be generated via Google TTS.
 3. 
 
-### Viewer scenarios pending completion:
+### VIP scenarios pending completion:
 
 ### Describe scenarios pending completion:
