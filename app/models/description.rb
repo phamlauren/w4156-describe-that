@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Description < ApplicationRecord
   belongs_to :description_track
   belongs_to :voice, optional: true

@@ -1,5 +1,4 @@
 require 'aws-sdk-s3'
-require 'securerandom'
 
 module S3FileHelper
   def upload_file(desired_name, file_io_contents)
