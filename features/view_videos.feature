@@ -6,6 +6,12 @@ Feature: view videos
 
 Background: existing YouTube videos
 
+    Given the following users exist:
+    | id | email                    | password          | options                |
+    | 1  | vishnu.nair@columbia.edu | password          | {"default_lang": "en"} |
+    | 2  | xw2765@columbia.edu      | drowssap          | {"default_lang": "en"} |
+    | 3  | lyp2106@barnard.edu      | thisIsMyPassword! | {"default_lang": "en"} |
+
     Given the following YouTube videos exist:
     | id | yt_video_id |
     | 1  | 1           |
@@ -14,10 +20,10 @@ Background: existing YouTube videos
     | 4  | 4           |
 
     Given the following description tracks exist:
-    | video_id | track_author_id | lang | is_generated |
-    | 1        | 1               | en   | true         |
-    | 2        | 2               | en   | true         |
-    | 3        | 3               | en   | true         |
+    | id | video_id | track_author_id | lang | is_generated |
+    | 1  | 1        | 1               | en   | true         |
+    | 2  | 2        | 2               | en   | true         |
+    | 3  | 3        | 3               | en   | true         |
 
     Given the following descriptions exist:
     | desc_track_id | start_time_sec | pause_at_start_time | audio_file_loc | desc_text              | voice_id | voice_speed | desc_type |
