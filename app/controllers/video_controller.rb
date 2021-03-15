@@ -1,0 +1,4 @@
+class VideoController < ApplicationController
+  
+end
+  
