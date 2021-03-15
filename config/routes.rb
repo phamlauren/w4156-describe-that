@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/video', to: 'video#index'
   get '/video/:id', to: 'video#show'
   get 'video/:id/describe', to: 'video#describe'
+  post 'video/:id/describe', to: 'video#describe'
   post '/video/:id/request', to: 'video#request_video'
   get '/user', to: 'user#index'
   get '/user/new', to: 'user#new'

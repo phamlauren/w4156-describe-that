@@ -68,8 +68,15 @@ class VideoController < ApplicationController
   end
 
   def describe
-    # input: params[:id]
-    render "describe"
+    if request.get?
+      # input: params[:id]
+      # create only when there is no description track for the video
+      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
+    end
+    if request.post?
+      puts params[:time]
+      puts params[:description]
+    end
   end
 
   private
