@@ -5,13 +5,16 @@ class VideoController < ApplicationController
     # make GET request to YouTube API -> get yt_video_id
     # @video = Video.find(yt_video_id)
     @video = Video.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @err = "Sorry, we couldn't find a video with that YouTube link."
+      @video_id = params[:id]
+      render "err"
+    else
     @description_tracks = DescriptionTrack.where('video_id': @video.id)
     @desc_track_ids = @description_tracks.pluck(:id)
     @descriptions =  Description.where('desc_track_id': @desc_track_ids)
     if @descriptions.empty?
-      @err = "This video does not yet have audio descriptions."
-      @video_id = @video.id
-      render "err"
+      render "request_video"
     end
     # renders app/view/video/show.html.erb by default
   end
