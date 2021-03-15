@@ -5,8 +5,9 @@ class VideoController < ApplicationController
     # make GET request to YouTube API -> get yt_video_id
     # @video = Video.find(yt_video_id)
     @video = Video.find(params[:id])
-    @description_track = DescriptionTrack.find_by('video_id': @video.id)
-    @descriptions = Description.where(desc_track_id: @description_track.id)
+    @description_tracks = DescriptionTrack.where('video_id': @video.id)
+    @desc_track_ids = @description_tracks.pluck(:id)
+    @descriptions =  Description.where('desc_track_id': @desc_track_ids)
     # renders app/view/video/show.html.erb by default
   end
 
