@@ -2,25 +2,35 @@ require 'http'
 require 'json'
 class VideoController < ApplicationController
 
+  def index
+    # handle the YouTube and get redirect
+    if params[:commit] == "Describe" && params[:yt_url]!=nil
+      ytid = get_ytid_from_url params[:yt_url]
+      puts ytid
+      if video_info(ytid) != {}
+        puts "11"
+        video = Video.find_or_create_by(yt_video_id: ytid)
+        id = video.id
+        # if the url is valid then redirect
+        redirect_to video_path(id)
+      else
+        # if not valid, then redirect to err page
+        @err = "Sorry, we couldn't find a video with that YouTube link."
+        render "err"
+      end
+    end
+  end
+
   # Show the video and all of its descriptions
   def show
     # make GET request to YouTube API -> get yt_video_id
-    
     # if there's only a params[:yt_url] then we need to get one video id
-    if params[:id] == nil
-      if params[:yt_url] == nil
-        # should not have a route without anything
-        redirect_to("video#index")
+    begin
+      if params[:id] == nil
+        raise ActiveRecord::RecordNotFound.new "No id"
+      else
+        @video = Video.find(params[:id])
       end
-      ytid = get_ytid_from_url params[:yt_url]
-      if video_info ytid == {}
-        raise ActiveRecord::RecordNotFound.new "Invalid ytid from url"
-      end
-      # get the video (if no corresponding video in db, we create one
-      @video = Video.find_or_create_by(yt_video_id: ytid)
-    else
-      @video = Video.find(params[:id])
-    end
     rescue ActiveRecord::RecordNotFound
       @err = "Sorry, we couldn't find a video with that YouTube link."
       @video_id = params[:id]
@@ -29,9 +39,7 @@ class VideoController < ApplicationController
       @description_tracks = DescriptionTrack.where('video_id': @video.id)
       @desc_track_ids = @description_tracks.pluck(:id)
       @descriptions =  Description.where('desc_track_id': @desc_track_ids)
-      if @descriptions.empty?
-        render "request_video"
-      end
+      render "request_video" if @descriptions.empty?
     end
     # renders app/view/video/show.html.erb by default
   end
@@ -67,16 +75,15 @@ class VideoController < ApplicationController
   private
   # parse the ytid from url without validation
   def get_ytid_from_url(url)
-      match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
-      if match == nil
-          return nil
-      return match.captures[0]
+    match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
+    return match == nil ? nil : match.captures[0]
   end
   # get useful info for video, if return {} then the ytid is invalid
   def video_info(ytid)
-      response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
-      result = JSON.parse(response)
-      return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
+    return {} if ytid == nil
+    response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
+    result = JSON.parse(response)
+    return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
   end
 
 end

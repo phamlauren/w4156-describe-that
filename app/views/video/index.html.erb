@@ -1,4 +1,4 @@
-<%= form_with url: 'video#show', method: :get do |form| %>
+<%= form_with url: video_path(""), method: :get do |form| %>
   <%= form.label :yt_url, "Enter YouTube URL: " %>
   <%= form.text_field :yt_url %>
   <%= form.submit "Describe" %>
