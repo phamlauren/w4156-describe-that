@@ -36,8 +36,23 @@ class Description < ApplicationRecord
   end
 
   def generate_tts  # return bool indicating success
-    false if desc_text.nil? or desc_text.empty?
+    false if desc_text.nil? or desc_text.empty? or voice_speed.nil? or :desc_type == Description.desc_types[:recorded]
+    voice_in_question = Voice.find_by(id: voice_id)
+    false if voice_in_question.nil?
 
+    io_object = GoogleCloudTtsHelper.synthesize(desc_text, voice_speed, voice_in_question.system_name)
+    false if io_object.nil?
 
+    if audio_file_loc.nil?
+      name_of_file = Description.generate_unique_name
+    else
+      name_of_file = self.audio_file_loc
+    end
+
+    upload_succeeded = S3FileHelper.upload_file(name_of_file, io_object)
+    false unless upload_succeeded
+
+    self.audio_file_loc = name_of_file
+    true
   end
 end
