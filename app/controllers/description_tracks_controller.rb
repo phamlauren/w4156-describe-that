@@ -2,13 +2,16 @@ require 'http'
 require 'json'
 class DescriptionTracksController < ActionController::Base
     def new
-        match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
-        ytid = match.captures[0]
-        @yt_info = video_info ytid
+        yt_id = params.key?(:yt_id) ? params[:yt_id] : nil
+        if yt_id == nil
+            match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
+            yt_id = match.captures[0]
+        end
+        @yt_info = video_info yt_id
         @yt_info != {} ? render('new') : render('new_fail')
     rescue NoMethodError
         # should not have a route without a YouTube URL
-        #redirect_to("video#index")
+        redirect_to("video#index")
     end
 
     private
