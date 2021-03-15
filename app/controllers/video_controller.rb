@@ -5,18 +5,33 @@ class VideoController < ApplicationController
   # Show the video and all of its descriptions
   def show
     # make GET request to YouTube API -> get yt_video_id
-    # @video = Video.find(yt_video_id)
-    @video = Video.find(params[:id])
+    
+    # if there's only a params[:yt_url] then we need to get one video id
+    if params[:id] == nil
+      if params[:yt_url] == nil
+        # should not have a route without anything
+        redirect_to("video#index")
+      end
+      ytid = get_ytid_from_url params[:yt_url]
+      if video_info ytid == {}
+        raise ActiveRecord::RecordNotFound.new "Invalid ytid from url"
+      end
+      # get the video (if no corresponding video in db, we create one
+      @video = Video.find_or_create_by(yt_video_id: ytid)
+    else
+      @video = Video.find(params[:id])
+    end
     rescue ActiveRecord::RecordNotFound
       @err = "Sorry, we couldn't find a video with that YouTube link."
       @video_id = params[:id]
       render "err"
     else
-    @description_tracks = DescriptionTrack.where('video_id': @video.id)
-    @desc_track_ids = @description_tracks.pluck(:id)
-    @descriptions =  Description.where('desc_track_id': @desc_track_ids)
-    if @descriptions.empty?
-      render "request_video"
+      @description_tracks = DescriptionTrack.where('video_id': @video.id)
+      @desc_track_ids = @description_tracks.pluck(:id)
+      @descriptions =  Description.where('desc_track_id': @desc_track_ids)
+      if @descriptions.empty?
+        render "request_video"
+      end
     end
     # renders app/view/video/show.html.erb by default
   end
@@ -45,7 +60,7 @@ class VideoController < ApplicationController
     redirect_to video_path
   end
 
-  def new
+  def describe
     # input: params[:id]
   end
 
