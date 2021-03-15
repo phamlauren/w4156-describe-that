@@ -34,9 +34,9 @@ class VideoController < ApplicationController
       @video_id = params[:id]
       render "err"
     else
-      @description_tracks = DescriptionTrack.where('video_id': @video.id)
+      @description_tracks = DescriptionTrack.where(video_id: @video.id)
       @desc_track_ids = @description_tracks.pluck(:id)
-      @descriptions =  Description.where('desc_track_id': @desc_track_ids)
+      @descriptions =  Description.where(desc_track_id: @desc_track_ids)
       @yt_info = video_info @video.yt_video_id
       render "request_video" if @descriptions.empty?
     end
@@ -70,12 +70,17 @@ class VideoController < ApplicationController
   def describe
     if request.get?
       # input: params[:id]
-      # create only when there is no description track for the video
+      # create only when there is **no** description track for the video
+      # might change that later!
       redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
     end
     if request.post?
-      puts params[:time]
-      puts params[:description]
+      redirect_to video_path(params[:id]) if params[:id] == nil
+      # save time and description
+      xw2765 = User.find_by(email: "xw2765@columbia.edu")
+      track = DescriptionTrack.create!(video_id: params[:id], track_author_id: xw2765.id, is_generated: true)
+      track.generate_descriptions(params[:time],params[:description])
+      redirect_to video_path(params[:id])
     end
   end
 

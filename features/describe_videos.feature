@@ -10,6 +10,10 @@ Background: existing YouTube videos
     Given I can access the following YouTube videos:
         | Title       | yt_video_id |
         | Transitions | 40z9n1SgozU |
+
+    Given the following users exist:
+    | email                    | password          | options                |
+    | xw2765@columbia.edu      | drowssap          | {"default_lang": "en"} |
  
 Scenario: enter a valid URL to describe
 
@@ -57,9 +61,9 @@ Scenario: add one description for the video I found
 
     And I press "Describe this video"
 
-    And I should on the description page for ""40z9n1SgozU""
+    And I should be on the description page for "40z9n1SgozU"
 
-    And I fill in "time" with "0:01\n1:57"
+    And I fill in "time" with "1\n157"
 
     And I fill in "description" with "people walking around\nwhatever"
 
@@ -69,4 +73,6 @@ Scenario: add one description for the video I found
 
     And I should see "Transitions"
 
-    And I should see "people walking around at 0:01\nwhatever at 1:57"
+    And I should see "people walking around"
+
+    And I should see "whatever"
