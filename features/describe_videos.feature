@@ -53,7 +53,7 @@ Scenario: go back to home page if no URL in params
 
 Scenario: add one description for the video I found
     
-    When I am on the new description_track page for "Transitions"
+    When I am on the new description page for "www.youtube.com/watch?v=40z9n1SgozU"
 
     And I fill in "time" with "0:01"
 

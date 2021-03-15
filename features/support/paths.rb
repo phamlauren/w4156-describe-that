@@ -28,6 +28,8 @@ module NavigationHelpers
       #     user_profile_path(User.find_by_login($1))
 
       when /^the new description page$/ then "/description_track/new"
+      
+      when /^the new description page for "(.+)"$/ then "/description_track/new?yt_url=#{$1}"
   
       else
         begin
