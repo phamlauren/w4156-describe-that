@@ -1,3 +1,5 @@
+require 'http'
+require 'json'
 class VideoController < ApplicationController
 
   # Show the video and all of its descriptions
@@ -41,6 +43,25 @@ class VideoController < ApplicationController
     @video = Video.find(params[:id])
     flash[:notice] = "This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'"
     redirect_to video_path
+  end
+
+  def new
+    # input: params[:id]
+  end
+
+  private
+  # parse the ytid from url without validation
+  def get_ytid_from_url(url)
+      match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
+      if match == nil
+          return nil
+      return match.captures[0]
+  end
+  # get useful info for video, if return {} then the ytid is invalid
+  def video_info(ytid)
+      response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
+      result = JSON.parse(response)
+      return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
   end
 
 end
