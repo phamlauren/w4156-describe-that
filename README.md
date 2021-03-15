@@ -55,5 +55,6 @@ Items in the following lists will be implemented for proj-iter-2.
 3. 
 
 ### Viewer scenarios pending completion:
+1. Viewers will be able to upvote / downvote requests for AD for videos.
 
 ### Describe scenarios pending completion:

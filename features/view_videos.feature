@@ -12,7 +12,7 @@ Background: existing YouTube videos
     | 2           |
     | 3           |
     | 4           |
-    
+
     Given the following description tracks exist:
     | video_id | track_author_id | lang | is_generated |
     | 1        | 1               | en   | true         |
@@ -34,18 +34,18 @@ Background: existing YouTube videos
 #   And I should see ""
 
 # Add step for getting the video from the YouTube API
+# Replace "yt_vide_id: \"1\"" with YouTube link
 Scenario: find a video with AD (happy path)
-  When I am on the page for "yt_video_id: \"1\""
+  When I am on the page for the YouTube link "yt_video_id: \"1\""
   Then I should see "This is AD for video 1"
   
 # Add step for geting the video from the YouTube API
+# Replace "yt_vide_id: \"1\"" with YouTube link
 Scenario: find a video without AD (sad) which I can then request (happy)
-  When I am on the page for "yt_video_id: \"4\""
+  When I am on the page for the YouTube link "yt_video_id: \"4\""
   Then I should see "This video does not yet have audio descriptions"
   And I press "Request AD for this video"
   Then I should see "You have successfully requested AD for this video"
-
-Scenario: upvote / downvote a video
 
 Scenario: upvote / downvote a video request
 
