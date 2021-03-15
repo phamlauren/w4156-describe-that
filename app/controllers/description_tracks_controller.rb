@@ -10,7 +10,7 @@ class DescriptionTracksController < ActionController::Base
         end
     rescue NoMethodError
         # should not have a route without a YouTube URL
-        redirect_to("welcome#index")
+        redirect_to("video#index")
     end
 
     private
