@@ -10,3 +10,6 @@ S3_BUCKET_NAME: ''
 
 # YouTube API key
 YT_API_KEY: ''
+
+# Google Cloud TTS API key
+GOOGLE_TTS_API_KEY: ''
