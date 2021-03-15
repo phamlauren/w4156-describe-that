@@ -13,8 +13,7 @@ Team members:
 1. Running DescribeThat! locally
 2. Overview
 3. User stories
-4. Details for proj-iter-1
-5. Plans for proj-iter-2
+4. Plans for proj-iter-2
 
 ## 1. Running DescribeThat! locally
 To the TAs: we are hoping that you don't have to run the application locally for ease on both of our parts. In particular, we use the YouTube API, Google TTS API, and AWS SDK to connect to an S3 bucket set up on Vishnu's server with various credentials that are not committed to this repo. However, if you want to run the application locally and haven't received those credentials from us already, please let us know and we will get them to you in a secure way.  
@@ -44,17 +43,15 @@ While other platforms providing AD for YouTube videos exist, **DescribeThat!** u
 > The option to write text descriptions to be generated into audio by Google TTS does not exclude potential describers due to lack of equipment, differing verbal ability, or plain preference.
 
 ## 3. User stories
-There are two users which have different stories: **VIPs** (visually impaired persons) and **describers**
+There are two users which have different stories: **VIPs** (visually impaired persons) and **describers**.
 
 ### The **VIP** story
+At this point in project implementation, a VIP can search for a video via its YouTube link, access the video's AD if it exists, and request AD for a video if it does not already exist.
 
 ### The describer story
+At this point in project implementation, a describer can search for a video via its YouTube link and add a text description to it which will be generated to audio by Google Text-to-Speech.
 
-## 4. Details for proj-iter-1
-
-The **SimpleCov** gem reports that our cucumber tests cover __% and that our RSpec tests cover __% of our code.
-
-## 5. Plans for proj-iter-2
+## 4. Plans for proj-iter-2
 
 Items in the following lists will be implemented for proj-iter-2.
 
@@ -67,3 +64,4 @@ Items in the following lists will be implemented for proj-iter-2.
 1. VIPs will be able to upvote / downvote requests for AD for videos.
 
 ### Describe scenarios pending completion:
+2. Describers will be able to record audio descriptions directly on the platform.
