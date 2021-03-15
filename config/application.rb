@@ -24,7 +24,7 @@ module W4156DescribeThat
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Read config/local_env.yml. Skipped if the file DOES NOT exist.
-    if Rails.env.development?
+    if Rails.env.development? or Rails.env.test?
       config.before_configuration do
         env_file = File.join(Rails.root, 'config', 'local_env.yml')
         YAML.load(File.open(env_file)).each do |key, value|
