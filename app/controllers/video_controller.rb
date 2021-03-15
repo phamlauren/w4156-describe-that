@@ -58,8 +58,8 @@ class VideoController < ApplicationController
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
       # save time and description
-      xw2765 = User.find_or_create_by(email: "xw2765@columbia.edu", password: "abcd")
-      track = DescriptionTrack.create!(video_id: params[:id], track_author_id: xw2765.id, is_generated: true)
+      user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "abcd")
+      track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"
     end
