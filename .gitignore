@@ -40,7 +40,9 @@ yarn-debug.log*
 .yarn-integrity
 
 # Ignore simplecov coverage
-coverage/
+/public/coverage/assets/
+/public/coverage/.resultset.json
+/public/coverage/.resultset.json.lock
 
 # Ignore local_env.yml
 config/local_env.yml
