@@ -10,10 +10,6 @@ Background: existing YouTube videos
     Given I can access the following YouTube videos:
         | Title       | yt_video_id |
         | Transitions | 40z9n1SgozU |
-
-    Given the following users exist:
-    | email                    | password          | options                |
-    | xw2765@columbia.edu      | drowssap          | {"default_lang": "en"} |
  
 Scenario: enter a valid URL to describe
 

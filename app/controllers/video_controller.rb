@@ -77,17 +77,17 @@ class VideoController < ApplicationController
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
       # save time and description
-      xw2765 = User.find_by(email: "xw2765@columbia.edu")
+      xw2765 = User.find_or_create_by(email: "xw2765@columbia.edu", password: "abcd")
       track = DescriptionTrack.create!(video_id: params[:id], track_author_id: xw2765.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])
-      redirect_to video_path(params[:id])
+      redirect_to "/video/#{params[:id]}"
     end
   end
 
   private
   # parse the ytid from url without validation
   def get_ytid_from_url(url)
-    match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
+    match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?&]+)(?:[\?|&].*)?$/.match(params[:yt_url])
     return match == nil ? nil : match.captures[0]
   end
   # get useful info for video, if return {} then the ytid is invalid
