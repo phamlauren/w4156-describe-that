@@ -31,7 +31,7 @@ $ rake db:create
 $ rake: db:migrate
 ```
 
-You will need to fill in the list of local env variables located at config/local_env.yml with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
+You will need to fill in the list of local env variables located at **w4156-describe-that/config/local_env.yml** with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
 
 You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
 
