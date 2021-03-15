@@ -38,3 +38,9 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Ignore simplecov coverage
+coverage/
+
+# Ignore local_env.yml
+config/local_env.yml

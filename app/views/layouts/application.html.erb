@@ -11,6 +11,11 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="main-wrapper">
+      <div id="content">
+        <%# All subsequent views are yielded within this wrapper %>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

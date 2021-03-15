@@ -26,6 +26,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootstrap', '~> 5.0.0.beta2'
 gem 'jquery-rails'
 
+# Use AWS S3 SDK for Ruby
+gem 'aws-sdk-s3', '~> 1'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -56,6 +59,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  # User SimpleCov code coverage tool
+  # https://github.com/simplecov-ruby/simplecov
+  gem 'simplecov', require: false
 end
 
 group :test do
