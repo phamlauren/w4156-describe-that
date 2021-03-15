@@ -339,6 +339,20 @@ CREATE UNIQUE INDEX index_videos_on_yt_video_id ON public.videos USING btree (yt
 
 
 --
+-- Name: index_voices_on_common_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_voices_on_common_name ON public.voices USING btree (common_name);
+
+
+--
+-- Name: index_voices_on_system_name_and_provider; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_voices_on_system_name_and_provider ON public.voices USING btree (system_name, provider);
+
+
+--
 -- Name: description_tracks fk_rails_68bd8b88de; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -388,6 +402,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210313055109'),
 ('20210314213123'),
 ('20210314213225'),
-('20210315031858');
+('20210315031858'),
+('20210315040013');
 
 
