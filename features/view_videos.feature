@@ -26,10 +26,10 @@ Background: existing YouTube videos
     | 3  | 3        | 3               | en   | true         |
 
     Given the following descriptions exist:
-    | desc_track_id | start_time_sec | pause_at_start_time | audio_file_loc | desc_text              | voice_id | voice_speed | desc_type |
-    | 1             | 1              | true                | loc1           | This is AD for video 1 | 1        | 1           | generated |
-    | 2             | 2              | false               | loc2           | This is AD for video 2 | 2        | 2           | generated |
-    | 3             | 3              | true                | loc3           | This is AD for video 3 | 3        | 3           | generated |
+    | desc_track_id | start_time_sec | pause_at_start_time | audio_file_loc | desc_text              | voice_speed | desc_type |
+    | 1             | 1              | true                | loc1           | This is AD for video 1 | 1           | generated |
+    | 2             | 2              | false               | loc2           | This is AD for video 2 | 2           | generated |
+    | 3             | 3              | true                | loc3           | This is AD for video 3 | 3           | generated |
 
 
 # Checks that we can find the video through the YouTube API
