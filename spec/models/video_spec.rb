@@ -1,35 +1,88 @@
 require 'rails_helper'
 
 RSpec.describe Video, type: :model do
-
   before (:all) do
-    # Seed videos: simulates retrieving them from YouTube API
-    videos_table = [
+    # User must exist for description track to exist
+    users_table = [
       {
-        id: 1,
-        yt_video_id: 1
+        email: 'vishnu.nair@columbia.edu',
+        password: 'password',
+        options: '{"default_lang": "en"}',
       },
       {
-        id: 2,
-        yt_video_id: 2
+        email: 'xw2765@columbia.edu',
+        password: 'password',
+        options: '{"default_lang": "en"}',
       },
       {
-        id: 3,
-        yt_video_id: 3
-      },
-      {
-        id: 4,
-        yt_video_id: 4
+        email: 'lyp2106@barnard.edu',
+        password: 'password',
+        options: '{"default_lang": "en"}',
       },
     ]
-    videos_table.each do |video|
-      Video.create video
+    users_table.each do |user|
+      User.create! user
     end
+    expect(User.exists?(:email=>'lyp2106@barnard.edu')).to eq(true)
   end
 
   # For each seeded video, create a description track
-  describe "create description tracks for videos" do
-    
+  describe "model" do
+    # Seed videos: simulates retrieving them from YouTube API
+    it "successfully creates videos" do
+      videos_table = [
+        {
+          yt_video_id: 100
+        },
+        {
+          yt_video_id: 200
+        },
+        {
+          yt_video_id: 300
+        },
+        {
+          yt_video_id: 400
+        },
+      ]
+      videos_table.each do |video|
+        Video.create! video
+      end
+      expect(Video.exists?(:yt_video_id=>200)).to eq(true)
+    end
+
+    it "successfully creates description tracks for videos" do
+      desc_track_table = [
+        {
+          video_id: 100,
+          track_author_id: 1,
+          lang: 'en',
+          is_generated: 1
+        },
+        {
+          video_id: 200,
+          track_author_id: 2,
+          lang: 'en',
+          is_generated: true
+        },
+        {
+          video_id: 300,
+          track_author_id: 3,
+          lang: 'en',
+          is_generated: true
+        },
+        {
+          video_id: 400,
+          track_author_id: 1,
+          lang: 'en',
+          is_generated: true
+        },
+      ]
+      desc_track_table.each do |desc_track|
+        DescriptionTrack.create! desc_track
+      end
+      expect(DescriptionTrack.exists?(:video_id=>100, :track_author_id=>1)).to eq(true)
+    end
+
   end
 
   # For each description track, create a description
