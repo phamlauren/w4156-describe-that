@@ -1,3 +1,4 @@
+<h1><%=@yt_info["title"]%></h1>
 <h2>This video does not yet have audio descriptions.</h2>
 <%= form_tag "/video/#{@video.id}/request", :method => :post do %>
 <%= csrf_meta_tags %>

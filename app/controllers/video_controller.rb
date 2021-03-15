@@ -12,7 +12,8 @@ class VideoController < ApplicationController
         video = Video.find_or_create_by(yt_video_id: ytid)
         id = video.id
         # if the url is valid then redirect
-        redirect_to video_path(id)
+        puts "redirect"
+        redirect_to action: "show", id: id
       else
         # if not valid, then redirect to err page
         @err = "Sorry, we couldn't find a video with that YouTube link."
@@ -39,6 +40,7 @@ class VideoController < ApplicationController
       @description_tracks = DescriptionTrack.where('video_id': @video.id)
       @desc_track_ids = @description_tracks.pluck(:id)
       @descriptions =  Description.where('desc_track_id': @desc_track_ids)
+      @yt_info = video_info @video.yt_video_id
       render "request_video" if @descriptions.empty?
     end
     # renders app/view/video/show.html.erb by default
@@ -81,6 +83,7 @@ class VideoController < ApplicationController
   # get useful info for video, if return {} then the ytid is invalid
   def video_info(ytid)
     return {} if ytid == nil
+    puts "no env key" if ENV["YT_API_KEY"]==nil
     response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
     result = JSON.parse(response)
     return result["items"].length()==1 ? result["items"][0]["snippet"] : {}

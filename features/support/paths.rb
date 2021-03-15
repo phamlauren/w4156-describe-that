@@ -15,7 +15,7 @@ module NavigationHelpers
   
       when /^the home\s?page$/ then '/'
 
-      when /^the new description page$/ then "/description_track/new"
+      when /^the show page for "(.+)"$/ then "/video/#{Video.find_by(yt_video_id: $1).id}"
       
       when /^the new description page for "(.+)"$/ then "/description_track/new?yt_url=#{$1}"
   
