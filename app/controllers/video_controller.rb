@@ -34,8 +34,8 @@ class VideoController < ApplicationController
       @video_id = params[:id]
       render "err"
     else
-      @description_tracks = DescriptionTrack.where(video_id: @video.id)
-      @desc_track_ids = @description_tracks.pluck(:id)
+      description_tracks = DescriptionTrack.where(video_id: @video.id)
+      desc_track_ids = description_tracks.pluck(:id)
       @descriptions =  Description.where(desc_track_id: @desc_track_ids)
       @yt_info = video_info @video.yt_video_id
       render "request_video" if @descriptions.empty?
