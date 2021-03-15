@@ -1,6 +1,7 @@
 class DescriptionTrack < ApplicationRecord
   belongs_to :video
-  belongs_to :user
+  belongs_to :user, # optional: true # optional: true is temporary for cucumber
+                                   # remove for deploy and prod
   has_many :descriptions
 
   def get_all_descriptions

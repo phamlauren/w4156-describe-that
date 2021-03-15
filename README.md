@@ -52,8 +52,9 @@ Items in the following lists will be implemented for proj-iter-2.
 ### App-wide features pending completion:
 1. Proper user authentication. The current implementation is naive and insecure.
 2. Google TTS. The current implementation allows for text descriptions to be saved, but audio is yet to be generated via Google TTS.
-3. 
+3. Users may edit their password.
 
 ### VIP scenarios pending completion:
+1. VIPs will be able to upvote / downvote requests for AD for videos.
 
 ### Describe scenarios pending completion:
