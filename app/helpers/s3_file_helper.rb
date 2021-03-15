@@ -8,7 +8,6 @@ module S3FileHelper
   # +desired_name+:: the desired name/key that the uploaded file should be given within the bucket.
   # +file_io_contents+:: the contents of the object to be uploaded. Can be `String`, `StringIO`, or `File`.
   # +metadata+:: any metadata to be stored with the object (Should be a `Hash<String, String>`. Optional: May be nil).
-
   def self.upload_file(desired_name, file_io_contents, metadata = nil)
     # init the client, resource, bucket, and target object
     client = Aws::S3::Client.new
@@ -40,7 +39,6 @@ module S3FileHelper
   # Params:
   # +file_name+:: the name/key of the target file within the bucket.
   # +validity_sec+:: the validity of the generated link in seconds. (Default: 300. May not exceed 1 week.)
-
   def self.get_presigned_dl_url_for_file(file_name, validity_sec = 300)
     s3 = Aws::S3::Client.new
     signer = Aws::S3::Presigner.new(client: s3)

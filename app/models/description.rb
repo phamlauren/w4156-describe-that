@@ -55,4 +55,9 @@ class Description < ApplicationRecord
     self.audio_file_loc = name_of_file
     true
   end
+
+  def get_download_url_for_audio_file
+    nil if audio_file_loc.nil?
+    S3FileHelper.get_presigned_dl_url_for_file(file_name: audio_file_loc, validity_sec: 1200)
+  end
 end
