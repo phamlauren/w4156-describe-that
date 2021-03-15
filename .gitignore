@@ -41,3 +41,6 @@ yarn-debug.log*
 
 # Ignore simplecov coverage
 coverage/
+
+# Ignore development-mode env variable file
+config/local_env.yml
