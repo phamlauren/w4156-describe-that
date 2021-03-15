@@ -1,32 +1,21 @@
-require 'google/api_client'
-require 'trollop'
-
+require 'http'
+require 'json'
 class DescriptionTracksController < ActionController::Base
     def new
         match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
         ytid = match.captures[0]
         @ytid_is_valid = valid_ytid ytid
-            
-        end
+        redirect_to("video#index")
     rescue NoMethodError
         # should not have a route without a YouTube URL
         redirect_to("video#index")
     end
 
     private
-    def get_service
-        client = Google::APIClient.new(
-            :key => $DEVELOPER_KEY,
-            :authorization => nil,
-            :application_name => $PROGRAM_NAME,
-            :application_version => '1.0.0'
-        )
-        youtube = client.discovered_api('youtube', 'v3')
-        return client, youtube
-    end
 
-    def valid_ytid ytid
-        client, youtube = get_service
-
+    def valid_ytid(ytid)
+        response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "id", :id => ytid, :key => ENV["YT_API_KEY"]})
+        result = JSON.parse(response)
+        return result["items"].length()==1
     end
 end
