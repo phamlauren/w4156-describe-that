@@ -354,6 +354,7 @@ DEPENDENCIES
   spring
   turbolinks (~> 5)
   tzinfo-data
+  unf_ext (~> 0.0.7.7)
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
