@@ -4,6 +4,10 @@ class DescriptionTrack < ApplicationRecord
   has_many :descriptions
 
   def get_all_descriptions
-    Description.where(desc_track_id: id).order('start_time_sec ASC').to_a
+    if is_generated
+      Description.where(desc_track_id: id, desc_type: Description.desc_types[:generated]).order('start_time_sec ASC').to_a
+    else
+      Description.where(desc_track_id: id, desc_type: Description.desc_types[:recorded]).order('start_time_sec ASC').to_a
+    end
   end
 end
