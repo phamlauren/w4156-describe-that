@@ -45,28 +45,22 @@ Scenario: enter an invalid URL to describe
 
     Then I should see "Sorry, we couldn't find a video with that YouTube link."
 
-Scenario: go back to home page if no URL in params
-
-    When I am on the show page for ""
-
-    Then I am on the home page
-
 Scenario: add one description for the video I found
     
-    When I am on the new description page for "www.youtube.com/watch?v=40z9n1SgozU"
+    When I am on the show page for "40z9n1SgozU"
 
-    And I fill in "time" with "0:01"
+    And I press "Describe this video"
 
-    And I fill in "description" with "people walking around"
+    And I should on the description page for ""40z9n1SgozU""
 
-    And I press "Add One Description"
+    And I fill in "time" with "0:01\n1:57"
 
-    Then I should see "people walking around at 0:01"
+    And I fill in "description" with "people walking around\nwhatever"
 
     Then I press "Submit"
 
-    Then I am on the description_track page
+    Then I am on the show page for "40z9n1SgozU"
 
     And I should see "Transitions"
 
-    And I should see "people walking around at 0:01"
+    And I should see "people walking around at 0:01\nwhatever at 1:57"
