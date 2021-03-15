@@ -61,4 +61,9 @@ class Description < ApplicationRecord
     nil if audio_file_loc.nil?
     S3FileHelper.get_presigned_dl_url_for_file(file_name: audio_file_loc, validity_sec: 1200)
   end
+
+  def delete_file_from_s3
+    return if audio_file_loc.nil? or audio_file_loc.empty?
+    S3FileHelper.delete_file(name_of_file: audio_file_loc)
+  end
 end
