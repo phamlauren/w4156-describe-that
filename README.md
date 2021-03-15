@@ -33,12 +33,12 @@ $ rake: db:migrate
 
 You will need to fill in the list of local env variables located at **w4156-describe-that/config/local_env.yml** with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
 
-You should be remain on branch main (which will differ from branch production in exactly one way, detailed in section **2. Running Cucumber and Rspect tests locally**. You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
+You should be remain on branch main (which will be ahead of production by exactly 1 commit, detailed in section **2. Running Cucumber and Rspect tests locally**). You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
 
 ## 2. Running Cucumber and RSpec tests locally
 By midnight on March 15, 2021, the main branch will be purposefully divergent from the production branch in exactly one way: **app/models/description_track.rb** and **app/models/description.rb** on main will have ```optional: true``` for their foreign keys. This is for Cucumber in particular. We tested successfully creation of foreign key models on the background portion of the Cucumber features, but various steps were unable to find those foreign keys. For example, upon successful creation of Users, the Cucumber steps were unable to access the User model and therefore unable create DescriptionTracks which have a foreign key to User. To bypass this check, we add ```optional: true``` to the foreign key relationships where such an issue arises and the tests pass, which lead us to believe it is a problem with Cucumber.  
 
-There is nothing further for you to set up locally on this point; as long as you 
+There is nothing further for you to set up locally as long as you stay on branch main. This is just a notice for why the main branch should be ahead of production by 1 commit at the time of your testing.
 
 ## 3. Overview
 
