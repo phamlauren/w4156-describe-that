@@ -47,7 +47,13 @@ Scenario: enter an invalid URL to describe
 
 Scenario: add one description for the video I found
     
-    When I am on the show page for "40z9n1SgozU"
+    When I am on the home page
+
+    And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU"
+
+    And I press "Describe"
+
+    Then I should be on the show page for "40z9n1SgozU"
 
     And I press "Describe this video"
 

@@ -6,13 +6,10 @@ class VideoController < ApplicationController
     # handle the YouTube and get redirect
     if params[:commit] == "Describe" && params[:yt_url]!=nil
       ytid = get_ytid_from_url params[:yt_url]
-      puts ytid
       if video_info(ytid) != {}
-        puts "11"
         video = Video.find_or_create_by(yt_video_id: ytid)
         id = video.id
         # if the url is valid then redirect
-        puts "redirect"
         redirect_to action: "show", id: id
       else
         # if not valid, then redirect to err page
@@ -72,6 +69,7 @@ class VideoController < ApplicationController
 
   def describe
     # input: params[:id]
+    render "describe"
   end
 
   private
