@@ -28,7 +28,8 @@ Once you have cloned this repository and you are in the **w4156-describe-that** 
 $ bundle install
 $ bundle exec rake webpacker:install
 $ rake db:create
-$ rake: db:migrate
+$ rake db:migrate
+$ rake db:seed
 ```
 
 You will need to fill in the list of local env variables located at **w4156-describe-that/config/local_env.yml** with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
