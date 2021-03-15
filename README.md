@@ -11,9 +11,10 @@ Team members:
 [Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.
 
 1. Running DescribeThat! locally
-2. Overview
-3. User stories
-4. Plans for proj-iter-2
+2. Running Cucumber and RSpec tests locally
+3. Overview
+4. User stories
+5. Plans for proj-iter-2
 
 ## 1. Running DescribeThat! locally
 To the TAs: we are hoping that you don't have to run the application locally for ease on both of our parts. In particular, we use the YouTube API, Google TTS API, and AWS SDK to connect to an S3 bucket set up on Vishnu's server with various credentials that are not committed to this repo. However, if you want to run the application locally and haven't received those credentials from us already, please let us know and we will get them to you in a secure way. (We should have already submitted them in a file on Courseworks.)  
@@ -32,9 +33,14 @@ $ rake: db:migrate
 
 You will need to fill in the list of local env variables located at **w4156-describe-that/config/local_env.yml** with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
 
-You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
+You should be remain on branch main (which will differ from branch production in exactly one way, detailed in section **2. Running Cucumber and Rspect tests locally**. You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
 
-## 2. Overview
+## 2. Running Cucumber and RSpec tests locally
+By midnight on March 15, 2021, the main branch will be purposefully divergent from the production branch in exactly one way: **app/models/description_track.rb** and **app/models/description.rb** on main will have ```optional: true``` for their foreign keys. This is for Cucumber in particular. We tested successfully creation of foreign key models on the background portion of the Cucumber features, but various steps were unable to find those foreign keys. For example, upon successful creation of Users, the Cucumber steps were unable to access the User model and therefore unable create DescriptionTracks which have a foreign key to User. To bypass this check, we add ```optional: true``` to the foreign key relationships where such an issue arises and the tests pass, which lead us to believe it is a problem with Cucumber.  
+
+There is nothing further for you to set up locally on this point; as long as you 
+
+## 3. Overview
 
 > **DescribeThat!** is a community-driven platform where describers add audio descriptions (AD) to YouTube videos for visually impaired persons (VIPs).
 
@@ -42,7 +48,7 @@ While other platforms providing AD for YouTube videos exist, **DescribeThat!** u
 
 > The option to write text descriptions to be generated into audio by Google TTS does not exclude potential describers due to lack of equipment, differing verbal ability, or plain preference.
 
-## 3. User stories
+## 4. User stories
 There are two users which have different stories: **VIPs** (visually impaired persons) and **describers**.
 
 ### The **VIP** story
@@ -54,7 +60,7 @@ At this point in project implementation, a describer can search for a video via 
 ### Bonus: the user story
 A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user at the moment. People can create a new user and existing users can "log in." At the moment, the notion of logging in is nominal.
 
-## 4. Current (but not exhaustive) plans for proj-iter-2
+## 5. Current (but not exhaustive) plans for proj-iter-2
 
 Items in the following lists will be implemented for proj-iter-2.
 
