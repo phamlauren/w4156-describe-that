@@ -4,13 +4,11 @@ class DescriptionTracksController < ActionController::Base
     def new
         match = /^(?:https:\/\/)?(?:www.youtube.com\/watch\?v=|youtu.be\/)([^?]+)(?:\?.*)?$/.match(params[:yt_url])
         ytid = match.captures[0]
-        yt_info = video_info ytid
-        #@ytid_is_valid = yt_info != {}
-        puts yt_info
-        redirect_to("video#index")
+        @yt_info = video_info ytid
+        @yt_info != {} ? render('new') : render('new_fail')
     rescue NoMethodError
         # should not have a route without a YouTube URL
-        redirect_to("video#index")
+        #redirect_to("video#index")
     end
 
     private
