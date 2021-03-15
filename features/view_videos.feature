@@ -7,11 +7,11 @@ Feature: view videos
 Background: existing YouTube videos
 
     Given the following YouTube videos exist:
-    | yt_video_id |
-    | 1           |
-    | 2           |
-    | 3           |
-    | 4           |
+    | id | yt_video_id |
+    | 1  | 1           |
+    | 2  | 2           |
+    | 3  | 3           |
+    | 4  | 4           |
 
     Given the following description tracks exist:
     | video_id | track_author_id | lang | is_generated |
