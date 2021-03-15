@@ -51,14 +51,16 @@ At this point in project implementation, a VIP can search for a video via its Yo
 ### The describer story
 At this point in project implementation, a describer can search for a video via its YouTube link and add a text description to it which will be generated to audio by Google Text-to-Speech.
 
-## 4. Plans for proj-iter-2
+### Bonus: the user story
+A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user at the moment. People can create a new user and existing users can "log in." At the moment, the notion of logging in is nominal.
+
+## 4. Current (but not exhaustive) plans for proj-iter-2
 
 Items in the following lists will be implemented for proj-iter-2.
 
 ### App-wide features pending completion:
 1. Proper user authentication. The current implementation is naive and insecure.
-2. Google TTS. The current implementation allows for text descriptions to be saved, but audio is yet to be generated via Google TTS.
-3. Users may edit their password.
+2. Users may edit their password.
 
 ### VIP scenarios pending completion:
 1. VIPs will be able to upvote / downvote requests for AD for videos.
