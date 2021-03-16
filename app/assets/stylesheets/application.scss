@@ -10,6 +10,17 @@ html {
     padding: 20px;
 }
 
+.page-title {
+    text-align: center;
+    color: $primary-color;
+    margin-top: 30px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Styling for wrapper */
 #main-wrapper {
     margin: 20px;
 }
@@ -19,7 +30,6 @@ html {
     height: 80%;
 }
 
-.page-title {
-    text-align: center;
-    color: $primary-color;
+#page-nav {
+    margin: 0 0 10px 0;
 }

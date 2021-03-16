@@ -14,7 +14,7 @@ Background: users in databse
 
 Scenario: create myself as a user
   When I go to the new user page
-  And I fill in the "email" field with "lyp2106@barnard.edu"
+  And I fill in the "email" field with "lauren.pham@columbia.edu"
   And I fill in the "password" field with "thisIsMyPassword!"
   And I press "Create"
   Then I should be on the Users index page

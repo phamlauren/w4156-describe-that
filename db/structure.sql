@@ -332,10 +332,31 @@ CREATE INDEX index_descriptions_on_voice_id ON public.descriptions USING btree (
 
 
 --
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+
+
+--
 -- Name: index_videos_on_yt_video_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_videos_on_yt_video_id ON public.videos USING btree (yt_video_id);
+
+
+--
+-- Name: index_voices_on_common_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_voices_on_common_name ON public.voices USING btree (common_name);
+
+
+--
+-- Name: index_voices_on_system_name_and_provider; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_voices_on_system_name_and_provider ON public.voices USING btree (system_name, provider);
 
 
 --
@@ -388,6 +409,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210313055109'),
 ('20210314213123'),
 ('20210314213225'),
-('20210315031858');
+('20210315031858'),
+('20210315040013'),
+('20210315214324');
 
 

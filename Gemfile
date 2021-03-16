@@ -29,6 +29,8 @@ gem 'jquery-rails'
 # Use AWS S3 SDK for Ruby
 gem 'aws-sdk-s3', '~> 1'
 
+# Use HTTParty for external requests
+gem "httparty"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -72,3 +74,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'unf_ext', '~> 0.0.7.7'
+gem "http"
