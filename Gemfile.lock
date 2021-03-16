@@ -346,6 +346,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   cucumber-rails
   database_cleaner
+  httparty
   http
   jbuilder (~> 2.7)
   jquery-rails
