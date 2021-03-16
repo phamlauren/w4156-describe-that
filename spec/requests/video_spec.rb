@@ -61,7 +61,10 @@ RSpec.describe "Videos", type: :request do
     end
   end
   describe "GET /user" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "makes it to the index page" do
+      get '/user'
+      expect(response).to render_template('index')
+    end
   end
   describe "GET /user/new" do
     pending "add some examples (or delete) #{__FILE__}"
