@@ -1,0 +1,6 @@
+<h1>Describe video</h1>
+<%= form_with method: :post do |form| %>
+  <%= form.text_area :time, size: "70x5" %>
+  <%= form.text_area :description, size: "70x5" %>
+  <%= form.submit "Submit" %>
+<% end %>

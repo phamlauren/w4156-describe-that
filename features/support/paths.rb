@@ -13,6 +13,13 @@ module NavigationHelpers
     def path_to(page_name)
       case page_name
   
+      when /^the home\s?page$/ then '/'
+
+      when /^the show page for "(.+)"$/ then "/video/#{Video.find_by(yt_video_id: $1).id}"
+      
+      when /^the description page for "(.+)"$/ then "/video/#{Video.find_by(yt_video_id: $1).id}/describe"
+  
+
       # For users
       when /^the Users index page$/ then '/user'
       when /^the new user page$/ then '/user/new'

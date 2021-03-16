@@ -31,6 +31,7 @@ $ rake db:create
 $ rake db:migrate
 $ rake db:seed
 ```
+> If you encounter an error like ***An error occurred while installing unf_ext (0.0.7.7), and Bundler cannot continue. Make sure that `gem install unf_ext -v '0.0.7.7' --source 'https://rubygems.org/'` succeeds before bundling.*** and you are on Mac OS, you may need to install xcode. Do this by running ```$ xcode-select --install```.
 
 You will need to fill in the list of local env variables located at **w4156-describe-that/config/local_env.yml** with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.  
 
@@ -56,7 +57,7 @@ There are two users which have different stories: **VIPs** (visually impaired pe
 At this point in project implementation, a VIP can search for a video via its YouTube link, access the video's AD if it exists, and request AD for a video if it does not already exist.
 
 ### The describer story
-At this point in project implementation, a describer can search for a video via its YouTube link and add a text description to it which will be generated to audio by Google Text-to-Speech.
+At this point in project implementation, a describer can search for a video via its YouTube link and add a single text description to it which will be generated to audio by Google Text-to-Speech. Only one description is allowed per video description track, and only one description track is allowed per video for this iteration.
 
 ### Bonus: the user story
 A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user at the moment. People can create a new user and existing users can "log in." At the moment, the notion of logging in is nominal.
