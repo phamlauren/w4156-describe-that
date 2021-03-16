@@ -48,9 +48,9 @@ d4 = DescriptionTrack.create(video_id: v4.id, track_author_id: vishnu.id, is_gen
 d5 = DescriptionTrack.create(video_id: v5.id, track_author_id: sheron.id, is_generated: true)
 
 # Description
-d1_1 = Description.create(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "walking around", voice_id: voice.id, voice_speed: 1.1)
-d1_2 = Description.create(desc_track_id: d1.id, start_time_sec: 12, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say hello", voice_id: voice.id, voice_speed: 1.1)
-d2_1 = Description.create(desc_track_id: d2.id, start_time_sec: 23, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "test description for track 2", voice_id: voice.id, voice_speed: 1.1)
-d3_1 = Description.create(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "test description for track 3", voice_id: voice.id, voice_speed: 1.1)
-d4_1 = Description.create(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "test description for track 4", voice_id: voice.id, voice_speed: 1.1)
-d5_1 = Description.create(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "test description for track 5", voice_id: voice.id, voice_speed: 1.1)
+d1_1 = Description.create(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 1) walking around", voice_id: voice.id, voice_speed: 1.1)
+d1_2 = Description.create(desc_track_id: d1.id, start_time_sec: 12, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 2) say hello", voice_id: voice.id, voice_speed: 1.1)
+d2_1 = Description.create(desc_track_id: d2.id, start_time_sec: 23, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "is Waltz No. 8 in A-Flat Major, Op. 64, No.3 or fight me", voice_id: voice.id, voice_speed: 1.1)
+d3_1 = Description.create(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say it five times fast pen pineapple apple pen pen pineapple apple pen", voice_id: voice.id, voice_speed: 1.1)
+d4_1 = Description.create(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "hamtaro is that u uwu", voice_id: voice.id, voice_speed: 1.1)
+d5_1 = Description.create(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "#90sKidsRemember og Disney", voice_id: voice.id, voice_speed: 1.1)
