@@ -87,7 +87,7 @@ class VideoController < ApplicationController
   # get useful info for video, if return {} then the ytid is invalid
   def video_info(ytid)
     return {} if ytid == nil
-    puts "no env key" if ENV["YT_API_KEY"]==nil
+    raise "no env key for YouTube!" if ENV["YT_API_KEY"]==nil
     response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
     result = JSON.parse(response)
     return result["items"].length()==1 ? result["items"][0]["snippet"] : {}

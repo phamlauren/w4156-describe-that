@@ -26,11 +26,31 @@ Voice.create(common_name: "Voice GB B", system_name: "en-GB-Wavenet-B", provider
 Voice.create(common_name: "Voice GB C", system_name: "en-GB-Wavenet-C", provider: "google_tts")
 Voice.create(common_name: "Voice GB D", system_name: "en-GB-Wavenet-D", provider: "google_tts")
 Voice.create(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider: "google_tts")
-Voice.create(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
+voice = Voice.create(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
 
 # YouTube videos
-Video.create(yt_video_id: "Rk1MYMPDx3s")
-Video.create(yt_video_id: "Jn09UdSb3aA")
-Video.create(yt_video_id: "Ct6BUPvE2sM")
-Video.create(yt_video_id: "l1heD4T8Yco")
-Video.create(yt_video_id: "E-6xk4W6N20")
+v1 = Video.create(yt_video_id: "Rk1MYMPDx3s")
+v2 = Video.create(yt_video_id: "Jn09UdSb3aA")
+v3 = Video.create(yt_video_id: "Ct6BUPvE2sM")
+v4 = Video.create(yt_video_id: "l1heD4T8Yco")
+v5 = Video.create(yt_video_id: "E-6xk4W6N20")
+
+# User
+vishnu = User.create(email: "vishnu.nair@columbia.edu", password: "password")
+sheron = User.create(email: "xw2765@columbia.edu", password: "drowssap")
+lauren = User.create(email: "lyp2106@barnard.edu", password: "thisIsMyPassword!")
+
+# Description Track
+d1 = DescriptionTrack.create(video_id: v1.id, track_author_id: vishnu.id, is_generated: true)
+d2 = DescriptionTrack.create(video_id: v2.id, track_author_id: sheron.id, is_generated: true)
+d3 = DescriptionTrack.create(video_id: v3.id, track_author_id: lauren.id, is_generated: true)
+d4 = DescriptionTrack.create(video_id: v4.id, track_author_id: vishnu.id, is_generated: true)
+d5 = DescriptionTrack.create(video_id: v5.id, track_author_id: sheron.id, is_generated: true)
+
+# Description
+d1_1 = Description.create(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 1) walking around", voice_id: voice.id, voice_speed: 1.1)
+d1_2 = Description.create(desc_track_id: d1.id, start_time_sec: 12, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 2) say hello", voice_id: voice.id, voice_speed: 1.1)
+d2_1 = Description.create(desc_track_id: d2.id, start_time_sec: 23, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "is Waltz No. 8 in A-Flat Major, Op. 64, No.3 or fight me", voice_id: voice.id, voice_speed: 1.1)
+d3_1 = Description.create(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say it five times fast pen pineapple apple pen pen pineapple apple pen", voice_id: voice.id, voice_speed: 1.1)
+d4_1 = Description.create(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "hamtaro is that u uwu", voice_id: voice.id, voice_speed: 1.1)
+d5_1 = Description.create(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "#90sKidsRemember og Disney", voice_id: voice.id, voice_speed: 1.1)
