@@ -28,13 +28,16 @@ RSpec.describe "Videos", type: :request do
     end
   end
   describe "GET /video" do
-    it "gets the show page for a video" do
+    it "retrieves from the YouTube API" do
       get '/video', params: { yt_url: 'https://www.youtube.com/watch?v=WrdsotPDrRg' }
       expect(response).to have_http_status(200)
     end
   end
   describe "GET /video/:id" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "gets the show page for a video" do
+      get '/video/9'
+      expect(assigns(:video).yt_video_id).to eq("WrdsotPDrRg")
+    end
   end
   describe "GET /video/:id/describe" do
     pending "add some examples (or delete) #{__FILE__}"
