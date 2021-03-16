@@ -40,7 +40,10 @@ You should be remain on branch main (which will be ahead of production by exactl
 ## 2. Running Cucumber and RSpec tests locally
 By midnight on March 15, 2021, the main branch will be purposefully divergent from the production branch in exactly one way: **app/models/description_track.rb** and **app/models/description.rb** on main will have ```optional: true``` for their foreign keys. This is for Cucumber in particular. We tested successfully creation of foreign key models on the background portion of the Cucumber features, but various steps were unable to find those foreign keys. For example, upon successful creation of Users, the Cucumber steps were unable to access the User model and therefore unable create DescriptionTracks which have a foreign key to User. To bypass this check, we add ```optional: true``` to the foreign key relationships where such an issue arises and the tests pass, which lead us to believe it is a problem with Cucumber.  
 
-There is nothing further for you to set up locally as long as you stay on branch main. This is just a notice for why the main branch should be ahead of production by 1 commit at the time of your testing.
+There is nothing further for you to set up locally as long as you stay on branch main. This is just a notice for why the main branch should be ahead of production by 1 commit at the time of your testing.  
+
+You can run all Cucumber tests using ```$ rake cucumber```.
+You can run all rspec tests using ```$ rake spec```. Not that because of our foreign keys, between every run of the rspec tests, you must also reset the temp_test database using ```$ rake db:migrate:reset RAILS_ENV=test ```.
 
 ## 3. Overview
 
