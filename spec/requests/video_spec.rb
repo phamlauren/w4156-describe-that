@@ -38,6 +38,10 @@ RSpec.describe "Videos", type: :request do
       get '/video/9'
       expect(assigns(:video).yt_video_id).to eq("WrdsotPDrRg")
     end
+    it "gets the err message for a video that does not exist" do
+      get '/video/100'
+      expect(assigns(:err)).to eq("Sorry, we couldn't find a video with that YouTube link.")
+    end
   end
   describe "GET /video/:id/describe" do
     pending "add some examples (or delete) #{__FILE__}"
