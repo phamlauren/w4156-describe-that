@@ -50,7 +50,10 @@ RSpec.describe "Videos", type: :request do
     pending "add some examples (or delete) #{__FILE__}"
   end
   describe "POST /video/:id/request" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "makes a request to the video that does not have any descriptions" do
+      post '/video/9/request'
+      expect(flash[:notice]).to eq("This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'")
+    end
   end
   describe "GET /user" do
     pending "add some examples (or delete) #{__FILE__}"
