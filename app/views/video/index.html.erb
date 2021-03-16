@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +18,9 @@
       <tr>
         <td>
           <%= video["title"] %>
-          <%= video["id"] %>
+        </td>
+        <td>
+          <%= link_to "Show", "/video/#{video["id"]}", :class => 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>
