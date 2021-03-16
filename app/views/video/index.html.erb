@@ -3,5 +3,22 @@
   <%= form.text_field :yt_url %>
   <%= form.submit "Describe" %>
 <% end %>
-<h1 class="page-title">Videos</h1>
 <%= flash[:notice] %>
+<h1 class="page-title">Videos wtih audio descriptions</h1>
+
+<table class="table table-striped col-md-12" id="movies">
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @videos_info.each do |video| %>
+      <tr>
+        <td>
+          <%= video["title"] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

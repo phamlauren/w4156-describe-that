@@ -3,6 +3,18 @@ require 'json'
 class VideoController < ApplicationController
 
   def index
+    @videos_info = []
+    @videos = Video.all
+    @videos.each do |video|
+      video_info = video_info video.yt_video_id
+      # don't show video if we can't get video info
+      if !video_info.empty?
+        @videos_info.push(video_info)
+      end
+    end
+  end
+
+  def fetch_from_api
     # handle the YouTube and get redirect
     if params[:commit] == "Describe" && params[:yt_url]!=nil
       ytid = get_ytid_from_url params[:yt_url]

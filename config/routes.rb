@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'video#index'
 
-  get '/video', to: 'video#index'
+  get '/video', to: 'video#fetch_from_api'
   get '/video/:id', to: 'video#show'
   get 'video/:id/describe', to: 'video#describe'
   post 'video/:id/describe', to: 'video#describe'
