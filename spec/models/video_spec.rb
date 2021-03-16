@@ -11,7 +11,7 @@ RSpec.describe Video, type: :model do
       },
       {
         email: 'xw2765@columbia.edu',
-        password: 'password',
+        password: 'drowssap',
         options: '{"default_lang": "en"}',
       },
       {
