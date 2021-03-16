@@ -1,11 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe "Videos", type: :request do
+  before (:all) do
+    # Seed some videos to test on
+    videos_table = [
+      {
+        yt_video_id: 'WrdsotPDrRg' # Darwin Derby by Vulfpeck
+      },
+      {
+        yt_video_id: 'Cj-AL-J98U0' # Merry-Go-Round by Joe Hisaishi
+      },
+      {
+        yt_video_id: 'Qn5IpWXWub0' # Pretty Boy by Joji feat. Lil Yachty
+      },
+      {
+        yt_video_id: 'TvpJWAx_NkY' # Portrait of a Time by Pete Cat Recording Co.
+      },
+    ]
+    videos_table.each do |video|
+      Video.create! video
+    end
+  end
   describe "GET /" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "renders index template" do
+      get '/'
+      expect(response).to render_template('index')
+    end
   end
   describe "GET /video" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "gets the show page for a video" do
+      get '/video', params: { yt_url: 'https://www.youtube.com/watch?v=WrdsotPDrRg' }
+      expect(response).to render_template('show')
+    end
   end
   describe "GET /video/:id" do
     pending "add some examples (or delete) #{__FILE__}"
