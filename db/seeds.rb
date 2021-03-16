@@ -27,3 +27,10 @@ Voice.create(common_name: "Voice GB C", system_name: "en-GB-Wavenet-C", provider
 Voice.create(common_name: "Voice GB D", system_name: "en-GB-Wavenet-D", provider: "google_tts")
 Voice.create(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider: "google_tts")
 Voice.create(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
+
+# YouTube videos
+Video.create(yt_video_id: "Rk1MYMPDx3s")
+Video.create(yt_video_id: "Jn09UdSb3aA")
+Video.create(yt_video_id: "Ct6BUPvE2sM")
+Video.create(yt_video_id: "l1heD4T8Yco")
+Video.create(yt_video_id: "E-6xk4W6N20")
