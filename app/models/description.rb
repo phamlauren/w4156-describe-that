@@ -44,7 +44,7 @@ class Description < ApplicationRecord
     io_object = GoogleCloudTtsHelper.synthesize(desc_text, voice_speed, voice_in_question.system_name)
     false if io_object.nil?
 
-    if audio_file_loc.nil?
+    if audio_file_loc.nil? or audio_file_loc.empty?
       name_of_file = Description.generate_unique_name
     else
       name_of_file = self.audio_file_loc
