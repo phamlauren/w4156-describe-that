@@ -56,7 +56,7 @@ There are two users which have different stories: **VIPs** (visually impaired pe
 At this point in project implementation, a VIP can search for a video via its YouTube link, access the video's AD if it exists, and request AD for a video if it does not already exist.
 
 ### The describer story
-At this point in project implementation, a describer can search for a video via its YouTube link and add a text description to it which will be generated to audio by Google Text-to-Speech.
+At this point in project implementation, a describer can search for a video via its YouTube link and add a single text description to it which will be generated to audio by Google Text-to-Speech. Only one description is allowed per video description track, and only one description track is allowed per video for this iteration.
 
 ### Bonus: the user story
 A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user at the moment. People can create a new user and existing users can "log in." At the moment, the notion of logging in is nominal.
