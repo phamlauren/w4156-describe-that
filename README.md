@@ -69,9 +69,19 @@ Items in the following lists will be implemented for proj-iter-2.
 ### App-wide features pending completion:
 1. Proper user authentication. The current implementation is naive and insecure.
 2. Users may edit their password.
+3. Show the selected YouTube video within an `iframe` on the page.
+4. Play descriptions alongside the video (both recorded/generated and inline/extended).
 
 ### VIP scenarios pending completion:
-1. VIPs will be able to upvote / downvote requests for AD for videos.
+1. VIPs will be able to request AD for videos.
+2. VIPs will be able to upvote / downvote requests for AD for videos.
+3. VIPs will be able to view multiple description tracks per video and select one to play.
+4. VIPs will be able to identify description tracks by author and language.
+5. VIPs will be able to view basic information about the video (as reported by YouTube) on our platform.
 
 ### Describe scenarios pending completion:
-2. Describers will be able to record audio descriptions directly on the platform.
+1. Describers will be able to record audio descriptions directly on the platform.
+2. Describers will be able to add multiple descriptions per track.
+3. Describers will be able to adjust the voice and speed of TTS-generated descriptions.
+4. Describers will be able to dynamically adjust the position of descriptions within a description track.
+5. Describers will be able to designate descriptions as _inline_ (plays alongside the video) or _extended_ (pauses the video while the description is playing).
