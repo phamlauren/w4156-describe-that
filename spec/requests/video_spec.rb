@@ -70,7 +70,10 @@ RSpec.describe "Videos", type: :request do
     pending "add some examples (or delete) #{__FILE__}"
   end
   describe "POST /user" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "creates a user" do
+      post '/user', params: { user: { email: 'alias@columbia.edu', password: 'possward' } }
+      expect(User.exists?(:email=>'alias@columbia.edu')).to eq(true)
+    end
   end
   describe "GET /user/login" do
     pending "add some examples (or delete) #{__FILE__}"
