@@ -155,11 +155,9 @@ GEM
       rake
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-<<<<<<< HEAD
     httparty (0.18.1)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
-=======
     http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -170,7 +168,6 @@ GEM
     http-form_data (2.3.0)
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
->>>>>>> cucumber/describe_videos
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
