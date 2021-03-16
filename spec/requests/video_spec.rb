@@ -44,10 +44,15 @@ RSpec.describe "Videos", type: :request do
     end
   end
   describe "GET /video/:id/describe" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "gets the video desciption page" do
+      get '/video/9/describe'
+    end
   end
   describe "POST /video/:id/describe" do
-    pending "add some examples (or delete) #{__FILE__}"
+    it "creates a description for an existing video" do
+      post '/video/9/describe', params: { id: 0, time: '00:00:00', description: 'of all the creatures in the sea my favorite is the bass' }
+      expect(DescriptionTrack.exists?(:video_id=>9)).to eq(true)
+    end
   end
   describe "POST /video/:id/request" do
     it "makes a request to the video that does not have any descriptions" do
