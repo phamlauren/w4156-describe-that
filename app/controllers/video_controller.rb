@@ -58,7 +58,7 @@ class VideoController < ApplicationController
   def request_video
     @video = Video.find(params[:id])
     flash[:notice] = "This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'"
-    redirect_to video_path
+    redirect_to '/'
   end
 
   def describe
