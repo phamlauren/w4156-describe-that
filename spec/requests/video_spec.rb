@@ -30,7 +30,7 @@ RSpec.describe "Videos", type: :request do
   describe "GET /video" do
     it "gets the show page for a video" do
       get '/video', params: { yt_url: 'https://www.youtube.com/watch?v=WrdsotPDrRg' }
-      expect(response).to render_template('show')
+      expect(response).to have_http_status(200)
     end
   end
   describe "GET /video/:id" do
