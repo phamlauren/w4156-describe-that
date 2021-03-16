@@ -43,7 +43,7 @@ By midnight on March 15, 2021, the main branch will be purposefully divergent fr
 There is nothing further for you to set up locally as long as you stay on branch main. This is just a notice for why the main branch should be ahead of production by 1 commit at the time of your testing.  
 
 You can run all Cucumber tests using ```$ rake cucumber```.
-You can run all rspec tests using ```$ rake spec```. Not that because of our foreign keys, between every run of the rspec tests, you must also reset the temp_test database using ```$ rake db:migrate:reset RAILS_ENV=test ```.
+You can run all rspec tests using ```$ rake spec```. Not that because of our uniqueness constraints and foreign keys, between every run of the rspec tests, you must also reset the temp_test database using ```$ rake db:migrate:reset RAILS_ENV=test ```.
 
 ## 3. Overview
 
