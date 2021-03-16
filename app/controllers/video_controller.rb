@@ -9,6 +9,7 @@ class VideoController < ApplicationController
       video_info = video_info video.yt_video_id
       # don't show video if we can't get video info
       if !video_info.empty?
+        video_info["id"] = video.id
         @videos_info.push(video_info)
       end
     end
