@@ -1,5 +1,5 @@
 class Voice < ApplicationRecord
-  has_many :descriptions_that_use_voice, class_name: "Description", foreign_key: "voice_id", optional: true
+  has_many :descriptions_that_use_voice, class_name: "Description", foreign_key: "voice_id"
 
   def self.get_all_voices_for_provider(provider)
     Voice.where(provider: provider).to_a
