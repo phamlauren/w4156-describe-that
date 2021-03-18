@@ -1,6 +1,23 @@
 <h1>Describe video</h1>
+<div id="player"></div>
 <%= form_with method: :post do |form| %>
   <%= form.text_area :time, size: "70x5" %>
   <%= form.text_area :description, size: "70x5" %>
   <%= form.submit "Submit" %>
 <% end %>
+
+<script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: '<%=@video.yt_video_id%>',
+    });
+    }
+</script>
