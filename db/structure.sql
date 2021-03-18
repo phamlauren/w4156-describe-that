@@ -227,6 +227,39 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: video_requests; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.video_requests (
+    id bigint NOT NULL,
+    video_id bigint NOT NULL,
+    requested_lang character(2),
+    requester_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: video_requests_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.video_requests_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: video_requests_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.video_requests_id_seq OWNED BY public.video_requests.id;
+
+
+--
 -- Name: videos; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -325,6 +358,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: video_requests id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_requests ALTER COLUMN id SET DEFAULT nextval('public.video_requests_id_seq'::regclass);
+
+
+--
 -- Name: videos id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -392,6 +432,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: video_requests video_requests_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_requests
+    ADD CONSTRAINT video_requests_pkey PRIMARY KEY (id);
 
 
 --
@@ -488,6 +536,20 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
+-- Name: index_video_requests_on_requester_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_requests_on_requester_id ON public.video_requests USING btree (requester_id);
+
+
+--
+-- Name: index_video_requests_on_video_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_requests_on_video_id ON public.video_requests USING btree (video_id);
+
+
+--
 -- Name: index_videos_on_yt_video_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -538,6 +600,22 @@ ALTER TABLE ONLY public.description_tracks
 
 ALTER TABLE ONLY public.descriptions
     ADD CONSTRAINT fk_rails_712eef50a3 FOREIGN KEY (voice_id) REFERENCES public.voices(id);
+
+
+--
+-- Name: video_requests fk_rails_78e4b92c70; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_requests
+    ADD CONSTRAINT fk_rails_78e4b92c70 FOREIGN KEY (requester_id) REFERENCES public.users(id);
+
+
+--
+-- Name: video_requests fk_rails_90e184756e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_requests
+    ADD CONSTRAINT fk_rails_90e184756e FOREIGN KEY (video_id) REFERENCES public.videos(id);
 
 
 --
@@ -603,6 +681,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210315214324'),
 ('20210318003159'),
 ('20210318005441'),
-('20210318010121');
+('20210318010121'),
+('20210318011347');
 
 
