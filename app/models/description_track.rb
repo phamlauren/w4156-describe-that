@@ -3,6 +3,8 @@ class DescriptionTrack < ApplicationRecord
   belongs_to :user, optional: true # optional: true is temporary for cucumber
                                    # remove for deploy and prod
   has_many :descriptions
+  has_many :votes, class_name: 'DescriptionTrackVote', foreign_key: "desc_track_id", optional: true
+  has_many :comments, class_name: 'DescriptionTrackComment', foreign_key: "desc_track_id", optional: true
 
   def get_all_descriptions
     if is_generated
