@@ -227,6 +227,38 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: video_request_upvotes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.video_request_upvotes (
+    id bigint NOT NULL,
+    video_request_id bigint NOT NULL,
+    upvoter_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: video_request_upvotes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.video_request_upvotes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: video_request_upvotes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.video_request_upvotes_id_seq OWNED BY public.video_request_upvotes.id;
+
+
+--
 -- Name: video_requests; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -358,6 +390,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: video_request_upvotes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_request_upvotes ALTER COLUMN id SET DEFAULT nextval('public.video_request_upvotes_id_seq'::regclass);
+
+
+--
 -- Name: video_requests id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -432,6 +471,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: video_request_upvotes video_request_upvotes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_request_upvotes
+    ADD CONSTRAINT video_request_upvotes_pkey PRIMARY KEY (id);
 
 
 --
@@ -536,6 +583,27 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
+-- Name: index_video_request_upvotes_on_upvoter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_request_upvotes_on_upvoter_id ON public.video_request_upvotes USING btree (upvoter_id);
+
+
+--
+-- Name: index_video_request_upvotes_on_video_request_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_request_upvotes_on_video_request_id ON public.video_request_upvotes USING btree (video_request_id);
+
+
+--
+-- Name: index_video_request_upvotes_on_video_request_id_and_upvoter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_video_request_upvotes_on_video_request_id_and_upvoter_id ON public.video_request_upvotes USING btree (video_request_id, upvoter_id);
+
+
+--
 -- Name: index_video_requests_on_requester_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -584,6 +652,22 @@ ALTER TABLE ONLY public.description_track_comments
 
 ALTER TABLE ONLY public.description_track_comments
     ADD CONSTRAINT fk_rails_213042b4a0 FOREIGN KEY (comment_author_id) REFERENCES public.users(id);
+
+
+--
+-- Name: video_request_upvotes fk_rails_259e983ca1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_request_upvotes
+    ADD CONSTRAINT fk_rails_259e983ca1 FOREIGN KEY (upvoter_id) REFERENCES public.users(id);
+
+
+--
+-- Name: video_request_upvotes fk_rails_424c88ddc1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_request_upvotes
+    ADD CONSTRAINT fk_rails_424c88ddc1 FOREIGN KEY (video_request_id) REFERENCES public.video_requests(id);
 
 
 --
@@ -682,6 +766,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318003159'),
 ('20210318005441'),
 ('20210318010121'),
-('20210318011347');
+('20210318011347'),
+('20210318011705'),
+('20210318012725');
 
 
