@@ -36,6 +36,40 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: description_track_comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.description_track_comments (
+    id bigint NOT NULL,
+    desc_track_id bigint NOT NULL,
+    comment_author_id bigint NOT NULL,
+    comment_text text,
+    parent_comment_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: description_track_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.description_track_comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: description_track_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.description_track_comments_id_seq OWNED BY public.description_track_comments.id;
+
+
+--
 -- Name: description_tracks; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -213,6 +247,13 @@ ALTER SEQUENCE public.voices_id_seq OWNED BY public.voices.id;
 
 
 --
+-- Name: description_track_comments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_comments ALTER COLUMN id SET DEFAULT nextval('public.description_track_comments_id_seq'::regclass);
+
+
+--
 -- Name: description_tracks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -253,6 +294,14 @@ ALTER TABLE ONLY public.voices ALTER COLUMN id SET DEFAULT nextval('public.voice
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: description_track_comments description_track_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_comments
+    ADD CONSTRAINT description_track_comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -301,6 +350,27 @@ ALTER TABLE ONLY public.videos
 
 ALTER TABLE ONLY public.voices
     ADD CONSTRAINT voices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_description_track_comments_on_comment_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_description_track_comments_on_comment_author_id ON public.description_track_comments USING btree (comment_author_id);
+
+
+--
+-- Name: index_description_track_comments_on_desc_track_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_description_track_comments_on_desc_track_id ON public.description_track_comments USING btree (desc_track_id);
+
+
+--
+-- Name: index_description_track_comments_on_parent_comment_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_description_track_comments_on_parent_comment_id ON public.description_track_comments USING btree (parent_comment_id);
 
 
 --
@@ -360,6 +430,22 @@ CREATE UNIQUE INDEX index_voices_on_system_name_and_provider ON public.voices US
 
 
 --
+-- Name: description_track_comments fk_rails_0ab621a69f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_comments
+    ADD CONSTRAINT fk_rails_0ab621a69f FOREIGN KEY (parent_comment_id) REFERENCES public.description_track_comments(id);
+
+
+--
+-- Name: description_track_comments fk_rails_213042b4a0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_comments
+    ADD CONSTRAINT fk_rails_213042b4a0 FOREIGN KEY (comment_author_id) REFERENCES public.users(id);
+
+
+--
 -- Name: description_tracks fk_rails_68bd8b88de; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -381,6 +467,14 @@ ALTER TABLE ONLY public.descriptions
 
 ALTER TABLE ONLY public.descriptions
     ADD CONSTRAINT fk_rails_bd1077d069 FOREIGN KEY (desc_track_id) REFERENCES public.description_tracks(id);
+
+
+--
+-- Name: description_track_comments fk_rails_e78b505b03; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_comments
+    ADD CONSTRAINT fk_rails_e78b505b03 FOREIGN KEY (desc_track_id) REFERENCES public.description_tracks(id);
 
 
 --
@@ -411,6 +505,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210314213225'),
 ('20210315031858'),
 ('20210315040013'),
-('20210315214324');
+('20210315214324'),
+('20210318003159');
 
 
