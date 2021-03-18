@@ -19,6 +19,16 @@ CREATE TYPE public.description_type AS ENUM (
 );
 
 
+--
+-- Name: vote_direction; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.vote_direction AS ENUM (
+    'up',
+    'down'
+);
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -67,6 +77,39 @@ CREATE SEQUENCE public.description_track_comments_id_seq
 --
 
 ALTER SEQUENCE public.description_track_comments_id_seq OWNED BY public.description_track_comments.id;
+
+
+--
+-- Name: description_track_votes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.description_track_votes (
+    id bigint NOT NULL,
+    desc_track_id bigint NOT NULL,
+    voter_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    vote_dir public.vote_direction
+);
+
+
+--
+-- Name: description_track_votes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.description_track_votes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: description_track_votes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.description_track_votes_id_seq OWNED BY public.description_track_votes.id;
 
 
 --
@@ -254,6 +297,13 @@ ALTER TABLE ONLY public.description_track_comments ALTER COLUMN id SET DEFAULT n
 
 
 --
+-- Name: description_track_votes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_votes ALTER COLUMN id SET DEFAULT nextval('public.description_track_votes_id_seq'::regclass);
+
+
+--
 -- Name: description_tracks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -302,6 +352,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 ALTER TABLE ONLY public.description_track_comments
     ADD CONSTRAINT description_track_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: description_track_votes description_track_votes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_votes
+    ADD CONSTRAINT description_track_votes_pkey PRIMARY KEY (id);
 
 
 --
@@ -371,6 +429,27 @@ CREATE INDEX index_description_track_comments_on_desc_track_id ON public.descrip
 --
 
 CREATE INDEX index_description_track_comments_on_parent_comment_id ON public.description_track_comments USING btree (parent_comment_id);
+
+
+--
+-- Name: index_description_track_votes_on_desc_track_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_description_track_votes_on_desc_track_id ON public.description_track_votes USING btree (desc_track_id);
+
+
+--
+-- Name: index_description_track_votes_on_desc_track_id_and_voter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_description_track_votes_on_desc_track_id_and_voter_id ON public.description_track_votes USING btree (desc_track_id, voter_id);
+
+
+--
+-- Name: index_description_track_votes_on_voter_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_description_track_votes_on_voter_id ON public.description_track_votes USING btree (voter_id);
 
 
 --
@@ -462,6 +541,14 @@ ALTER TABLE ONLY public.descriptions
 
 
 --
+-- Name: description_track_votes fk_rails_a4af1ab8f6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_votes
+    ADD CONSTRAINT fk_rails_a4af1ab8f6 FOREIGN KEY (desc_track_id) REFERENCES public.description_tracks(id);
+
+
+--
 -- Name: descriptions fk_rails_bd1077d069; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -486,6 +573,14 @@ ALTER TABLE ONLY public.description_tracks
 
 
 --
+-- Name: description_track_votes fk_rails_f4d78577b2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.description_track_votes
+    ADD CONSTRAINT fk_rails_f4d78577b2 FOREIGN KEY (voter_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -506,6 +601,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210315031858'),
 ('20210315040013'),
 ('20210315214324'),
-('20210318003159');
+('20210318003159'),
+('20210318005441'),
+('20210318010121');
 
 
