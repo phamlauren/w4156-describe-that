@@ -46,6 +46,7 @@ RSpec.describe "Videos", type: :request do
   describe "GET /video/:id/describe" do
     it "gets the video desciption page" do
       get '/video/9/describe'
+      expect(response).to render_template('describe')
     end
   end
   describe "POST /video/:id/describe" do
