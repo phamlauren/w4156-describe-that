@@ -4,7 +4,7 @@
   <%= form.submit "Describe" %>
 <% end %>
 <%= flash[:notice] %>
-<h1 class="page-title">Videos wtih audio descriptions</h1>
+<h1 class="page-title">Videos with audio descriptions</h1>
 
 <table class="table table-striped col-md-12" id="movies">
   <thead>
@@ -20,7 +20,7 @@
           <%= video["title"] %>
         </td>
         <td>
-          <%= link_to "Show", "/video/#{video["id"]}", :class => 'btn btn-primary' %>
+          <%= link_to "Show", "/video/#{video["id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' }%>
         </td>
       </tr>
     <% end %>
