@@ -4,4 +4,4 @@
 <%= csrf_meta_tags %>
   <%= submit_tag 'Request AD for this video', :class => 'btn btn-primary' %>
 <% end %>
-<%= button_to 'Describe this video', "/video/#{@video.id}/describe", :class => 'btn btn-primary', :method => :get %>
+<%= button_to 'Describe this video', "/video/#{@video.id}/describe", :class => 'btn btn-primary', :method => :get, data: { turbolinks: 'false' } %>
