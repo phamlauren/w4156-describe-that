@@ -136,28 +136,18 @@ RSpec.describe Video, type: :model do
   end
 
 
-  # For a video, get_all_desc_tracks
+  # For a video, get_all_desc_tracks /// MODEL METHOD
   describe "gets all description tracks for videos" do
     
   end
 
-  # For a video, get_all_desc_track_with_lang
+  # For a video, get_all_desc_track_with_lang /// MODEL METHOD
   describe "gets all description tracks with their language for videos" do
     
   end
 
-  # For a video, video_exists
+  # For a video, video_exists /// MODEL METHOD
   describe "checks if video exists" do
-    
-  end
-
-  # For a description track, get_all_descriptions
-  describe "gets all descriptions for description tracks" do
-    
-  end
-
-  # For a description, assert generate_unique_name works
-  describe "checks generation of description track audio file names" do
     
   end
 
