@@ -66,11 +66,18 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
-      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
+      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.exists?(video_id: params[:id])
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
       # save time and description
+
+      ### audio content is in params[audio_content] -- check of this is nil before proceeding!
+      # this_description_filename = Description.generate_unique_name
+      # audio_content_bytes = Base64.decode64(params[:audio_content])
+      # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
+      ###
+
       user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
       track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])

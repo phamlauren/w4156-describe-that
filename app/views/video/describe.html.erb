@@ -5,6 +5,7 @@
   <div id="media-record-div">
     <%= button_tag "Get Rec Permission", type: 'button', onClick: 'recorder_button_click_event()', id: "toggle-recording-button", class: "btn-primary" %>
   </div>
+  <%= form.hidden_field :audio_content, id: "recorded-audio-content" %>
   <%= form.submit "Submit" %>
 <% end %>
 
@@ -22,9 +23,6 @@
     let got_media_perms = false;
     let isRecording = false;
     let last_download_link = null;
-
-
-
 
     function recorder_button_click_event() {
         media = {
@@ -47,7 +45,6 @@
                 recorder_toggle_button.textContent = "Record";
             }).catch(log);
         } else {
-            // if NOW...
             if (isRecording) {
                 // recorder_toggle_button.setAttribute('disabled', 'true');
                 recorder_toggle_button.style.background = '#0000FF';
@@ -84,5 +81,19 @@
         }
         recording_div.appendChild(recordedMediaParent);
         last_download_link = recordedMediaParent;
+
+        blobToBase64(blob, (base64) => {
+            id("recorded-audio-content").value = base64;
+        });
     }
+
+    let blobToBase64 = function(blob, callback) {
+        let reader = new FileReader();
+        reader.onload = function() {
+            let dataUrl = reader.result;
+            let base64 = dataUrl.split(',')[1];
+            callback(base64);
+        };
+        reader.readAsDataURL(blob);
+    };
 </script>
