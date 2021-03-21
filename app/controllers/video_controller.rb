@@ -66,7 +66,9 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
-      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.exists?(video_id: params[:id])
+      @video = Video.find(params[:id])
+      @yt_info = video_info @video.yt_video_id
+      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil

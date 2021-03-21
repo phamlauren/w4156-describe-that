@@ -1,7 +1,8 @@
 <h1>Describe video</h1>
+<div id="player"></div>
+<button type="button" id="add-description-button">Add one description at current time!</button>
+<div id="description-forms"></div>
 <%= form_with method: :post do |form| %>
-  <%= form.text_area :time, size: "70x5" %>
-  <%= form.text_area :description, size: "70x5" %>
   <div id="media-record-div">
     <%= button_tag "Get Rec Permission", type: 'button', onClick: 'recorder_button_click_event()', id: "toggle-recording-button", class: "btn-primary" %>
   </div>
@@ -10,6 +11,32 @@
 <% end %>
 
 <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        height: '390',
+        width: '640',
+        videoId: '<%=@video.yt_video_id%>',
+    });
+    }
+
+    window.addEventListener('load', () => {
+      const add_description_button = document.getElementById("add-description-button");
+      add_description_button.addEventListener("click",()=>{
+        console.log("30");
+        const description_forms = document.getElementById("description-forms");
+        const current_time = player.getCurrentTime();
+        console.log(current_time);
+        const des_html = `<%= form_with url: "description/create" do |form| %><%= form.hidden_field :time, value: ` + String(current_time) + ` %><%= form.label :description, "For Second: ` + String(current_time) + `" %><%= form.text_area :description, size: "70x2" %><%= form.submit "Add" %><% end %>`;
+        description_forms.insertAdjacentHTML('beforeend',des_html);
+      })
+    });
+
     let log = console.log.bind(console),
         id = val => document.getElementById(val),
         stream,
