@@ -123,7 +123,8 @@ CREATE TABLE public.description_tracks (
     lang character(2) DEFAULT 'en'::bpchar NOT NULL,
     is_generated boolean NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    published boolean NOT NULL
 );
 
 
@@ -768,6 +769,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318010121'),
 ('20210318011347'),
 ('20210318011705'),
-('20210318012725');
+('20210318012725'),
+('20210321234900');
 
 
