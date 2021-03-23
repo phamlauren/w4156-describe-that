@@ -68,6 +68,10 @@ class VideoController < ApplicationController
       # might change that later!
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
+      # get user here!
+      user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+      # create or load the track for this video and this user
+      @track = DescriptionTrack.find_or_create_by!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
     end
     if request.post?
@@ -79,9 +83,6 @@ class VideoController < ApplicationController
       # audio_content_bytes = Base64.decode64(params[:audio_content])
       # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       ###
-
-      user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
-      track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"
     end

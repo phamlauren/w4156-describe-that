@@ -1,6 +1,7 @@
-<h1>Describe video</h1>
+<h1>Describe video for <%=@yt_info["title"]%></h1>
+<p><%=@yt_info["description"]%></p>
 <div id="player"></div>
-<button type="button" id="add-description-button">Add one description at current time!</button>
+<button type="button" id="add-description-button">Add one new description at current time!</button>
 <div id="description-forms"></div>
 <%= form_with method: :post do |form| %>
   <div id="media-record-div">
@@ -37,6 +38,7 @@
       })
     });
 
+    // codes related to recorded audio below
     let log = console.log.bind(console),
         id = val => document.getElementById(val),
         stream,
