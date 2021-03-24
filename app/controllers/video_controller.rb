@@ -2,13 +2,30 @@ require 'http'
 require 'json'
 class VideoController < ApplicationController
 
+  # All of the video records that have a published DescriptionTrack
   def index
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
       video_info = video_info video.yt_video_id
-      # don't show video if we can't get video info
+      # show if video has description track and if we successfully get video info from youtube API
       if video.has_published_desc_track && !video_info.empty?
+        video_info["id"] = video.id
+        @videos_info.push(video_info)
+      end
+    end
+  end
+
+  # All of the video records, including those without DescriptionTracks
+  # Because we add a video once we get it from the API the first time someone
+  # Enters the URL
+  def recently_accessed
+    @videos_info = []
+    @videos = Video.all
+    @videos.each do |video|
+      video_info = video_info video.yt_video_id
+      # show if we can successfully get video info from youtube API
+      if !video_info.empty?
         video_info["id"] = video.id
         @videos_info.push(video_info)
       end
