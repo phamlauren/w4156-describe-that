@@ -200,11 +200,11 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    email character varying NOT NULL,
-    password character varying NOT NULL,
     options jsonb DEFAULT '{"default_lang": "en"}'::jsonb NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    username character varying,
+    auth0_id character varying
 );
 
 
@@ -577,13 +577,6 @@ CREATE INDEX index_descriptions_on_voice_id ON public.descriptions USING btree (
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
-
-
---
 -- Name: index_video_request_upvotes_on_upvoter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -770,6 +763,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318011347'),
 ('20210318011705'),
 ('20210318012725'),
-('20210321234900');
+('20210321234900'),
+('20210324201847');
 
 
