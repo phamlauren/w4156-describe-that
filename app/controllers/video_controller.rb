@@ -2,13 +2,30 @@ require 'http'
 require 'json'
 class VideoController < ApplicationController
 
+  # All of the video records that have a published DescriptionTrack
   def index
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
-      video_info = video_info video.yt_video_id
-      # don't show video if we can't get video info
-      if !video_info.empty?
+      video_info = video.video_info
+      # show if video has description track and if we successfully get video info from youtube API
+      if video.has_published_desc_track && !video_info.empty?
+        video_info["id"] = video.id
+        @videos_info.push(video_info)
+      end
+    end
+  end
+
+  # All of the video records, including those without DescriptionTracks
+  # Because we add a video once we get it from the API the first time someone
+  # Enters the URL
+  def index_undescribed
+    @videos_info = []
+    @videos = Video.all
+    @videos.each do |video|
+      video_info = video.video_info
+      # show if video has no description track and if we can successfully get video info from youtube API
+      if !video.has_published_desc_track && !video_info.empty?
         video_info["id"] = video.id
         @videos_info.push(video_info)
       end
@@ -50,15 +67,30 @@ class VideoController < ApplicationController
       description_tracks = DescriptionTrack.where(video_id: @video.id)
       desc_track_ids = description_tracks.pluck(:id)
       @descriptions =  Description.where(desc_track_id: desc_track_ids)
-      @yt_info = video_info @video.yt_video_id
+      @yt_info = @video.video_info
       render "request_video" if @descriptions.empty?
     end
   end
 
   def request_video
-    @video = Video.find(params[:id])
-    flash[:notice] = "This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'"
-    redirect_to '/'
+    video = Video.find(params[:id])
+    video_request = VideoRequest.find_by(video_id: video.id)
+    # TODO : user id of the person logged in
+    user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+    # if a request does not exist, then make one
+    if !video_request
+      VideoRequest.create!(video_id: video.id, requested_lang:'en', requester_id: user.id)
+      flash[:notice] = "You request has been saved!"
+    # if a request exists and the user has not already upvoted, then upvote
+    elsif !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
+      VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
+      flash[:notice] = "You request has been saved!"
+    # else request exists and the user has already upvoted
+    else
+      flash[:notice] = "You have already requested this video."
+    end
+
+    redirect_to '/video_requests'
   end
 
   def describe
@@ -66,11 +98,20 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
+      @video = Video.find(params[:id])
+      @yt_info = @video.video_info
       redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
       # save time and description
+
+      ### audio content is in params[audio_content] -- check of this is nil before proceeding!
+      # this_description_filename = Description.generate_unique_name
+      # audio_content_bytes = Base64.decode64(params[:audio_content])
+      # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
+      ###
+
       user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
       track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])
