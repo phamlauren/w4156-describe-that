@@ -7,7 +7,7 @@ class VideoController < ApplicationController
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
-      video_info = video_info video.yt_video_id
+      video_info = video.video_info
       # show if video has description track and if we successfully get video info from youtube API
       if video.has_published_desc_track && !video_info.empty?
         video_info["id"] = video.id
@@ -23,7 +23,7 @@ class VideoController < ApplicationController
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
-      video_info = video_info video.yt_video_id
+      video_info = video.video_info
       # show if we can successfully get video info from youtube API
       if !video_info.empty?
         video_info["id"] = video.id
@@ -67,7 +67,7 @@ class VideoController < ApplicationController
       description_tracks = DescriptionTrack.where(video_id: @video.id)
       desc_track_ids = description_tracks.pluck(:id)
       @descriptions =  Description.where(desc_track_id: desc_track_ids)
-      @yt_info = video_info @video.yt_video_id
+      @yt_info = @video.video_info
       render "request_video" if @descriptions.empty?
     end
   end
@@ -84,7 +84,7 @@ class VideoController < ApplicationController
       # create only when there is **no** description track for the video
       # might change that later!
       @video = Video.find(params[:id])
-      @yt_info = video_info @video.yt_video_id
+      @yt_info = @video.video_info
       redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
     end
     if request.post?

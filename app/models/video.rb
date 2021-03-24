@@ -17,4 +17,12 @@ class Video < ApplicationRecord
     deleted if deleted
     # TODO: Else call the YouTube API (or look at the video page) to check.
   end
+
+  # get useful info for video, if return {} then the yt_video_id is invalid
+  def video_info
+    raise "no env key for YouTube!" if ENV["YT_API_KEY"]==nil
+    response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => yt_video_id, :key => ENV["YT_API_KEY"]})
+    result = JSON.parse(response)
+    return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
+  end
 end
