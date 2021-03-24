@@ -32,6 +32,10 @@ gem 'aws-sdk-s3', '~> 1'
 # Use HTTParty for external requests
 gem "httparty"
 
+# using Auth0 for authentication
+gem 'omniauth-auth0', '~> 2.5'
+gem 'omniauth-rails_csrf_protections', '~> 0.1' # prevents forged authentication requests
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
