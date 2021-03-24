@@ -21,5 +21,11 @@ Rails.application.routes.draw do
   get '/user/login', to: 'user#login_page'
   post '/user/login', to: 'user#login'
 
+  # Auth0
+  get '/auth/auth0/callback' => 'auth0#callback'
+  get '/auth/failure' => 'auth0#failure'
+  get '/auth/logout' => 'auth0#logout'
+
   get '/coverage', :to => redirect('/index.html')
 end
+
