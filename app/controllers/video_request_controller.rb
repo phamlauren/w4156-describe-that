@@ -10,7 +10,8 @@ class VideoRequestController < ApplicationController
         video_info = video.video_info
         # show video if we successfully get video info from youtube API
         if !video_info.empty?
-        video_info["id"] = video.id
+        video_info["video_id"] = video.id
+        video_info["vote_count"] = video_request.number_of_votes
         @requests_info.push(video_info)
         end
     end

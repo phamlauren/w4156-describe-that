@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Title</th>
+      <th>Votes</th>
       <th></th>
     </tr>
   </thead>
@@ -18,6 +19,9 @@
       <tr>
         <td>
           <%= request["title"] %>
+        </td>
+        <td>
+          <%= request["vote_count"] %>
         </td>
         <td>
           <%= link_to "Show", "/video/#{request["video_id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
