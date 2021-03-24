@@ -36,9 +36,9 @@ v4 = Video.create(yt_video_id: "l1heD4T8Yco")
 v5 = Video.create(yt_video_id: "E-6xk4W6N20")
 
 # User
-vishnu = User.create(email: "vishnu.nair@columbia.edu", password: "password")
-sheron = User.create(email: "xw2765@columbia.edu", password: "drowssap")
-lauren = User.create(email: "lyp2106@barnard.edu", password: "thisIsMyPassword!")
+vishnu = User.create(username: "vishnu.nair", auth0_id: "abcde")
+sheron = User.create(username: "xw2765", auth0_id: "edcba")
+lauren = User.create(username: "lyp2106", auth0_id: "zyxw")
 
 # Description Track
 d1 = DescriptionTrack.create(video_id: v1.id, track_author_id: vishnu.id, is_generated: true, published: true)
