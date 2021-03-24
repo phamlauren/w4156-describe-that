@@ -73,19 +73,19 @@ At this point in project implementation, a describer can search for a video via 
 ### Bonus: the user story
 A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user at the moment. People can create a new user and existing users can "log in." At the moment, the notion of logging in is nominal.
 
-## 6. Current (but not exhaustive) plans for proj-iter-2
+## 6. Current (iter-2) status update from iter-1
 
 Items in the following lists will be implemented for proj-iter-2.
 
 ### App-wide features pending completion:
-1. Proper user authentication. The current implementation is naive and insecure.
-2. Users may edit their password.
-3. Show the selected YouTube video within an `iframe` on the page.
+1. ~Proper user authentication. The current implementation is naive and insecure.~ Implemented Auth0. To login, users are redirected to Auth0 where they sign in using their email and password. Upon Auth0 callback, the Auth0 auth0_id is stored locally and the local user id is used for foreign key purposes.
+2. ~Users may edit their password.~ Since we have implemented Auth0, this is no longer needed.
+3. ~Show the selected YouTube video within an `iframe` on the page.~ Implemented.
 4. Play descriptions alongside the video (both recorded/generated and inline/extended).
 
 ### VIP scenarios pending completion:
-1. VIPs will be able to request AD for videos.
-2. VIPs will be able to upvote / downvote requests for AD for videos.
+1. ~VIPs will be able to request AD for videos.~ Implemented.
+2. ~VIPs will be able to upvote requests for AD for videos.~ Implemented.
 3. VIPs will be able to view multiple description tracks per video and select one to play.
 4. VIPs will be able to identify description tracks by author and language.
 5. VIPs will be able to view basic information about the video (as reported by YouTube) on our platform.
