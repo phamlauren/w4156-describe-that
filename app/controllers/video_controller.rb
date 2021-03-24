@@ -4,6 +4,7 @@ class VideoController < ApplicationController
 
   # All of the video records that have a published DescriptionTrack
   def index
+    puts session[:userinfo]
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
@@ -75,8 +76,7 @@ class VideoController < ApplicationController
   def request_video
     video = Video.find(params[:id])
     video_request = VideoRequest.find_by(video_id: video.id)
-    # TODO : user id of the person logged in
-    user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+    user = User.find_by(auth_id: session[:userinfo]['sub'])
     # if a request does not exist, then make one
     if !video_request
       VideoRequest.create!(video_id: video.id, requested_lang:'en', requester_id: user.id)
@@ -112,7 +112,7 @@ class VideoController < ApplicationController
       # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       ###
 
-      user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+      user = User.find_by(auth_id: session[:userinfo]['sub'])
       track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"

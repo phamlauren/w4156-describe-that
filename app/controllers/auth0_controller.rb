@@ -7,6 +7,12 @@ class Auth0Controller < ApplicationController
     auth_info = request.env['omniauth.auth']
     session[:userinfo] = auth_info['extra']['raw_info']
 
+    # If a User does not exist with auth0Id = session[:userinfo]['sub'], then it is the user's first time logging in
+    # So create aUser for them and now we can attach description_track, video_request, and video_request_upvote to them via
+    # user = User.find_by(auth_id: session[:userinfo]['sub'])
+    if !User.exists?(auth_id: session[:userinfo]['sub'])
+      User.create!(auth_id: session[:userinfo]['sub'], username: session[:userinfo]['nickname'])
+
     # Redirect to the URL you want after successful auth
     redirect_to '/'
   end
