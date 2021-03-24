@@ -19,13 +19,13 @@ class VideoController < ApplicationController
   # All of the video records, including those without DescriptionTracks
   # Because we add a video once we get it from the API the first time someone
   # Enters the URL
-  def recently_accessed
+  def index_undescribed
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
       video_info = video.video_info
-      # show if we can successfully get video info from youtube API
-      if !video_info.empty?
+      # show if video has no description track and if we can successfully get video info from youtube API
+      if !video.has_published_desc_track && !video_info.empty?
         video_info["id"] = video.id
         @videos_info.push(video_info)
       end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'video#index'
 
   # Video
-  get '/video/recent', to: 'video#recently_accessed'
+  get '/video/undescribed', to: 'video#index_undescribed'
   get '/video', to: 'video#fetch_from_api'
   get '/video/:id', to: 'video#show'
   get 'video/:id/describe', to: 'video#describe'
