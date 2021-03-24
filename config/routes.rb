@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Video request
   get '/video_requests', to: 'video_request#index'
+  get '/video_requests/:id', to: 'video_request#upvote_request'
 
   # User
   get '/user', to: 'user#index'

@@ -2,19 +2,33 @@ class VideoRequestController < ApplicationController
 
   def index
     @requests_info = []
-    video_requests = VideoRequest.all.sort { |a, b| a.number_of_votes <=> b.number_of_votes }
-    puts video_requests
+    video_requests = VideoRequest.all.sort { |b, a| a.number_of_votes <=> b.number_of_votes }
     video_requests.each do |video_request|
         video = Video.find(video_request.video_id)
-        puts video
         video_info = video.video_info
         # show video if we successfully get video info from youtube API
         if !video_info.empty?
+        video_info["id"] = video_request.id
         video_info["video_id"] = video.id
         video_info["vote_count"] = video_request.number_of_votes
         @requests_info.push(video_info)
         end
     end
+  end
+
+  def upvote_request
+    video_request = VideoRequest.find(params[:id])
+    # TODO : user id of the person logged in
+    user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+    # if the user has not already upvoted, then upvote
+    if !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
+      VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
+      flash[:notice] = "You request has been saved!"
+    # else the user has already upvoted
+    else
+      flash[:notice] = "You have already requested this video."
+    end
+    redirect_to '/video_requests'
   end
 
 end
