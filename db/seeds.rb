@@ -41,11 +41,11 @@ sheron = User.create(email: "xw2765@columbia.edu", password: "drowssap")
 lauren = User.create(email: "lyp2106@barnard.edu", password: "thisIsMyPassword!")
 
 # Description Track
-d1 = DescriptionTrack.create(video_id: v1.id, track_author_id: vishnu.id, is_generated: true)
-d2 = DescriptionTrack.create(video_id: v2.id, track_author_id: sheron.id, is_generated: true)
-d3 = DescriptionTrack.create(video_id: v3.id, track_author_id: lauren.id, is_generated: true)
-d4 = DescriptionTrack.create(video_id: v4.id, track_author_id: vishnu.id, is_generated: true)
-d5 = DescriptionTrack.create(video_id: v5.id, track_author_id: sheron.id, is_generated: true)
+d1 = DescriptionTrack.create(video_id: v1.id, track_author_id: vishnu.id, is_generated: true, published: true)
+d2 = DescriptionTrack.create(video_id: v2.id, track_author_id: sheron.id, is_generated: true, published: true)
+d3 = DescriptionTrack.create(video_id: v3.id, track_author_id: lauren.id, is_generated: true, published: true)
+d4 = DescriptionTrack.create(video_id: v4.id, track_author_id: vishnu.id, is_generated: true, published: true)
+d5 = DescriptionTrack.create(video_id: v5.id, track_author_id: sheron.id, is_generated: true, published: true)
 
 # Description
 d1_1 = Description.create(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 1) walking around", voice_id: voice.id, voice_speed: 1.1)
