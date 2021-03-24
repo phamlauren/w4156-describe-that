@@ -1,0 +1,28 @@
+<%= form_with url: video_path, method: :get do |form| %>
+  <%= form.label :yt_url, "Enter YouTube URL: " %>
+  <%= form.text_field :yt_url %>
+  <%= form.submit "Describe" %>
+<% end %>
+<%= flash[:notice] %>
+<h1 class="page-title">Video requests</h1>
+
+<table class="table table-striped col-md-12" id="video_requests">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @requests_info.each do |request| %>
+      <tr>
+        <td>
+          <%= request["title"] %>
+        </td>
+        <td>
+          <%= link_to "Show", "/video/#{request["video_id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
