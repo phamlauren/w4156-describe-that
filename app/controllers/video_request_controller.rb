@@ -20,8 +20,8 @@ class VideoRequestController < ApplicationController
     video_request = VideoRequest.find(params[:id])
     # TODO : user id of the person logged in
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    # if the user has not already upvoted, then upvote
-    if !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
+    # if the user is not the requester and has not already upvoted, then upvote
+    if video_request.requester_id != user.id && !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
       flash[:notice] = "You request has been saved!"
     # else the user has already upvoted
