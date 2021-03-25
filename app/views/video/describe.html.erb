@@ -57,6 +57,8 @@ window.addEventListener("load", () => {
     new_description.querySelector("#time").value = current_time;
     new_description.addEventListener("ajax:success", (e) => {
       console.log(e);
+      // disable the add buttom after submit
+      new_description.querySelector("input[name='commit']").disabled = true;
     });
   });
 });
