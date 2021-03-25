@@ -7,10 +7,10 @@ Feature: view videos
 Background: existing YouTube videos
 
     Given the following users exist:
-    | id | email                    | password          | options                |
-    | 1  | vishnu.nair@columbia.edu | password          | {"default_lang": "en"} |
-    | 2  | xw2765@columbia.edu      | drowssap          | {"default_lang": "en"} |
-    | 3  | lyp2106@barnard.edu      | thisIsMyPassword! | {"default_lang": "en"} |
+    | id | username    | auth0_id | options                |
+    | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+    | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+    | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
 
     Given the following YouTube videos exist:
     | id | yt_video_id |

@@ -5,18 +5,18 @@ RSpec.describe Video, type: :model do
     # User must exist for description track to exist
     users_table = [
       {
-        email: 'vishnu.nair@columbia.edu',
-        password: 'password',
+        username: 'vishnu.nair',
+        auth0_id: 'asdffdsa',
         options: '{"default_lang": "en"}',
       },
       {
-        email: 'xw2765@columbia.edu',
-        password: 'drowssap',
+        username: 'xw2765@columbia.edu',
+        auth0_id: 'fdsaasdf',
         options: '{"default_lang": "en"}',
       },
       {
-        email: 'lyp2106@barnard.edu',
-        password: 'password',
+        username: 'lyp2106@barnard.edu',
+        auth0_id: 'jkl;;lkj',
         options: '{"default_lang": "en"}',
       },
     ]
