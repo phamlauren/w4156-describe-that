@@ -56,11 +56,9 @@ window.addEventListener("load", () => {
     description_forms.insertAdjacentHTML("beforeend", des_html);
     const new_description = description_forms.lastChild;
     new_description.querySelector("#time").value = current_time;
-    new_description.addEventListener("ajax:success", (e) => {
+    new_description.addEventListener("ajax:success", function (e) {
       console.log(e);
-      console.log(this);
       // disable the add buttom after submit
-      new_description.querySelector("input[name='commit']").disabled = true;
       const desc_audio_html = `
       <td>${new_description.querySelector("input[name='time']").value}</td>
       <td>
@@ -71,6 +69,7 @@ window.addEventListener("load", () => {
       </td>`
       const description_audios = document.getElementById("description-audios");
       description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
+      this.style.display = "none";
     });
   });
 });
