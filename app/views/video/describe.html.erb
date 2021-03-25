@@ -1,6 +1,21 @@
 <h1>Describe video for <%=@yt_info["title"]%></h1>
 <div id="player"></div>
 <button type="button" id="add-description-button">Add one new description at current time!</button>
+
+<tbody id="description-audios">
+  <% @descriptions.each do |d| %>
+    <tr>
+      <td><%= d.start_time_sec %></td>
+      <td>
+        <audio controls>
+          <source src="<%= d.url %>" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+
 <div id="description-forms"></div>
 <%= form_with method: :post do |form| %>
   <div id="media-record-div">

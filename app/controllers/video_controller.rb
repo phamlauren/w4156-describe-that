@@ -106,6 +106,7 @@ class VideoController < ApplicationController
       redirect_to "/video/#{params[:id]}/describe" if params[:id] == nil
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
+      @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file} }
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
