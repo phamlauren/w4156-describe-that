@@ -96,3 +96,12 @@ Items in the following lists will be implemented for proj-iter-2.
 3. Describers will be able to adjust the voice and speed of TTS-generated descriptions.
 4. Describers will be able to dynamically adjust the position of descriptions within a description track.
 5. Describers will be able to designate descriptions as _inline_ (plays alongside the video) or _extended_ (pauses the video while the description is playing).
+
+------- NOTES FOR SHERON
+What works right now:
+- User can add forms for creating descriptions dynamically, linked to pause time
+
+What is happening next:
+- User to be able to incrementally hear descriptions as they're writing them - not just once after all descriptions are finished
+  - Prioritize: user saving all at once and then generating all at once. 
+  - Secondary goal: get them dynamically
