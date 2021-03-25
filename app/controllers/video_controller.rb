@@ -62,6 +62,10 @@ class VideoController < ApplicationController
   end
 
   def describe
+    user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
+    # create or load the track for this video and this user
+    # by default, generated is true and published is false, we need to modify it later when user clicks buttons
+    @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
     if request.get?
       # input: params[:id]
       # create only when there is **no** description track for the video
@@ -70,10 +74,6 @@ class VideoController < ApplicationController
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       # get user here!
-      user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
-      # create or load the track for this video and this user
-      # by default, generated is true and published is false, we need to modify it later when user clicks buttons
-      @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
@@ -84,7 +84,7 @@ class VideoController < ApplicationController
       # audio_content_bytes = Base64.decode64(params[:audio_content])
       # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       ###
-      track.generate_descriptions(params[:time],params[:description])
+      @track.published = true
       redirect_to "/video/#{params[:id]}"
     end
   end

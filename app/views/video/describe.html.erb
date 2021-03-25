@@ -7,8 +7,9 @@
     <%= button_tag "Get Rec Permission", type: 'button', onClick: 'recorder_button_click_event()', id: "toggle-recording-button", class: "btn-primary" %>
   </div>
   <%= form.hidden_field :audio_content, id: "recorded-audio-content" %>
-  <%= form.submit "Submit" %>
+  <%= form.submit "Submit audio" %>
 <% end %>
+<%= button_to "Publish Description Track", action: "describe" %>
 
 <script>
 var tag = document.createElement("script");
