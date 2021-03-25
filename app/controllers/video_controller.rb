@@ -118,6 +118,7 @@ class VideoController < ApplicationController
       # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       ###
       @track.published = true
+      @track.save
       #track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
       #track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"
