@@ -54,6 +54,7 @@ class Description < ApplicationRecord
     false unless upload_succeeded
 
     self.audio_file_loc = name_of_file
+    self.save
     true
   end
 
