@@ -66,13 +66,14 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
+      redirect_to "/video/#{params[:id]}/describe" if params[:id] == nil
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       # get user here!
       user = User.find_or_create_by(email: "xw2765@columbia.edu", password: "drowssap")
       # create or load the track for this video and this user
-      @track = DescriptionTrack.find_or_create_by!(video_id: params[:id], track_author_id: user.id, is_generated: true)
-      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
+      # by default, generated is true and published is false, we need to modify it later when user clicks buttons
+      @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
