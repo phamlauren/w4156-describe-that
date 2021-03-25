@@ -16,10 +16,6 @@ Rails.application.routes.draw do
 
   # User
   get '/user', to: 'user#index'
-  get '/user/new', to: 'user#new'
-  post '/user', to: 'user#create'
-  get '/user/login', to: 'user#login_page'
-  post '/user/login', to: 'user#login'
 
   # Auth0
   get '/auth/auth0/callback' => 'auth0#callback'
