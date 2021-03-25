@@ -60,25 +60,4 @@ RSpec.describe "Videos", type: :request do
       expect(flash[:notice]).to eq("This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'")
     end
   end
-  describe "GET /user" do
-    it "makes it to the index page" do
-      get '/user'
-      expect(response).to render_template('index')
-    end
-  end
-  describe "GET /user/new" do
-    pending "add some examples (or delete) #{__FILE__}"
-  end
-  describe "POST /user" do
-    it "creates a user" do
-      post '/user', params: { user: { email: 'alias@columbia.edu', password: 'possward' } }
-      expect(User.exists?(:email=>'alias@columbia.edu')).to eq(true)
-    end
-  end
-  describe "GET /user/login" do
-    pending "add some examples (or delete) #{__FILE__}"
-  end
-  describe "POST /user/login" do
-    pending "add some examples (or delete) #{__FILE__}"
-  end
 end
