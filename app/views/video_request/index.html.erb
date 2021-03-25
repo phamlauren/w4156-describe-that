@@ -24,9 +24,15 @@
         <td>
           <%= request["vote_count"] %>
         </td>
+        <% if session[:userinfo].nil? %>
+        <td>
+            <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
+        </td>
+        <% else %>
         <td>
           <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
         </td>
+        <% end %>
         <td>
           <%= link_to "Show", "/video/#{request["video_id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
         </td>
