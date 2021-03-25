@@ -52,7 +52,15 @@ window.addEventListener("load", () => {
     const description_forms = document.getElementById("description-forms");
     const current_time = player.getCurrentTime();
     console.log(current_time);
-    const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %><%= form.hidden_field :track_id, value: @track.id %><%= form.hidden_field :time %><%= form.label :description, "For Second: `+String(current_time)+`" %><%= form.text_area :description, size: "70x2" %><%= form.submit "Add" %><% end %>`;
+    const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
+      <%= form.hidden_field :track_id, value: @track.id %>
+      <%= form.hidden_field :time %>
+      <%= form.label :description, "For Second: `+String(current_time)+`" %>
+      <%= form.text_area :description, size: "70x2" %>
+      <%= form.label :voice_speed, "Voice speed" %>
+      <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
+      <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <%= form.submit "Add" %><% end %>`;
     description_forms.insertAdjacentHTML("beforeend", des_html);
     const new_description = description_forms.lastChild;
     new_description.querySelector("#time").value = current_time;
