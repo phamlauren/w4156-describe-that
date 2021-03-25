@@ -19,7 +19,7 @@ class VideoRequestController < ApplicationController
   def upvote_request
     video_request = VideoRequest.find(params[:id])
     # TODO : user id of the person logged in
-    user = User.find_by(auth_id: session[:userinfo]['sub'])
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # if the user has not already upvoted, then upvote
     if !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
