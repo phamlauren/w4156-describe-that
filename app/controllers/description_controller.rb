@@ -12,6 +12,7 @@ class DescriptionController < ApplicationController
   def edit_generated
     d = Description.find(params[:desc_id].to_i)
     editable = {start_time_sec: d.start_time_sec, pause_at_start_time: d.pause_at_start_time ? "1" : "0", desc_text: d.desc_text, voice_id: d.voice_id, voice_speed: d.voice_speed}
+    d.delete_file_from_s3
     Description.destroy(d.id)
     render :json => editable.to_json
   end
