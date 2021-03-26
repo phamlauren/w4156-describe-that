@@ -1,6 +1,7 @@
 <h1>Describe video for <%=@yt_info["title"]%></h1>
 <div id="player"></div>
-<button type="button" id="add-description-button">Add one new description at current time!</button>
+<button type="button" id="add-description-button">Add one new generated description at current time!</button>
+<button type="button" id="record-description-button">Add one new recorded description at current time!</button>
 <div id="description-forms"></div>
 <table id="description-audios">
   <tr>
@@ -28,14 +29,8 @@
 </table>
 
 
-<%= form_with method: :post do |form| %>
-  <div id="media-record-div">
-    <%= button_tag "Get Rec Permission", type: 'button', onClick: 'recorder_button_click_event()', id: "toggle-recording-button", class: "btn-primary" %>
-  </div>
-  <%= form.hidden_field :audio_content, id: "recorded-audio-content" %>
-  <%= form.submit "Submit audio" %>
-<% end %>
 <%= button_to "Publish Description Track", action: "describe" %>
+
 
 <script>
 var tag = document.createElement("script");
@@ -53,6 +48,15 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
+// codes related to recorded audio below
+let log = console.log.bind(console),
+  id = (val) => document.getElementById(val),
+  stream,
+  recorder,
+  counter = 1,
+  chunks,
+  media;
+
 const add_description_form = function(editable={}) {
   const description_audios = document.getElementById("description-audios");
   const description_forms = document.getElementById("description-forms");
@@ -65,7 +69,7 @@ const add_description_form = function(editable={}) {
     <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
     <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
     <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
-    <button type="button" id="delete-description">Delete</button>
+    <button type="button" id="remove-description">Remove</button>
     <%= form.submit "Add" %><% end %>`;
   description_forms.insertAdjacentHTML("beforeend", des_html);
   const new_description = description_forms.lastChild;
@@ -79,7 +83,7 @@ const add_description_form = function(editable={}) {
   if (editable.desc_text) new_description.querySelector("#pause_at_start_time").value = editable.pause_at_start_time;
   if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
   if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
-  new_description.querySelector("#delete-description").addEventListener("click", function (e) {
+  new_description.querySelector("#remove-description").addEventListener("click", function (e) {
     console.log(this.parentNode);
     this.parentNode.remove();
   });
@@ -107,40 +111,91 @@ const add_description_form = function(editable={}) {
   });
 };
 
+const add_record_description_form = function() {
+  const description_audios = document.getElementById("description-audios");
+  const description_forms = document.getElementById("description-forms");
+  const des_html = `<%= form_with(url: "/description/new_recorded", class: "new-description", local: false) do |form| %>
+    <%= form.hidden_field :track_id, value: @track.id %>
+    <%= form.label :description, "time (sec):" %>
+    <%= form.number_field :time %>
+    <div id="media-record-div">
+      <%= button_tag "Get Rec Permission", type: 'button', id: "toggle-recording-button", class: "btn-primary" %>
+    </div>
+    <%= form.hidden_field :audio_content, id: "recorded-audio-content", required: true %>
+    <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+    <button type="button" id="remove-description">Remove</button>
+    <%= form.submit "Add" %><% end %>`;
+  description_forms.insertAdjacentHTML("beforeend", des_html);
+  const new_description = description_forms.lastChild;
+
+  let recorder_toggle_button = new_description.querySelector("#toggle-recording-button");
+  let recording_div = new_description.querySelector("#media-record-div");
+  let got_media_perms = false;
+  let isRecording = false;
+  let last_download_link = null;
+  recorder_toggle_button.addEventListener("click", function (e) {
+    recorder_button_click_event(recorder_toggle_button, recording_div, got_media_perms, isRecording, last_download_link);
+  });
+
+  // set time range
+  new_description.querySelector("#time").min = 0;
+  new_description.querySelector("#time").step = 0.1;
+  new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
+
+  new_description.querySelector("#remove-description").addEventListener("click", function (e) {
+    console.log(this.parentNode);
+    this.parentNode.remove();
+  });
+  new_description.addEventListener("ajax:success", function (e) {
+    // disable the add buttom after submit
+    const desc_audio_html = `
+    <td>${new_description.querySelector("input[name='time']").value}</td>
+    <td>
+      <audio controls>
+        <source src="${e.detail[0].url}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </td>
+    <td>
+      <%= form_with(url: "/description/delete_recorded", class: "delete-description", local: false) do |form| %>
+        <%= form.hidden_field :desc_id %>
+        <%= form.submit "delete" %>
+      <% end %>
+    </td>`
+    
+    description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
+    const new_audios = description_audios.lastChild;
+    new_audios.querySelector("#desc_id").value = e.detail[0].id;
+    this.remove();
+  });
+};
+
 window.addEventListener("load", () => {
+
   // add description form
   const add_description_button = document.getElementById(
     "add-description-button"
   );
-  const description_audios = document.getElementById("description-audios");
-  const description_forms = document.getElementById("description-forms");
   add_description_button.addEventListener("click", ()=> add_description_form());
 
-  // add listeners for edit
+  // record description form
+  const record_description_button = document.getElementById(
+    "record-description-button"
+  );
+  record_description_button.addEventListener("click", ()=> add_record_description_form());
+
+  // add listeners for edit (generated audios)
   const edit_description_forms = document.getElementsByClassName("edit-description");
   Array.prototype.forEach.call(edit_description_forms, (f) => f.addEventListener("ajax:success", function (e) {
     console.log(e);
     add_description_form(e.detail[0])
     this.parentNode.parentNode.remove();
-  }))
+  }));
+
+  // add listeners for delete (recorded audios)
 });
 
-// codes related to recorded audio below
-let log = console.log.bind(console),
-  id = (val) => document.getElementById(val),
-  stream,
-  recorder,
-  counter = 1,
-  chunks,
-  media;
-
-let recorder_toggle_button = id("toggle-recording-button");
-let recording_div = id("media-record-div");
-let got_media_perms = false;
-let isRecording = false;
-let last_download_link = null;
-
-function recorder_button_click_event() {
+function recorder_button_click_event(recorder_toggle_button, recording_div, got_media_perms, isRecording, last_download_link) {
   media = {
     tag: "audio",
     type: "audio/wav",
@@ -156,7 +211,7 @@ function recorder_button_click_event() {
         recorder = new MediaRecorder(stream);
         recorder.ondataavailable = (e) => {
           chunks.push(e.data);
-          if (recorder.state == "inactive") makeLink();
+          if (recorder.state == "inactive") makeLink(recording_div, last_download_link);
         };
         log("got media successfully");
         got_media_perms = true;
@@ -180,7 +235,7 @@ function recorder_button_click_event() {
   }
 }
 
-function makeLink() {
+function makeLink(recording_div, last_download_link) {
   let blob = new Blob(chunks, { type: media.type });
   let url = URL.createObjectURL(blob);
   let recordedMediaParent = window.document.createElement("span");
