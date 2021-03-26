@@ -3,7 +3,11 @@
 <button type="button" id="add-description-button">Add one new description at current time!</button>
 
 <table id="description-audios">
-  <tr><th>start time (sec)</th><th>audio</th></tr>
+  <tr>
+    <th>start time (sec)</th>
+    <th>audio</th>
+    <th>edit</th>
+  </tr>
   <% @descriptions.each do |d| %>
     <tr>
       <td><%= d[:start_time_sec] %></td>
@@ -12,6 +16,12 @@
           <source src="<%= d[:url] %>" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
+      </td>
+      <td>
+        <%= form_with(url: "/description/edit_generated", class: "edit-description", local: false) do |form| %>
+          <%= form.hidden_field :desc_id, value: d[:id] %>
+          <%= form.submit "edit" %>
+        <% end %>
       </td>
     </tr>
   <% end %>
@@ -54,10 +64,10 @@ window.addEventListener("load", () => {
       <%= form.label :description, "time (sec):" %>
       <%= form.number_field :time %>
       <%= form.text_area :description, size: "70x2" %>
-      <%= form.label :voice_speed, "Voice speed" %>
+      <%= form.label :voice_speed, "Voice speed:" %>
       <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
-      <%= form.select :voice_id, [["extended", 1], ["inline", 0]], selected: 0 %>
-      <%= form.select :pause_at_start_time, @voices, selected: @voices[0][1] %>
+      <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
       <button type="button" id="delete-description">Delete</button>
       <%= form.submit "Add" %><% end %>`;
     description_forms.insertAdjacentHTML("beforeend", des_html);
@@ -71,18 +81,25 @@ window.addEventListener("load", () => {
       this.parentNode.remove();
     });
     new_description.addEventListener("ajax:success", function (e) {
-      console.log(e);
       // disable the add buttom after submit
       const desc_audio_html = `
       <td>${new_description.querySelector("input[name='time']").value}</td>
       <td>
         <audio controls>
-          <source src="${e.detail[0]}" type="audio/mpeg">
+          <source src="${e.detail[0].url}" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
+      </td>
+      <td>
+        <%= form_with(url: "/description/edit_generated", class: "edit-description", local: false) do |form| %>
+          <%= form.hidden_field :desc_id %>
+          <%= form.submit "edit" %>
+        <% end %>
       </td>`
       const description_audios = document.getElementById("description-audios");
       description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
+      const new_audios = description_audios.lastChild;
+      new_audios.querySelector("#desc_id").value = e.detail[0].id;
       this.remove();
     });
   });
