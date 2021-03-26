@@ -1,126 +1,219 @@
-<h1>Describe video</h1>
+<h1>Describe video for <%=@yt_info["title"]%></h1>
 <div id="player"></div>
-<button type="button" id="add-description-button">Add one description at current time!</button>
+<button type="button" id="add-description-button">Add one new description at current time!</button>
 <div id="description-forms"></div>
+<table id="description-audios">
+  <tr>
+    <th>start time (sec)</th>
+    <th>audio</th>
+    <th>edit</th>
+  </tr>
+  <% @descriptions.each do |d| %>
+    <tr>
+      <td><%= d[:start_time_sec] %></td>
+      <td>
+        <audio controls>
+          <source src="<%= d[:url] %>" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </td>
+      <td>
+        <%= form_with(url: "/description/edit_generated", class: "edit-description", local: false) do |form| %>
+          <%= form.hidden_field :desc_id, value: d[:id] %>
+          <%= form.submit "edit" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
 <%= form_with method: :post do |form| %>
   <div id="media-record-div">
     <%= button_tag "Get Rec Permission", type: 'button', onClick: 'recorder_button_click_event()', id: "toggle-recording-button", class: "btn-primary" %>
   </div>
   <%= form.hidden_field :audio_content, id: "recorded-audio-content" %>
-  <%= form.submit "Submit" %>
+  <%= form.submit "Submit audio" %>
 <% end %>
+<%= button_to "Publish Description Track", action: "describe" %>
 
 <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+const vid = "<%=@video.yt_video_id%>";
 
-    var player;
-    function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: '<%=@video.yt_video_id%>',
-    });
-    }
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("player", {
+    height: "390",
+    width: "640",
+    videoId: vid,
+  });
+}
 
-    window.addEventListener('load', () => {
-      const add_description_button = document.getElementById("add-description-button");
-      add_description_button.addEventListener("click",()=>{
-        console.log("30");
-        const description_forms = document.getElementById("description-forms");
-        const current_time = player.getCurrentTime();
-        console.log(current_time);
-        const des_html = `<%= form_with url: "description/create" do |form| %><%= form.hidden_field :time, value: ` + String(current_time) + ` %><%= form.label :description, "For Second: ` + String(current_time) + `" %><%= form.text_area :description, size: "70x2" %><%= form.submit "Add" %><% end %>`;
-        description_forms.insertAdjacentHTML('beforeend',des_html);
-      })
-    });
+const add_description_form = function(editable={}) {
+  const description_audios = document.getElementById("description-audios");
+  const description_forms = document.getElementById("description-forms");
+  const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
+    <%= form.hidden_field :track_id, value: @track.id %>
+    <%= form.label :description, "time (sec):" %>
+    <%= form.number_field :time %>
+    <%= form.text_area :description, size: "70x2" %>
+    <%= form.label :voice_speed, "Voice speed:" %>
+    <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
+    <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+    <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
+    <button type="button" id="delete-description">Delete</button>
+    <%= form.submit "Add" %><% end %>`;
+  description_forms.insertAdjacentHTML("beforeend", des_html);
+  const new_description = description_forms.lastChild;
+  // set time range
+  new_description.querySelector("#time").min = 0;
+  new_description.querySelector("#time").step = 0.1;
+  new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
+  // set value from editable or make it default
+  new_description.querySelector("#time").max = editable.start_time_sec ? player.getDuration() : editable.start_time_sec;
+  if (editable.desc_text) new_description.querySelector("#description").value = editable.desc_text;
+  if (editable.desc_text) new_description.querySelector("#pause_at_start_time").value = editable.pause_at_start_time;
+  if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
+  if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
+  new_description.querySelector("#delete-description").addEventListener("click", function (e) {
+    console.log(this.parentNode);
+    this.parentNode.remove();
+  });
+  new_description.addEventListener("ajax:success", function (e) {
+    // disable the add buttom after submit
+    const desc_audio_html = `
+    <td>${new_description.querySelector("input[name='time']").value}</td>
+    <td>
+      <audio controls>
+        <source src="${e.detail[0].url}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </td>
+    <td>
+      <%= form_with(url: "/description/edit_generated", class: "edit-description", local: false) do |form| %>
+        <%= form.hidden_field :desc_id %>
+        <%= form.submit "edit" %>
+      <% end %>
+    </td>`
+    
+    description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
+    const new_audios = description_audios.lastChild;
+    new_audios.querySelector("#desc_id").value = e.detail[0].id;
+    this.remove();
+  });
+};
 
-    let log = console.log.bind(console),
-        id = val => document.getElementById(val),
-        stream,
-        recorder,
-        counter=1,
-        chunks,
-        media;
+window.addEventListener("load", () => {
+  // add description form
+  const add_description_button = document.getElementById(
+    "add-description-button"
+  );
+  const description_audios = document.getElementById("description-audios");
+  const description_forms = document.getElementById("description-forms");
+  add_description_button.addEventListener("click", ()=> add_description_form());
 
-    let recorder_toggle_button = id("toggle-recording-button");
-    let recording_div = id("media-record-div");
-    let got_media_perms = false;
-    let isRecording = false;
-    let last_download_link = null;
+  // add listeners for edit
+  const edit_description_forms = document.getElementsByClassName("edit-description");
+  Array.prototype.forEach.call(edit_description_forms, (f) => f.addEventListener("ajax:success", function (e) {
+    console.log(e);
+    add_description_form(e.detail[0])
+    this.parentNode.parentNode.remove();
+  }))
+});
 
-    function recorder_button_click_event() {
-        media = {
-            tag: 'audio',
-            type: 'audio/wav',
-            ext: '.wav',
-            gUM: {audio: true}
-        }
+// codes related to recorded audio below
+let log = console.log.bind(console),
+  id = (val) => document.getElementById(val),
+  stream,
+  recorder,
+  counter = 1,
+  chunks,
+  media;
 
-        if (!got_media_perms) {
-            navigator.mediaDevices.getUserMedia(media.gUM).then(_stream => {
-                stream = _stream;
-                recorder = new MediaRecorder(stream);
-                recorder.ondataavailable = e => {
-                    chunks.push(e.data);
-                    if(recorder.state == 'inactive')  makeLink();
-                };
-                log('got media successfully');
-                got_media_perms = true;
-                recorder_toggle_button.textContent = "Record";
-            }).catch(log);
-        } else {
-            if (isRecording) {
-                // recorder_toggle_button.setAttribute('disabled', 'true');
-                recorder_toggle_button.style.background = '#0000FF';
-                recorder.stop();
-                recorder_toggle_button.textContent = "Record";
-            } else {
-                // recorder_toggle_button.removeAttribute('disabled');
-                recorder_toggle_button.style.background = '#FF0000';
-                chunks = [];
-                recorder.start();
-                recorder_toggle_button.textContent = "Recording...";
-            }
-            isRecording = !isRecording;
-        }
-    }
+let recorder_toggle_button = id("toggle-recording-button");
+let recording_div = id("media-record-div");
+let got_media_perms = false;
+let isRecording = false;
+let last_download_link = null;
 
-    function makeLink(){
-        let blob = new Blob(chunks, {type: media.type });
-        let url = URL.createObjectURL(blob);
-        let recordedMediaParent = window.document.createElement('span');
-        let mt = window.document.createElement(media.tag);
-        let hf = window.document.createElement('a');
+function recorder_button_click_event() {
+  media = {
+    tag: "audio",
+    type: "audio/wav",
+    ext: ".wav",
+    gUM: { audio: true },
+  };
 
-        mt.controls = true;
-        mt.src = url;
-        hf.href = url;
-        hf.download = `${counter++}${media.ext}`;
-        hf.innerHTML = `download ${hf.download}`;
-
-        recordedMediaParent.appendChild(mt);
-        recordedMediaParent.appendChild(hf);
-        if (last_download_link != null) {
-            recording_div.removeChild(last_download_link);
-        }
-        recording_div.appendChild(recordedMediaParent);
-        last_download_link = recordedMediaParent;
-
-        blobToBase64(blob, (base64) => {
-            id("recorded-audio-content").value = base64;
-        });
-    }
-
-    let blobToBase64 = function(blob, callback) {
-        let reader = new FileReader();
-        reader.onload = function() {
-            let dataUrl = reader.result;
-            let base64 = dataUrl.split(',')[1];
-            callback(base64);
+  if (!got_media_perms) {
+    navigator.mediaDevices
+      .getUserMedia(media.gUM)
+      .then((_stream) => {
+        stream = _stream;
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = (e) => {
+          chunks.push(e.data);
+          if (recorder.state == "inactive") makeLink();
         };
-        reader.readAsDataURL(blob);
-    };
+        log("got media successfully");
+        got_media_perms = true;
+        recorder_toggle_button.textContent = "Record";
+      })
+      .catch(log);
+  } else {
+    if (isRecording) {
+      // recorder_toggle_button.setAttribute('disabled', 'true');
+      recorder_toggle_button.style.background = "#0000FF";
+      recorder.stop();
+      recorder_toggle_button.textContent = "Record";
+    } else {
+      // recorder_toggle_button.removeAttribute('disabled');
+      recorder_toggle_button.style.background = "#FF0000";
+      chunks = [];
+      recorder.start();
+      recorder_toggle_button.textContent = "Recording...";
+    }
+    isRecording = !isRecording;
+  }
+}
+
+function makeLink() {
+  let blob = new Blob(chunks, { type: media.type });
+  let url = URL.createObjectURL(blob);
+  let recordedMediaParent = window.document.createElement("span");
+  let mt = window.document.createElement(media.tag);
+  let hf = window.document.createElement("a");
+
+  mt.controls = true;
+  mt.src = url;
+  hf.href = url;
+  hf.download = `${counter++}${media.ext}`;
+  hf.innerHTML = `download ${hf.download}`;
+
+  recordedMediaParent.appendChild(mt);
+  recordedMediaParent.appendChild(hf);
+  if (last_download_link != null) {
+    recording_div.removeChild(last_download_link);
+  }
+  recording_div.appendChild(recordedMediaParent);
+  last_download_link = recordedMediaParent;
+
+  blobToBase64(blob, (base64) => {
+    id("recorded-audio-content").value = base64;
+  });
+}
+
+let blobToBase64 = function (blob, callback) {
+  let reader = new FileReader();
+  reader.onload = function () {
+    let dataUrl = reader.result;
+    let base64 = dataUrl.split(",")[1];
+    callback(base64);
+  };
+  reader.readAsDataURL(blob);
+};
+
 </script>

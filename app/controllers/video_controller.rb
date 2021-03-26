@@ -94,13 +94,20 @@ class VideoController < ApplicationController
   end
 
   def describe
+    user = User.find_or_create_by(auth0_id: "drowssap")
+    #user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    # create or load the track for this video and this user
+    # by default, generated is true and published is false, we need to modify it later when user clicks buttons
+    @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
     if request.get?
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
+      redirect_to "/video/#{params[:id]}/describe" if params[:id] == nil
       @video = Video.find(params[:id])
-      @yt_info = @video.video_info
-      redirect_to video_path(params[:id]) if params[:id] == nil || DescriptionTrack.find_by(video_id: params[:id])
+      @yt_info = video_info @video.yt_video_id
+      @voices = Voice.all.map { |v| [v.common_name, v.id] }
+      @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file} }
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
@@ -111,10 +118,10 @@ class VideoController < ApplicationController
       # audio_content_bytes = Base64.decode64(params[:audio_content])
       # S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       ###
-
-      user = User.find_by(auth0_id: session[:userinfo]['sub'])
-      track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
-      track.generate_descriptions(params[:time],params[:description])
+      @track.published = true
+      @track.save
+      #track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
+      #track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"
     end
   end

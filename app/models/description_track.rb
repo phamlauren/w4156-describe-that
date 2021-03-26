@@ -14,7 +14,7 @@ class DescriptionTrack < ApplicationRecord
     end
   end
 
-
+  # used by iter-1: generates all descriptions for a list of times and texts
   def generate_descriptions times, descriptions
     times = times.split("\n")
     descriptions = descriptions.split("\n")
