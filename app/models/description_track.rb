@@ -7,11 +7,12 @@ class DescriptionTrack < ApplicationRecord
   has_many :comments, class_name: 'DescriptionTrackComment', foreign_key: "desc_track_id"
 
   def get_all_descriptions
-    if is_generated
-      Description.where(desc_track_id: id, desc_type: Description.desc_types[:generated]).order('start_time_sec ASC').to_a
-    else
-      Description.where(desc_track_id: id, desc_type: Description.desc_types[:recorded]).order('start_time_sec ASC').to_a
-    end
+    #if is_generated
+    #  Description.where(desc_track_id: id, desc_type: Description.desc_types[:generated]).order('start_time_sec ASC').to_a
+    #else
+    #  Description.where(desc_track_id: id, desc_type: Description.desc_types[:recorded]).order('start_time_sec ASC').to_a
+    #end
+    Description.where(desc_track_id: id).order('start_time_sec ASC').to_a
   end
 
   # used by iter-1: generates all descriptions for a list of times and texts

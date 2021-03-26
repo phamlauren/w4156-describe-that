@@ -19,10 +19,18 @@
         </audio>
       </td>
       <td>
+        <% if d[:generated] %>
         <%= form_with(url: "/description/edit_generated", class: "edit-description", local: false) do |form| %>
           <%= form.hidden_field :desc_id, value: d[:id] %>
           <%= form.submit "edit" %>
         <% end %>
+        <% else %>
+        <%= form_with(url: "/description/delete_recorded", class: "delete-description", local: false) do |form| %>
+          <%= form.hidden_field :desc_id, value: d[:id] %>
+          <%= form.submit "delete" %>
+        <% end %>
+        <% end %>
+
       </td>
     </tr>
   <% end %>
