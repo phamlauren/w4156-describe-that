@@ -94,8 +94,8 @@ class VideoController < ApplicationController
   end
 
   def describe
-    user = User.find_or_create_by(auth0_id: "drowssap")
-    #user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    #user = User.find_or_create_by(auth0_id: "drowssap")
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # create or load the track for this video and this user
     # by default, generated is true and published is false, we need to modify it later when user clicks buttons
     @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
