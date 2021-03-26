@@ -64,8 +64,6 @@ let log = console.log.bind(console),
   counter = 1,
   chunks,
   media;
-let got_media_perms = false;
-let isRecording = false;
 
 const add_description_form = function(editable={}) {
   const description_audios = document.getElementById("description-audios");
@@ -138,9 +136,11 @@ const add_record_description_form = function() {
 
   let recorder_toggle_button = new_description.querySelector("#toggle-recording-button");
   let recording_div = new_description.querySelector("#media-record-div");
-  let last_download_link = null;
+  recorder_toggle_button.last_download_link = null;
+  recorder_toggle_button.isRecording = false;
+  recorder_toggle_button.got_media_perms = false;
   recorder_toggle_button.addEventListener("click", function (e) {
-    last_download_link = recorder_button_click_event(recorder_toggle_button, recording_div, last_download_link);
+    recorder_button_click_event(recorder_toggle_button, recording_div);
   });
 
   // set time range
@@ -170,6 +170,9 @@ const add_record_description_form = function() {
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
     new_audios.querySelector("#desc_id").value = e.detail[0].id;
+    new_audios.querySelector(".delete-description").addEventListener("ajax:success", function (e) {
+      this.parentNode.parentNode.remove();
+    });
     this.remove();
   });
 };
@@ -202,7 +205,7 @@ window.addEventListener("load", () => {
   }));
 });
 
-function recorder_button_click_event(recorder_toggle_button, recording_div, last_download_link) {
+function recorder_button_click_event(recorder_toggle_button, recording_div) {
   media = {
     tag: "audio",
     type: "audio/wav",
@@ -210,7 +213,7 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, last
     gUM: { audio: true },
   };
 
-  if (!got_media_perms) {
+  if (!recorder_toggle_button.got_media_perms) {
     navigator.mediaDevices
       .getUserMedia(media.gUM)
       .then((_stream) => {
@@ -218,15 +221,15 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, last
         recorder = new MediaRecorder(stream);
         recorder.ondataavailable = (e) => {
           chunks.push(e.data);
-          if (recorder.state == "inactive") last_download_link = makeLink(recording_div, last_download_link);
+          if (recorder.state == "inactive") makeLink(recording_div, recorder_toggle_button);
         };
         log("got media successfully");
-        got_media_perms = true;
+        recorder_toggle_button.got_media_perms = true;
         recorder_toggle_button.textContent = "Record";
       })
       .catch(log);
   } else {
-    if (isRecording) {
+    if (recorder_toggle_button.isRecording) {
       // recorder_toggle_button.setAttribute('disabled', 'true');
       recorder_toggle_button.style.background = "#0000FF";
       recorder.stop();
@@ -238,12 +241,11 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, last
       recorder.start();
       recorder_toggle_button.textContent = "Recording...";
     }
-    isRecording = !isRecording;
+    recorder_toggle_button.isRecording = !recorder_toggle_button.isRecording;
   }
-  return last_download_link;
 }
 
-function makeLink(recording_div, last_download_link) {
+function makeLink(recording_div, recorder_toggle_button) {
   let blob = new Blob(chunks, { type: media.type });
   let url = URL.createObjectURL(blob);
   let recordedMediaParent = window.document.createElement("span");
@@ -258,15 +260,16 @@ function makeLink(recording_div, last_download_link) {
 
   recordedMediaParent.appendChild(mt);
   recordedMediaParent.appendChild(hf);
-  if (last_download_link != null) {
-    recording_div.removeChild(last_download_link);
+  console.log(recorder_toggle_button.last_download_link);
+  if (recorder_toggle_button.last_download_link != null) {
+    recording_div.removeChild(recorder_toggle_button.last_download_link);
   }
   recording_div.appendChild(recordedMediaParent);
+  recorder_toggle_button.last_download_link = recordedMediaParent;
 
   blobToBase64(blob, (base64) => {
     id("recorded-audio-content").value = base64;
   });
-  return recordedMediaParent;
 }
 
 let blobToBase64 = function (blob, callback) {
