@@ -54,8 +54,8 @@ window.addEventListener("load", () => {
     console.log(current_time);
     const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
       <%= form.hidden_field :track_id, value: @track.id %>
-      <%= form.hidden_field :time %>
-      <%= form.label :description, "For Second: `+String(current_time)+`" %>
+      <%= form.label :description, "time (sec):" %>
+      <%= form.number_field :time %>
       <%= form.text_area :description, size: "70x2" %>
       <%= form.label :voice_speed, "Voice speed" %>
       <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
@@ -63,6 +63,9 @@ window.addEventListener("load", () => {
       <%= form.submit "Add" %><% end %>`;
     description_forms.insertAdjacentHTML("beforeend", des_html);
     const new_description = description_forms.lastChild;
+    new_description.querySelector("#time").min = 0;
+    new_description.querySelector("#time").max = player.getDuration();
+    new_description.querySelector("#time").step = 0.1;
     new_description.querySelector("#time").value = current_time;
     new_description.addEventListener("ajax:success", function (e) {
       console.log(e);
@@ -77,7 +80,7 @@ window.addEventListener("load", () => {
       </td>`
       const description_audios = document.getElementById("description-audios");
       description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
-      this.style.display = "none";
+      this.remove();
     });
   });
 });
