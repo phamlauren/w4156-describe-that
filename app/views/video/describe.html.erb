@@ -56,6 +56,8 @@ let log = console.log.bind(console),
   counter = 1,
   chunks,
   media;
+let got_media_perms = false;
+let isRecording = false;
 
 const add_description_form = function(editable={}) {
   const description_audios = document.getElementById("description-audios");
@@ -130,11 +132,9 @@ const add_record_description_form = function() {
 
   let recorder_toggle_button = new_description.querySelector("#toggle-recording-button");
   let recording_div = new_description.querySelector("#media-record-div");
-  let got_media_perms = false;
-  let isRecording = false;
   let last_download_link = null;
   recorder_toggle_button.addEventListener("click", function (e) {
-    recorder_button_click_event(recorder_toggle_button, recording_div, got_media_perms, isRecording, last_download_link);
+    last_download_link = recorder_button_click_event(recorder_toggle_button, recording_div, last_download_link);
   });
 
   // set time range
@@ -195,7 +195,7 @@ window.addEventListener("load", () => {
   // add listeners for delete (recorded audios)
 });
 
-function recorder_button_click_event(recorder_toggle_button, recording_div, got_media_perms, isRecording, last_download_link) {
+function recorder_button_click_event(recorder_toggle_button, recording_div, last_download_link) {
   media = {
     tag: "audio",
     type: "audio/wav",
@@ -211,7 +211,7 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, got_
         recorder = new MediaRecorder(stream);
         recorder.ondataavailable = (e) => {
           chunks.push(e.data);
-          if (recorder.state == "inactive") makeLink(recording_div, last_download_link);
+          if (recorder.state == "inactive") last_download_link = makeLink(recording_div, last_download_link);
         };
         log("got media successfully");
         got_media_perms = true;
@@ -233,6 +233,7 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, got_
     }
     isRecording = !isRecording;
   }
+  return last_download_link;
 }
 
 function makeLink(recording_div, last_download_link) {
@@ -250,15 +251,16 @@ function makeLink(recording_div, last_download_link) {
 
   recordedMediaParent.appendChild(mt);
   recordedMediaParent.appendChild(hf);
+  console.log(last_download_link);
   if (last_download_link != null) {
     recording_div.removeChild(last_download_link);
   }
   recording_div.appendChild(recordedMediaParent);
-  last_download_link = recordedMediaParent;
 
   blobToBase64(blob, (base64) => {
     id("recorded-audio-content").value = base64;
   });
+  return recordedMediaParent;
 }
 
 let blobToBase64 = function (blob, callback) {
