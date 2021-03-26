@@ -48,10 +48,7 @@ window.addEventListener("load", () => {
     "add-description-button"
   );
   add_description_button.addEventListener("click", () => {
-    console.log("30");
     const description_forms = document.getElementById("description-forms");
-    const current_time = player.getCurrentTime();
-    console.log(current_time);
     const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
       <%= form.hidden_field :track_id, value: @track.id %>
       <%= form.label :description, "time (sec):" %>
@@ -66,7 +63,7 @@ window.addEventListener("load", () => {
     new_description.querySelector("#time").min = 0;
     new_description.querySelector("#time").max = player.getDuration();
     new_description.querySelector("#time").step = 0.1;
-    new_description.querySelector("#time").value = current_time;
+    new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
     new_description.addEventListener("ajax:success", function (e) {
       console.log(e);
       // disable the add buttom after submit
