@@ -58,6 +58,7 @@ window.addEventListener("load", () => {
       <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
       <%= form.select :voice_id, [["extended", 1], ["inline", 0]], selected: 0 %>
       <%= form.select :pause_at_start_time, @voices, selected: @voices[0][1] %>
+      <button type="button" id="delete-description">Delete</button>
       <%= form.submit "Add" %><% end %>`;
     description_forms.insertAdjacentHTML("beforeend", des_html);
     const new_description = description_forms.lastChild;
@@ -65,6 +66,10 @@ window.addEventListener("load", () => {
     new_description.querySelector("#time").max = player.getDuration();
     new_description.querySelector("#time").step = 0.1;
     new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
+    new_description.querySelector("#delete-description").addEventListener("click", function (e) {
+      console.log(this.parentNode);
+      this.parentNode.remove();
+    });
     new_description.addEventListener("ajax:success", function (e) {
       console.log(e);
       // disable the add buttom after submit
