@@ -27,6 +27,8 @@ class DescriptionController < ApplicationController
   end
 
   def delete_recorded
-    #
+    d = Description.find(params[:desc_id].to_i)
+    d.delete_file_from_s3
+    Description.destroy(d.id)
   end
 end
