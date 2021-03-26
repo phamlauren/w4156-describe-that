@@ -79,7 +79,7 @@ const add_description_form = function(editable={}) {
   if (editable.desc_text) new_description.querySelector("#pause_at_start_time").value = editable.pause_at_start_time;
   if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
   if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
-  if (editable.desc_text) new_description.querySelector("#delete-description").addEventListener("click", function (e) {
+  new_description.querySelector("#delete-description").addEventListener("click", function (e) {
     console.log(this.parentNode);
     this.parentNode.remove();
   });
