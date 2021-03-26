@@ -65,6 +65,6 @@ class Description < ApplicationRecord
 
   def delete_file_from_s3
     return if audio_file_loc.nil? or audio_file_loc.empty?
-    S3FileHelper.delete_file(name_of_file: audio_file_loc)
+    S3FileHelper.delete_file(audio_file_loc)
   end
 end

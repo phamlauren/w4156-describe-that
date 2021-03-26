@@ -18,12 +18,15 @@ class DescriptionController < ApplicationController
   end
 
   def new_recorded
-    this_description_filename = Description.generate_unique_name
-    audio_content_bytes = Base64.decode64(params[:audio_content])
-    S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
-    description = Description.create(pause_at_start_time: params[:pause_at_start_time]=="1" ? true : false, desc_type: 'recorded', audio_file_loc: this_description_filename, desc_track_id: params[:track_id].to_i, start_time_sec: params[:time].to_f)
-      ### audio content is in params[audio_content] -- check of this is nil before proceeding!
-    render :json => {id: description.id, url: description.audio_file_loc ? description.get_download_url_for_audio_file : ""}.to_json
+    if params[:audio_content]
+      this_description_filename = Description.generate_unique_name
+      audio_content_bytes = Base64.decode64(params[:audio_content])
+      S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
+      description = Description.create(pause_at_start_time: params[:pause_at_start_time]=="1" ? true : false, desc_type: 'recorded', audio_file_loc: this_description_filename, desc_track_id: params[:track_id].to_i, start_time_sec: params[:time].to_f)
+        ### audio content is in params[audio_content] -- check of this is nil before proceeding!
+      d = description
+      render :json => {id: description.id, url: description.audio_file_loc ? description.get_download_url_for_audio_file : ""}.to_json
+    end
   end
 
   def delete_recorded

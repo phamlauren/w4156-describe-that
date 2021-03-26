@@ -86,11 +86,9 @@ const add_description_form = function(editable={}) {
   if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
   if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
-    console.log(this.parentNode);
     this.parentNode.remove();
   });
   new_description.addEventListener("ajax:success", function (e) {
-    // disable the add buttom after submit
     const desc_audio_html = `
     <td>${new_description.querySelector("input[name='time']").value}</td>
     <td>
@@ -143,11 +141,9 @@ const add_record_description_form = function() {
   new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
 
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
-    console.log(this.parentNode);
     this.parentNode.remove();
   });
   new_description.addEventListener("ajax:success", function (e) {
-    // disable the add buttom after submit
     const desc_audio_html = `
     <td>${new_description.querySelector("input[name='time']").value}</td>
     <td>
@@ -187,12 +183,15 @@ window.addEventListener("load", () => {
   // add listeners for edit (generated audios)
   const edit_description_forms = document.getElementsByClassName("edit-description");
   Array.prototype.forEach.call(edit_description_forms, (f) => f.addEventListener("ajax:success", function (e) {
-    console.log(e);
     add_description_form(e.detail[0])
     this.parentNode.parentNode.remove();
   }));
 
   // add listeners for delete (recorded audios)
+  const delete_recorded_description = document.getElementsByClassName("delete-description");
+  Array.prototype.forEach.call(delete_recorded_description, (f) => f.addEventListener("ajax:success", function (e) {
+    this.parentNode.parentNode.remove();
+  }));
 });
 
 function recorder_button_click_event(recorder_toggle_button, recording_div, last_download_link) {
@@ -251,7 +250,6 @@ function makeLink(recording_div, last_download_link) {
 
   recordedMediaParent.appendChild(mt);
   recordedMediaParent.appendChild(hf);
-  console.log(last_download_link);
   if (last_download_link != null) {
     recording_div.removeChild(last_download_link);
   }
