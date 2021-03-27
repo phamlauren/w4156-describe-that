@@ -130,7 +130,7 @@ const add_record_description_form = function() {
     <%= form.hidden_field :audio_content, id: "recorded-audio-content", required: true %>
     <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
     <button type="button" id="remove-description">Remove</button>
-    <%= form.submit "Add" %><% end %>`;
+    <%= form.submit "Add", disabled: true %><% end %>`;
   description_forms.insertAdjacentHTML("beforeend", des_html);
   const new_description = description_forms.lastChild;
 
@@ -140,7 +140,7 @@ const add_record_description_form = function() {
   recorder_toggle_button.isRecording = false;
   recorder_toggle_button.got_media_perms = false;
   recorder_toggle_button.addEventListener("click", function (e) {
-    recorder_button_click_event(recorder_toggle_button, recording_div);
+    recorder_button_click_event(recorder_toggle_button, recording_div, new_description.querySelector("input[name='commit']"));
   });
 
   // set time range
@@ -205,7 +205,7 @@ window.addEventListener("load", () => {
   }));
 });
 
-function recorder_button_click_event(recorder_toggle_button, recording_div) {
+function recorder_button_click_event(recorder_toggle_button, recording_div, commit_button) {
   media = {
     tag: "audio",
     type: "audio/wav",
@@ -234,13 +234,16 @@ function recorder_button_click_event(recorder_toggle_button, recording_div) {
       recorder_toggle_button.style.background = "#0000FF";
       recorder.stop();
       recorder_toggle_button.textContent = "Record";
+      commit_button.disabled = false;
     } else {
       // recorder_toggle_button.removeAttribute('disabled');
       recorder_toggle_button.style.background = "#FF0000";
       chunks = [];
       recorder.start();
       recorder_toggle_button.textContent = "Recording...";
+      commit_button.disabled = true;
     }
+    console.log(commit_button);
     recorder_toggle_button.isRecording = !recorder_toggle_button.isRecording;
   }
 }
