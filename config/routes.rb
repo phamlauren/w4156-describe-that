@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post 'video/:id/describe', to: 'video#describe'
   post '/video/:id/request', to: 'video#request_video'
 
+  get '/play/:id', to: 'video#play'
+
   # Description
   post '/description/new_generated', to: 'description#new_generated', as: 'new_generated'
   post '/description/new_recorded', to: 'description#new_recorded', as: 'new_recorded'

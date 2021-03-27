@@ -1,0 +1,121 @@
+<h1>Watch: <%=@yt_info["title"]%></h1>
+<div id="player"></div>
+
+<audio controls style="display: none" id="description-player" onEnded="onDescriptionEnd()">
+  <source id="audio-source" src="#" type="audio/wav">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    const vid = "<%= @video.yt_video_id %>";
+
+    // helpers
+    let log = (s) => console.log(s);
+    let id = (val) => document.getElementById(val);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+            height: "390",
+            width: "640",
+            videoId: vid,
+            events: {
+                'onReady': onPlayerIsReady
+                // 'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    let description_data = <%= @descriptions.to_json.html_safe %>;
+    let description_player = id("description-player");
+    let audio_source = id("audio-source");
+
+    let current_index = 0;
+    let num_descriptions = description_data.length;
+    var timeMonitoringIntervalID = null;
+
+    let lastVolume = 100;
+
+    let onPlayerIsReady = (event) => {
+        timeMonitoringIntervalID = setInterval(monitorTime, 100);
+    }
+
+    // let onPlayerStateChange = (event) => {
+    //     if (current_index >= num_descriptions) {
+    //         if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
+    //         return;
+    //     }
+    //
+    //     // TODO: Allow restarting the video.
+    //
+    //     if (event.data == YT.PlayerState.PLAYING && current_index < num_descriptions) {
+    //
+    //     }
+    //
+    //     if (event.data == YT.PlayerState.PLAYING) {
+    //         setTimeout(stopVideo, 6000);
+    //     }
+    // }
+
+    let monitorTime = () => {
+        if (current_index >= num_descriptions) {
+            if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
+            return;
+        }
+
+        let current_description = description_data[current_index];
+        let curr_time = player.getCurrentTime();
+
+        if (curr_time > current_description["start_time_sec"]) {
+            if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
+            triggerDescription();
+        }
+    }
+
+    let triggerDescription = () => {
+        let current_description = description_data[current_index];
+        assignURLToAudioPlayer(current_description["url"]);
+
+        if (current_description["inline_extended"] === "extended") {
+            playExtendedDescription();
+        } else if (current_description["inline_extended"] === "inline") {
+            playInlineDescription();
+        }
+    }
+
+    let assignURLToAudioPlayer = (url) => {
+        audio_source.src = url;
+        description_player.load();
+    }
+
+    let playExtendedDescription = () => {
+        player.pauseVideo();
+        description_player.play();
+    }
+
+    let playInlineDescription = () => {
+        lastVolume = player.getVolume();
+        player.setVolume(lastVolume/10);
+        description_player.play();
+    }
+
+    let onDescriptionEnd = () => {
+        if (current_index >= num_descriptions) return;
+
+        let description_that_just_ended = description_data[current_index];
+        current_index += 1;
+
+        if (description_that_just_ended["inline_extended"] === "extended") {
+            player.playVideo();
+        } else if (description_that_just_ended["inline_extended"] === "inline") {
+            player.setVolume(lastVolume);
+        }
+
+        timeMonitoringIntervalID = setInterval(monitorTime, 100);
+    }
+
+</script>
