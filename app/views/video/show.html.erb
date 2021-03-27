@@ -1,6 +1,26 @@
 <h2 class="text-center page-title"><%=@yt_info["title"]%></h2>
 <div id="player"></div>
-<p><% @descriptions.each do |desc| %><%= desc.desc_text %>&nbsp<% end %></p>
+
+<br>
+
+<div><p><%= @all_tracks.size %> description track(s) found!</p></div>
+<table id="all-description-tracks">
+  <tr>
+    <th>Author</th>
+    <th>Lang</th>
+    <th>Link</th>
+  </tr>
+  <% @all_tracks.each do |dtrack| %>
+    <tr>
+      <td><%= dtrack.user.username %></td>
+      <td><%= dtrack.lang %></td>
+      <td><%= link_to "Watch!", "/play/#{dtrack["id"]}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
 <h3>Video Info</h3>
 <%= @yt_info["description"].gsub(/\n/, '<br/>').html_safe %>
 <script>
