@@ -5,7 +5,7 @@ class DescriptionController < ApplicationController
     #Description.where(desc_track_id: params[:track_id].to_i, start_time_sec: params[:time].to_f).destroy_all
     
     description = Description.create(pause_at_start_time: params[:pause_at_start_time]=="1" ? true : false, desc_type: 'generated', audio_file_loc: "", desc_text: params[:description], voice_id: params[:voice_id].to_i, voice_speed: params[:voice_speed].to_f, desc_track_id: params[:track_id].to_i, start_time_sec: params[:time].to_f)
-    render :json => {id: description.id, url: description.generate_tts ? description.get_download_url_for_audio_file : ""}.to_json
+    render :json => {id: description.id, url: description.generate_tts ? description.get_download_url_for_audio_file : "", inline_extended: description.pause_at_start_time ? "extended" : "inline"}.to_json
   end
 
   # delete generated description from db and return to the front-end for edit
@@ -24,7 +24,7 @@ class DescriptionController < ApplicationController
       audio_content_bytes = Base64.decode64(params[:audio_content])
       S3FileHelper.upload_file(this_description_filename, audio_content_bytes)
       description = Description.create(pause_at_start_time: params[:pause_at_start_time]=="1" ? true : false, desc_type: 'recorded', audio_file_loc: this_description_filename, desc_track_id: params[:track_id].to_i, start_time_sec: params[:time].to_f)
-      render :json => {id: description.id, url: description.audio_file_loc ? description.get_download_url_for_audio_file : ""}.to_json
+      render :json => {id: description.id, url: description.audio_file_loc ? description.get_download_url_for_audio_file : "", inline_extended: description.pause_at_start_time ? "extended" : "inline"}.to_json
     end
   end
 
