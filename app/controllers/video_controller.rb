@@ -98,7 +98,7 @@ class VideoController < ApplicationController
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # create or load the track for this video and this user
     # by default, generated is true and published is false, we need to modify it later when user clicks buttons
-    @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
+    @track = DescriptionTrack.create_with(published: false).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
     if request.get?
       # input: params[:id]
       # create only when there is **no** description track for the video
@@ -115,8 +115,6 @@ class VideoController < ApplicationController
       ###
       @track.published = true
       @track.save
-      #track = DescriptionTrack.create!(video_id: params[:id], track_author_id: user.id, is_generated: true)
-      #track.generate_descriptions(params[:time],params[:description])
       redirect_to "/video/#{params[:id]}"
     end
   end

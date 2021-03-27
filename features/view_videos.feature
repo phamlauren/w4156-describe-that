@@ -20,7 +20,7 @@ Background: existing YouTube videos
     | 4  | 4           |
 
     Given the following description tracks exist:
-    | id | video_id | track_author_id | lang | is_generated |
+    | id | video_id | track_author_id | lang | published |
     | 1  | 1        | 1               | en   | true         |
     | 2  | 2        | 2               | en   | true         |
     | 3  | 3        | 3               | en   | true         |
