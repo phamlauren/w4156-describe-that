@@ -6,12 +6,14 @@
 <table id="description-audios">
   <tr>
     <th>start time (sec)</th>
+    <th>inline/extended</th>
     <th>audio</th>
     <th>edit</th>
   </tr>
   <% @descriptions.each do |d| %>
     <tr>
       <td><%= d[:start_time_sec] %></td>
+      <td><%= d[:inline_extended] %></td>
       <td>
         <audio controls>
           <source src="<%= d[:url] %>" type="audio/mpeg">
@@ -94,9 +96,11 @@ const add_description_form = function(editable={}) {
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
     this.parentNode.remove();
   });
+  console.log(new_description.querySelector("select[name='pause_at_start_time'] option[selected='selected']").innerHTML);
   new_description.addEventListener("ajax:success", function (e) {
-    const desc_audio_html = `
+    const desc_audio_html = `<tr>
     <td>${new_description.querySelector("input[name='time']").value}</td>
+    <td>${e.detail[0].inline_extended}</td>
     <td>
       <audio controls>
         <source src="${e.detail[0].url}" type="audio/mpeg">
@@ -108,7 +112,7 @@ const add_description_form = function(editable={}) {
         <%= form.hidden_field :desc_id %>
         <%= form.submit "edit" %>
       <% end %>
-    </td>`
+    </td></tr>`
     
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
@@ -152,8 +156,9 @@ const add_record_description_form = function() {
     this.parentNode.remove();
   });
   new_description.addEventListener("ajax:success", function (e) {
-    const desc_audio_html = `
+    const desc_audio_html = `<tr>
     <td>${new_description.querySelector("input[name='time']").value}</td>
+    <td>${e.detail[0].inline_extended}</td>
     <td>
       <audio controls>
         <source src="${e.detail[0].url}" type="audio/mpeg">
@@ -165,7 +170,7 @@ const add_record_description_form = function() {
         <%= form.hidden_field :desc_id %>
         <%= form.submit "delete" %>
       <% end %>
-    </td>`
+    </td></tr>`
     
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;

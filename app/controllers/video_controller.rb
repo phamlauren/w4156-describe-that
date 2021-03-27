@@ -94,8 +94,8 @@ class VideoController < ApplicationController
   end
 
   def describe
-    user = User.find_or_create_by(auth0_id: "drowssap")
-    #user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    #user = User.find_or_create_by(auth0_id: "drowssap")
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # create or load the track for this video and this user
     # by default, generated is true and published is false, we need to modify it later when user clicks buttons
     @track = DescriptionTrack.create_with(published: false, is_generated: true).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
@@ -107,7 +107,7 @@ class VideoController < ApplicationController
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       @voices = Voice.all.map { |v| [v.common_name, v.id] }
-      @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated'} }
+      @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
     end
     if request.post?
       redirect_to video_path(params[:id]) if params[:id] == nil
