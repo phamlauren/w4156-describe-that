@@ -29,11 +29,11 @@ Voice.create(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider
 voice = Voice.create(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
 
 # YouTube videos
-v1 = Video.create(yt_video_id: "Rk1MYMPDx3s")
-v2 = Video.create(yt_video_id: "Jn09UdSb3aA")
-v3 = Video.create(yt_video_id: "Ct6BUPvE2sM")
-v4 = Video.create(yt_video_id: "l1heD4T8Yco")
-v5 = Video.create(yt_video_id: "E-6xk4W6N20")
+v1 = Video.create(yt_video_id: "Rk1MYMPDx3s") # Saxophone
+v2 = Video.create(yt_video_id: "Jn09UdSb3aA") # The Best of Chopin
+v3 = Video.create(yt_video_id: "Ct6BUPvE2sM") # PIKOTARO - PPAP
+v4 = Video.create(yt_video_id: "l1heD4T8Yco") # hammie boye
+v5 = Video.create(yt_video_id: "E-6xk4W6N20") # Fan.tasia
 
 # User
 vishnu = User.create(username: "vishnu.nair", auth0_id: "abcde")
@@ -54,6 +54,11 @@ d2_1 = Description.create(desc_track_id: d2.id, start_time_sec: 23, pause_at_sta
 d3_1 = Description.create(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say it five times fast pen pineapple apple pen pen pineapple apple pen", voice_id: voice.id, voice_speed: 1.1)
 d4_1 = Description.create(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "hamtaro is that u uwu", voice_id: voice.id, voice_speed: 1.1)
 d5_1 = Description.create(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "#90sKidsRemember og Disney", voice_id: voice.id, voice_speed: 1.1)
+
+# Description Track Comments
+# For some reason was having trouble finding d1, so added optional: true on FK in model
+c1 = DescriptionTrackComment.create!(desc_track_id: d1.id, comment_author_id: lauren.id, comment_text: 'true story: in middle school, I wanted to learn the saxophone but everyone told me it was a boy\'s instrument so I didn\'t and I regret it to this day.')
+c2 = DescriptionTrackComment.create!(desc_track_id: d1.id, comment_author_id: sheron.id, comment_text: 'very sad story indeed', parent_comment_id: c1.id)
 
 # Video requests
 r1 = VideoRequest.create(video_id: v1.id, requested_lang: 'en', requester_id: lauren.id)
