@@ -1,8 +1,8 @@
 class DescriptionTrack < ApplicationRecord
   belongs_to :video
-  belongs_to :author, class_name: "User", foreign_key: "track_author_id",  optional: true # optional: true is temporary for cucumber
+  belongs_to :author, class_name: "User", foreign_key: "track_author_id"#  optional: true # optional: true is temporary for cucumber
                                                                                           # remove for deploy and prod
-  has_many :descriptions
+  has_many :descriptions, class_name: "Description", foreign_key: 'desc_track_id'
   has_many :votes, class_name: 'DescriptionTrackVote', foreign_key: "desc_track_id"
   has_many :comments, class_name: 'DescriptionTrackComment', foreign_key: "desc_track_id"
 
