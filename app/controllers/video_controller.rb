@@ -1,5 +1,7 @@
 require 'http'
 require 'json'
+require 'ostruct'
+
 class VideoController < ApplicationController
 
   # All of the video records that have a published DescriptionTrack
@@ -205,11 +207,29 @@ class VideoController < ApplicationController
   end
 
   def build_lang_list
-    all_langs = LanguageList::COMMON_LANGUAGES.collect { |l_info| [l_info.name, l_info.iso_639_1] }
-    all_langs.insert(0, ['---', '---'])
-    this_index = all_langs.index { |l_info| l_info[0] == "English" }
+    all_langs = LanguageList::COMMON_LANGUAGES.collect { |l_info|
+      this_lang = OpenStruct.new
+      this_lang.name = l_info.name
+      this_lang.code = l_info.iso_639_1
+      this_lang
+    }
+
+    all_langs = all_langs.sort_by { |struct| struct.name }
+
+    skip_lang = OpenStruct.new
+    skip_lang.name = '---'
+    skip_lang.code = '---'
+    all_langs.insert(0, skip_lang)
+
+    this_index = all_langs.index { |l_info| l_info.name == "English" }
     all_langs.insert(0, all_langs.delete_at(this_index))
-    all_langs
+
+    arr_langs = []
+    all_langs.each do |l|
+      arr_langs.append([l.name, l.code])
+    end
+
+    arr_langs
   end
 end
   
