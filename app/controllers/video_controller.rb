@@ -156,5 +156,12 @@ class VideoController < ApplicationController
     return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
   end
 
+  def build_lang_list
+    all_langs = LanguageList::COMMON_LANGUAGES.collect { |l_info| [l_info.name, l_info.iso_639_1] }
+    all_langs.insert(0, ['---', '---'])
+    this_index = all_langs.index { |l_info| l_info[0] == "English" }
+    all_langs.insert(0, all_langs.delete_at(this_index))
+    all_langs
+  end
 end
   
