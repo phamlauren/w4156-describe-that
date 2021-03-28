@@ -25,7 +25,7 @@
       <td><%= LanguageList::LanguageInfo.find(dtrack.lang).name %></td>
       <td><%= dtrack.published ? "Yes" : "No" %></td>
       <td>
-        <%= link_to "Watch!", "/play/#{params[:id]}/track/#{dtrack["id"]}", :class => "btn btn-primary #{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>
+        <%= link_to "Watch!", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "btn btn-primary #{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>
         <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.user.username %>
           <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
           <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>
