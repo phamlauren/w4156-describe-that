@@ -121,7 +121,6 @@ CREATE TABLE public.description_tracks (
     video_id bigint NOT NULL,
     track_author_id bigint NOT NULL,
     lang character(2) DEFAULT 'en'::bpchar NOT NULL,
-    is_generated boolean NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     published boolean NOT NULL
@@ -764,6 +763,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318011705'),
 ('20210318012725'),
 ('20210321234900'),
-('20210324201847');
+('20210324201847'),
+('20210327002417');
 
 

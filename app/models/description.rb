@@ -54,16 +54,17 @@ class Description < ApplicationRecord
     false unless upload_succeeded
 
     self.audio_file_loc = name_of_file
+    self.save
     true
   end
 
   def get_download_url_for_audio_file
     nil if audio_file_loc.nil?
-    S3FileHelper.get_presigned_dl_url_for_file(file_name: audio_file_loc, validity_sec: 1200)
+    S3FileHelper.get_presigned_dl_url_for_file(audio_file_loc, 1200)
   end
 
   def delete_file_from_s3
     return if audio_file_loc.nil? or audio_file_loc.empty?
-    S3FileHelper.delete_file(name_of_file: audio_file_loc)
+    S3FileHelper.delete_file(audio_file_loc)
   end
 end

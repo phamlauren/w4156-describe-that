@@ -1,8 +1,8 @@
 <h2 class="text-center page-title"><%=@yt_info["title"]%></h2>
 <div id="player"></div>
 <p><% @descriptions.each do |desc| %><%= desc.desc_text %>&nbsp<% end %></p>
-
-
+<h3>Video Info</h3>
+<%= @yt_info["description"].gsub(/\n/, '<br/>').html_safe %>
 <script>
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";

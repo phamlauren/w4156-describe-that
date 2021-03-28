@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   post '/video/:id/request', to: 'video#request_video'
   post '/video/:id/comment', to: 'video#comment'
 
+  # Description
+  post '/description/new_generated', to: 'description#new_generated', as: 'new_generated'
+  post '/description/new_recorded', to: 'description#new_recorded', as: 'new_recorded'
+  post '/description/edit_generated', to: 'description#edit_generated', as: 'edit_generated'
+  post '/description/delete_recorded', to: 'description#delete_recorded', as: 'delete_recorded'
+
   # Video request
   get '/video_requests', to: 'video_request#index'
   get '/video_requests/:id', to: 'video_request#upvote_request'
