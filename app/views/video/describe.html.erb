@@ -1,4 +1,8 @@
-<h1>Describe video for <%=@yt_info["title"]%></h1>
+<h1>Describe video: <%=@yt_info["title"]%></h1>
+<p><strong>Track ID: <%=@track.id%> | Author: <%= @track.user.username %></strong></p>
+
+<br>
+
 <div id="player"></div>
 <button type="button" id="add-description-button">Add one new generated description at current time!</button>
 <button type="button" id="record-description-button">Add one new recorded description at current time!</button>

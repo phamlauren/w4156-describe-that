@@ -1,4 +1,8 @@
 <h1>Watch: <%=@yt_info["title"]%></h1>
+<p><strong>Track ID: <%=@track.id%> | Author: <%= @track.user.username %></strong></p>
+
+<br>
+
 <div id="player"></div>
 
 <audio controls style="display: none" id="description-player" onEnded="onDescriptionEnd()">
