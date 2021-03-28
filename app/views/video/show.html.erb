@@ -19,7 +19,7 @@
           <%= comment["comment_text"] %>
         </td>
         <td>
-          <%= comment["comment_auth_id"] %>
+          <%= comment.comment_author.username %>
         </td>
       </tr>
     <% end %>
