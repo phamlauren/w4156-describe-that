@@ -24,8 +24,8 @@
             width: "640",
             videoId: vid,
             events: {
-                'onReady': onPlayerIsReady
-                // 'onStateChange': onPlayerStateChange
+                'onReady': onPlayerIsReady,
+                'onStateChange': onPlayerStateChange
             }
         });
     }
@@ -39,6 +39,7 @@
     var timeMonitoringIntervalID = null;
 
     let lastVolume = 100;
+    let isPlayingDescription = false;
 
     let onPlayerIsReady = (event) => {
         timeMonitoringIntervalID = setInterval(monitorTime, 100);
@@ -66,22 +67,17 @@
         setTimeout(checkPlayerTime, interval); /// initial call delayed
     }
 
-    // let onPlayerStateChange = (event) => {
-    //     if (current_index >= num_descriptions) {
-    //         if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
-    //         return;
-    //     }
-    //
-    //     // TODO: Allow restarting the video.
-    //
-    //     if (event.data == YT.PlayerState.PLAYING && current_index < num_descriptions) {
-    //
-    //     }
-    //
-    //     if (event.data == YT.PlayerState.PLAYING) {
-    //         setTimeout(stopVideo, 6000);
-    //     }
-    // }
+    let onPlayerStateChange = (event) => {
+        if (isPlayingDescription) {
+            if (event.data == YT.PlayerState.PLAYING && description_data[current_index]["inline_extended"] === "extended") {
+                player.pauseVideo();
+            }
+
+            if (event.data == YT.PlayerState.PAUSED && description_data[current_index]["inline_extended"] === "inline") {
+                player.playVideo();
+            }
+        }
+    }
 
     let monitorTime = () => {
         if (current_index >= num_descriptions) return;
@@ -91,6 +87,7 @@
 
         if (curr_time > current_description["start_time_sec"]) {
             if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
+            isPlayingDescription = true;
             triggerDescription();
         }
     }
@@ -145,6 +142,7 @@
             player.setVolume(lastVolume);
         }
 
+        isPlayingDescription = false;
         timeMonitoringIntervalID = setInterval(monitorTime, 100);
     }
 
