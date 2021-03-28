@@ -1,9 +1,9 @@
 require 'securerandom'
 
 class Description < ApplicationRecord
-  belongs_to :description_track, optional: true # optional: true is temporary for cucumber
-                                                # remove for deploy and prod
-  belongs_to :voice, optional: true
+  belongs_to :description_track, foreign_key: 'desc_track_id'#, optional: true # optional: true is temporary for cucumber
+                                                                              # remove for deploy and prod
+  belongs_to :voice, class_name: "Voice", foreign_key: "voice_id", optional: true
   enum desc_type: { recorded: "recorded", generated: "generated" }
 
   # add validation to generated descriptions

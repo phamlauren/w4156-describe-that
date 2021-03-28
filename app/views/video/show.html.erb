@@ -1,6 +1,47 @@
 <h2 class="text-center page-title"><%=@yt_info["title"]%></h2>
 <div id="player"></div>
-<p><% @descriptions.each do |desc| %><%= desc.desc_text %>&nbsp<% end %></p>
+
+<br>
+
+<div><p><%= @all_tracks.size %> description track(s) found!</p></div>
+
+<table id="all-description-tracks">
+  <tr>
+    <th>ID</th>
+    <th>Author</th>
+    <th>Lang</th>
+    <th>Published?</th>
+    <th>Link</th>
+  </tr>
+  <% @all_tracks.each do |dtrack| %>
+    <tr>
+      <td><%= dtrack.id %></td>
+      <td><%= dtrack.user.username %></td>
+      <td><%= LanguageList::LanguageInfo.find(dtrack.lang).name %></td>
+      <td><%= dtrack.published ? "Yes" : "No" %></td>
+      <td>
+        <%= link_to "Watch!", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "btn btn-primary #{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>
+        <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.user.username %>
+          <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
+          <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<h3>Create new description track</h3>
+
+<%= form_tag "/video/#{@video.id}/describe", :method => :get do %>
+  <%= csrf_meta_tags %>
+  <%= select_tag :lang, raw(@langs) %>
+  <%= submit_tag 'Create new track!', :class => 'btn btn-primary' %>
+<% end %>
+
+<br>
+
 <h3>Video Info</h3>
 <%= @yt_info["description"].gsub(/\n/, '<br/>').html_safe %>
 <h3>Comments</h3>
@@ -19,7 +60,7 @@
           <%= comment["comment_text"] %>
         </td>
         <td>
-          <%= comment["comment_auth_id"] %>
+          <%= comment.comment_author.username %>
         </td>
       </tr>
     <% end %>
