@@ -69,7 +69,7 @@ class VideoController < ApplicationController
     else
       @all_tracks = DescriptionTrack.where(video_id: @video.id)
       @yt_info = @video.video_info
-      @langs = build_lang_list
+      @langs = build_lang_list_as_html
       render "request_video" if @all_tracks.empty?
     end
   end
@@ -106,13 +106,13 @@ class VideoController < ApplicationController
     # by default, published is false, we need to modify it later when user clicks buttons
     # if a description track was not specified...
     if params[:dtrack_id].nil?
-      @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+      @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id, lang: params[:lang])
       redirect_to "/video/#{params[:id]}/describe/#{@track.id}"
     else
       # try to look for the specified track
       this_track = DescriptionTrack.where(id: params[:dtrack_id], video_id: params[:id]).first
       if this_track.nil?
-        @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+        @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id, lang: params[:lang])
         redirect_to "/video/#{params[:id]}/describe/#{@track.id}"
       else
         @track = this_track
@@ -126,7 +126,6 @@ class VideoController < ApplicationController
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       @voices = Voice.all.map { |v| [v.common_name, v.id] }
-      @langs = build_lang_list
       @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
     end
     if request.post?
@@ -211,11 +210,13 @@ class VideoController < ApplicationController
     return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
   end
 
-  def build_lang_list
+  # language code helpers
+  def build_lang_struct_list
     all_langs = LanguageList::COMMON_LANGUAGES.collect { |l_info|
       this_lang = OpenStruct.new
       this_lang.name = l_info.name
       this_lang.code = l_info.iso_639_1
+      this_lang.enabled = true
       this_lang
     }
 
@@ -224,17 +225,33 @@ class VideoController < ApplicationController
     skip_lang = OpenStruct.new
     skip_lang.name = '---'
     skip_lang.code = '---'
+    skip_lang.enabled = false
     all_langs.insert(0, skip_lang)
 
     this_index = all_langs.index { |l_info| l_info.name == "English" }
     all_langs.insert(0, all_langs.delete_at(this_index))
 
+    all_langs
+  end
+
+  def build_lang_list_as_arr
     arr_langs = []
-    all_langs.each do |l|
+    build_lang_struct_list.each do |l|
       arr_langs.append([l.name, l.code])
     end
 
     arr_langs
+  end
+
+  def build_lang_list_as_html
+    list = build_lang_struct_list
+    resulting_html = ""
+
+    list.each do |lstr|
+      resulting_html += "<option value=\"#{lstr.code}\" #{"disabled" unless lstr.enabled}>#{lstr.name}</option>"
+    end
+
+    resulting_html
   end
 end
   

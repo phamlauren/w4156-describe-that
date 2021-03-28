@@ -5,11 +5,6 @@
 
 <div><p><%= @all_tracks.size %> description track(s) found!</p></div>
 
-<%= select 'target', 'lang', @langs, { disabled: '---' } %>
-<%= button_to 'Create new track!', "/video/#{@video.id}/describe", :class => 'btn btn-primary', :method => :get, data: { turbolinks: 'false' } %>
-
-<br>
-
 <table id="all-description-tracks">
   <tr>
     <th>ID</th>
@@ -34,6 +29,16 @@
     </tr>
   <% end %>
 </table>
+
+<br>
+
+<h3>Create new description track</h3>
+
+<%= form_tag "/video/#{@video.id}/describe", :method => :get do %>
+  <%= csrf_meta_tags %>
+  <%= select_tag :lang, raw(@langs) %>
+  <%= submit_tag 'Create new track!', :class => 'btn btn-primary' %>
+<% end %>
 
 <br>
 
