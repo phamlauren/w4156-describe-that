@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'video/:id/describe', to: 'video#describe'
   post 'video/:id/describe', to: 'video#describe'
   post '/video/:id/request', to: 'video#request_video'
+  post '/video/:id/comment', to: 'video#comment'
 
   # Video request
   get '/video_requests', to: 'video_request#index'
