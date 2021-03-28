@@ -40,35 +40,16 @@
 
     let current_index = 0;
     let num_descriptions = description_data.length;
-    var timeMonitoringIntervalID = null;
+    let timeMonitoringIntervalID = null;
 
     let lastVolume = 100;
     let isPlayingDescription = false;
 
+    // seek tracking
+    let lastTime = -1;
+
     let onPlayerIsReady = (event) => {
         timeMonitoringIntervalID = setInterval(monitorTime, 100);
-
-        /// set up seek tracking
-        var lastTime = -1;
-        var interval = 1000;
-
-        var checkPlayerTime = function () {
-            if (lastTime != -1) {
-                if(player.getPlayerState() == YT.PlayerState.PLAYING) {
-                    var t = player.getCurrentTime();
-
-                    /// expecting 1 second interval , with 500 ms margin
-                    if (Math.abs(t - lastTime - 1) > 0.5) {
-                        // there was a seek occuring
-                        console.log("seek!");
-                        onSeek();
-                    }
-                }
-            }
-            lastTime = player.getCurrentTime();
-            setTimeout(checkPlayerTime, interval); /// repeat function call in 1 second
-        }
-        setTimeout(checkPlayerTime, interval); /// initial call delayed
     }
 
     let onPlayerStateChange = (event) => {
@@ -84,27 +65,38 @@
     }
 
     let monitorTime = () => {
+        let t = player.getCurrentTime();
+
+        // check for a seek
+        if (lastTime != -1) {
+            // a difference of over 500 ms counts as a seek
+            if (Math.abs(t - lastTime) > 0.5) {
+                // a seek occurred
+                console.log("seek!");
+                onSeek(t);
+            }
+        }
+        lastTime = t;
+
         if (current_index >= num_descriptions) return;
-
         let current_description = description_data[current_index];
-        let curr_time = player.getCurrentTime();
 
-        if (curr_time > current_description["start_time_sec"]) {
+        if (lastTime > current_description["start_time_sec"]) {
             if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
             isPlayingDescription = true;
             triggerDescription();
         }
     }
 
-    let onSeek = () => {
-        let current_time = player.getCurrentTime();
-        for (var i = 0; i < description_data.length; i++) {
+    let onSeek = (current_time) => {
+        for (let i = 0; i < description_data.length; i++) {
             let this_description = description_data[i];
             if (this_description["start_time_sec"] > current_time) {
                 current_index = i;
-                break;
+                return;
             }
         }
+        current_index = num_descriptions;
     }
 
     let triggerDescription = () => {
