@@ -7,7 +7,7 @@
   <%= link_to "Login to request AD for this video", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
   <%= link_to "Login to describe this video", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
 <% else %>
-  <h3>Request AD for this video</h3>
+  <h3>request AD for this video</h3>
   <%= form_tag "/video/#{@video.id}/request", :method => :post do %>
     <%= csrf_meta_tags %>
     <%= select_tag :lang, raw(@langs) %>
@@ -16,7 +16,7 @@
 
   <br>
 
-  <h3>Describe this video</h3>
+  <h3>describe this video</h3>
   <%= form_tag "/video/#{@video.id}/describe", :method => :get do %>
     <%= csrf_meta_tags %>
     <%= select_tag :lang, raw(@langs) %>
