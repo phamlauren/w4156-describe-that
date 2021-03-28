@@ -7,9 +7,9 @@ Team members:
 - vn2287, Vishnu Nair
 - xw2765, Sheron Wang
 
-[Link](https://describe-that.herokuapp.com) to iteration 1 on Heroku.
-[Link]() to iteration 2 on Heroku.
-[Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.
+[Link](https://describe-that.herokuapp.com) to iteration 1 on Heroku.  
+[Link]() to iteration 2 on Heroku.  
+[Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.  
 
 1. Overview
 2. User stories
@@ -22,9 +22,9 @@ Team members:
 
 > **DescribeThat!** is a community-driven platform where describers add audio descriptions (AD) to YouTube videos for visually impaired persons (VIPs).
 
-While other platforms providing AD for YouTube videos exist, **DescribeThat!** uniquely gives describers the option to write text descriptions in addition to the traditional mode of AD, which is audio recorded by describers. **DescribeThat!** uses Google Text-to-Speech to generate AD from text descriptions written by describers. The traditional option to record AD is also supported by **DescribeThat!**.
+While other platforms that provide users the ability to add AD for YouTube videos exist, **DescribeThat!** uniquely gives describers the option to write text descriptions in addition to the traditional mode of recording spoken AD. **DescribeThat!** uses Google Text-To-Speech to generate AD from text descriptions written by describers. The traditional option to record AD is also supported by **DescribeThat!**.
 
-> The option to write text descriptions to be generated into audio by Google TTS does not exclude potential describers due to lack of equipment, differing verbal ability, or plain preference.
+> The option to write text descriptions to be generated into audio by Google TTS is uniquely inclusive to potential describers who otherwise would not contribute AD due to lack of equipment, differing verbal ability, or plain preference.
 
 **DescribeThat!** depends on **Auth0**, **YouTube API**, **Google TTS API**, and **AWS SDK** to connect to an **S3 bucket** set up on Vishnu's personal server.
 
