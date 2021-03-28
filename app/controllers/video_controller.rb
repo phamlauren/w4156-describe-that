@@ -94,19 +94,19 @@ class VideoController < ApplicationController
     redirect_to '/video_requests'
   end
 
-  # Right now this supports only one desc_track per video
-  # Hence it is hardcoded to get the desc_track by the video id
   def comment
-    video = Video.find(params[:id])
-    description_track = DescriptionTrack.find_by(video_id: video.id)
+    # Get the description track and the user
+    description_track = DescriptionTrack.find(params[:dtrack_id])
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    DescriptionTrackComment.create!(video_id: video.id,
+    # Create the description track
+    DescriptionTrackComment.create!(
+      desc_track_id: description_track.id,
       comment_author_id: user.id,
       comment_text: params[:comment_text],
       parent_comment_id: params[:parent_comment_id]
     )
-    redirect_to "/video/#{params[:id]}"
-
+    # Redirect to the play page for the description track
+    redirect_to "/play/#{description_track.video_id}/track/#{description_track.id}"
   end
 
   def describe
