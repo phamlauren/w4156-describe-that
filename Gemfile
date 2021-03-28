@@ -32,6 +32,9 @@ gem 'aws-sdk-s3', '~> 1'
 # Use HTTParty for external requests
 gem "httparty"
 
+# For Heroku
+gem 'mimemagic', '~> 0.3.8'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
