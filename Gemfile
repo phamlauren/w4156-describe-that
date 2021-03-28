@@ -38,6 +38,8 @@ gem "language_list"
 # using Auth0 for authentication
 gem 'omniauth-auth0', '~> 2.5'
 gem 'omniauth-rails_csrf_protection', '~> 0.1' # prevents forged authentication requests
+# For Heroku
+gem 'mimemagic', '~> 0.3.8'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
