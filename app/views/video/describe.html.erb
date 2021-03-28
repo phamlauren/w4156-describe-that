@@ -117,6 +117,10 @@ const add_description_form = function(editable={}) {
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
     new_audios.querySelector("#desc_id").value = e.detail[0].id;
+    new_audios.querySelector(".edit-description").addEventListener("ajax:success", function (e) {
+      add_description_form(e.detail[0])
+      this.parentNode.parentNode.remove();
+    });
     this.remove();
   });
 };
