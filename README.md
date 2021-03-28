@@ -60,8 +60,8 @@ Items in the following lists will be implemented for proj-iter-2.
 ### Describe scenarios pending completion:
 1. ~Describers will be able to record audio descriptions directly on the platform.~ Implemented.
 2. ~Describers will be able to add multiple descriptions per track.~ Implemented.
-3. Describers will be able to adjust the voice and speed of TTS-generated descriptions.
-4. Describers will be able to dynamically adjust the position of descriptions within a description track.
+3. ~Describers will be able to adjust the voice and speed of TTS-generated descriptions.~ Implemented.
+4. ~Describers will be able to dynamically adjust the timing of descriptions within a description track.~ Implemented.
 5. ~Describers will be able to designate descriptions as _inline_ (plays alongside the video) or _extended_ (pauses the video while the description is playing).~ Implemented.
 
 ## 4. Running DescribeThat! locally
