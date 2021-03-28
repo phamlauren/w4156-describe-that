@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   # User
   get '/user', to: 'user#index'
+  get '/dashboard', to: 'user#dashboard'
 
   # Auth0
   get '/auth/auth0/callback' => 'auth0#callback'

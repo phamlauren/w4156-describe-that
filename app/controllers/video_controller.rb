@@ -52,7 +52,7 @@ class VideoController < ApplicationController
     end
   end
 
-  # Show the video and all of its descriptions
+  # Show the video and all of its description tracks
   def show
     # make GET request to YouTube API -> get yt_video_id
     # if there's only a params[:yt_url] then we need to get one video id
@@ -70,6 +70,7 @@ class VideoController < ApplicationController
       @all_tracks = DescriptionTrack.where(video_id: @video.id)
       @yt_info = @video.video_info
       @langs = build_lang_list_as_html
+      # @comments = DescriptionTrackComment.where(desc_track_id: desc_track_ids)
       render "request_video" if @all_tracks.empty?
     end
   end
@@ -92,6 +93,21 @@ class VideoController < ApplicationController
     end
 
     redirect_to '/video_requests'
+  end
+
+  def comment
+    # Get the description track and the user
+    description_track = DescriptionTrack.find(params[:dtrack_id])
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    # Create the description track
+    DescriptionTrackComment.create!(
+      desc_track_id: description_track.id,
+      comment_author_id: user.id,
+      comment_text: params[:comment_text],
+      parent_comment_id: params[:parent_comment_id]
+    )
+    # Redirect to the play page for the description track
+    redirect_to "/play/#{description_track.video_id}/track/#{description_track.id}"
   end
 
   def describe
