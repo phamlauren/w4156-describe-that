@@ -68,6 +68,7 @@ class VideoController < ApplicationController
       description_tracks = DescriptionTrack.where(video_id: @video.id)
       desc_track_ids = description_tracks.pluck(:id)
       @descriptions =  Description.where(desc_track_id: desc_track_ids)
+      @comments = DescriptionTrackComment.where(desc_track_id: desc_track_ids)
       @yt_info = @video.video_info
       render "request_video" if @descriptions.empty?
     end
