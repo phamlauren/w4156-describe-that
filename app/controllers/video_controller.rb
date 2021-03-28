@@ -95,19 +95,25 @@ class VideoController < ApplicationController
   end
 
   def describe
-    #user = User.find_or_create_by(auth0_id: "drowssap")
+    # get the logged in user
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    # create or load the track for this video and this user
-    # by default, generated is true and published is false, we need to modify it later when user clicks buttons
+    # TODO: redirect to login page if not logged in
 
+    # redirect home if a video ID is not specified
+    redirect_to root_path if params[:id].nil?
+
+    # create or load the track for this video and this user
+    # by default, published is false, we need to modify it later when user clicks buttons
     # if a description track was not specified...
     if params[:dtrack_id].nil?
       @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+      redirect_to "/video/#{params[:id]}/describe/#{@track.id}"
     else
       # try to look for the specified track
       this_track = DescriptionTrack.where(id: params[:dtrack_id], video_id: params[:id]).first
       if this_track.nil?
         @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+        redirect_to "/video/#{params[:id]}/describe/#{@track.id}"
       else
         @track = this_track
       end
@@ -117,7 +123,6 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
-      redirect_to "/video/#{params[:id]}/describe" if params[:id] == nil
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       @voices = Voice.all.map { |v| [v.common_name, v.id] }
