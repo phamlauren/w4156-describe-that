@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   post '/description/edit_generated', to: 'description#edit_generated', as: 'edit_generated'
   post '/description/delete_recorded', to: 'description#delete_recorded', as: 'delete_recorded'
 
+  # Description track
+  post '/description_track/:id/switch_published', to: 'description_track#switch_published'
+
   # Video request
   get '/video_requests', to: 'video_request#index'
   get '/video_requests/:id', to: 'video_request#upvote_request'

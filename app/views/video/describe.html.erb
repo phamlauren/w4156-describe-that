@@ -38,8 +38,14 @@
   <% end %>
 </table>
 
-
-<%= button_to "Publish Description Track", action: "describe" %>
+<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
+  <%= form.hidden_field :published, value: true %>
+  <%= form.submit "Publish Description Track", disabled: @track.published %>
+<% end %>
+<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
+  <%= form.hidden_field :published, value: false %>
+  <%= form.submit "Unpublish Description Track", disabled: !@track.published %>
+<% end %>
 
 
 <script>
@@ -57,6 +63,23 @@ function onYouTubeIframeAPIReady() {
     videoId: vid,
   });
 }
+
+// add listener for publish & unpublish
+const publish = document.querySelector(".publish-track");
+const publish_btn = publish.querySelector("input[name='commit']")
+const unpublish = document.querySelector(".unpublish-track");
+const unpublish_btn = unpublish.querySelector("input[name='commit']");
+console.log("<%=@track.published%>");
+publish.addEventListener("click", function(e) {
+  this.submit();
+  publish_btn.disabled = true;
+  unpublish_btn.disabled = false;
+});
+unpublish.addEventListener("click", function(e) {
+  this.submit();
+  publish_btn.disabled = false;
+  unpublish_btn.disabled = true;
+});
 
 // codes related to recorded audio below
 let log = console.log.bind(console),
@@ -252,7 +275,6 @@ function recorder_button_click_event(recorder_toggle_button, recording_div, comm
       recorder_toggle_button.textContent = "Recording...";
       commit_button.disabled = true;
     }
-    console.log(commit_button);
     recorder_toggle_button.isRecording = !recorder_toggle_button.isRecording;
   }
 }
