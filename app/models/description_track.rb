@@ -14,6 +14,10 @@ class DescriptionTrack < ApplicationRecord
     end
   end
 
+  def get_all_comments
+    DescriptionTrackComment.where(desc_track_id: id)
+  end
+
 
   def generate_descriptions times, descriptions
     times = times.split("\n")
