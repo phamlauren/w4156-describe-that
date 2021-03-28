@@ -12,6 +12,7 @@
 
 <table id="all-description-tracks">
   <tr>
+    <th>ID</th>
     <th>Author</th>
     <th>Lang</th>
     <th>Published?</th>
@@ -19,6 +20,7 @@
   </tr>
   <% @all_tracks.each do |dtrack| %>
     <tr>
+      <td><%= dtrack.id %></td>
       <td><%= dtrack.user.username %></td>
       <td><%= LanguageList::LanguageInfo.find(dtrack.lang).name %></td>
       <td><%= dtrack.published ? "Yes" : "No" %></td>
