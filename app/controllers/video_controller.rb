@@ -135,6 +135,9 @@ class VideoController < ApplicationController
     end
   end
 
+  def play
+  end
+
   private
   # parse the ytid from url without validation
   def get_ytid_from_url(url)
