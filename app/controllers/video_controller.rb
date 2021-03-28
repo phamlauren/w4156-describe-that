@@ -105,7 +105,7 @@ class VideoController < ApplicationController
       @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
     else
       # try to look for the specified track
-      this_track = DescriptionTrack.where(id: params[:dtrack_id]).first
+      this_track = DescriptionTrack.where(id: params[:dtrack_id], video_id: params[:id]).first
       if this_track.nil?
         @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
       else
@@ -180,7 +180,7 @@ class VideoController < ApplicationController
       @yt_info = video_info @video.yt_video_id
 
       begin
-        @track = DescriptionTrack.where(id: params[:dtrack_id]).first!
+        @track = DescriptionTrack.where(id: params[:dtrack_id], video_id: @video.id).first!
       rescue ActiveRecord::RecordNotFound
         redirect_to "/video/#{params[:id]}"
         return
