@@ -4,6 +4,13 @@
 <br>
 
 <div id="player"></div>
+
+<!-- Hidden description audio player. -->
+<audio controls style="display: none" id="description-player" onEnded="onDescriptionEnd()">
+  <source id="audio-source" src="#" type="audio/wav">
+  Your browser does not support the audio element.
+</audio>
+
 <button type="button" id="add-description-button">Add one new generated description at current time!</button>
 <button type="button" id="record-description-button">Add one new recorded description at current time!</button>
 <div id="description-forms"></div>
@@ -53,12 +60,18 @@ var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 const vid = "<%=@video.yt_video_id%>";
 
+let description_data = <%= @descriptions.to_json.html_safe %>
+
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "390",
     width: "640",
     videoId: vid,
+    events: {
+      'onReady': onPlayerIsReady,
+      'onStateChange': onPlayerStateChange
+    }
   });
 }
 
@@ -117,6 +130,9 @@ const add_description_form = function(editable={}) {
         <%= form.submit "edit" %>
       <% end %>
     </td></tr>`
+
+    description_data.push(e.detail[0]);
+    onSeek(player.getCurrentTime());
     
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
@@ -159,6 +175,7 @@ const add_record_description_form = function() {
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
     this.parentNode.remove();
   });
+
   new_description.addEventListener("ajax:success", function (e) {
     const desc_audio_html = `<tr>
     <td>${new_description.querySelector("input[name='time']").value}</td>
@@ -175,13 +192,17 @@ const add_record_description_form = function() {
         <%= form.submit "delete" %>
       <% end %>
     </td></tr>`
-    
+
+    description_data.push(e.detail[0]);
+    onSeek(player.getCurrentTime());
+
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
     new_audios.querySelector("#desc_id").value = e.detail[0].id;
     new_audios.querySelector(".delete-description").addEventListener("ajax:success", function (e) {
       this.parentNode.parentNode.remove();
     });
+
     this.remove();
   });
 };
@@ -293,5 +314,111 @@ let blobToBase64 = function (blob, callback) {
   };
   reader.readAsDataURL(blob);
 };
+
+//// PLAYING DESCRIPTIONS ////
+
+let description_player = id("description-player");
+let audio_source = id("audio-source");
+
+let current_index = 0;
+let timeMonitoringIntervalID = null;
+
+let lastVolume = 100;
+let isPlayingDescription = false;
+
+// seek tracking
+let lastTime = -1;
+
+let onPlayerIsReady = (event) => {
+    timeMonitoringIntervalID = setInterval(monitorTime, 100);
+}
+
+let onPlayerStateChange = (event) => {
+    if (isPlayingDescription) {
+        if (event.data == YT.PlayerState.PLAYING && description_data[current_index]["inline_extended"] === "extended") {
+            player.pauseVideo();
+        }
+
+        if (event.data == YT.PlayerState.PAUSED && description_data[current_index]["inline_extended"] === "inline") {
+            player.playVideo();
+        }
+    }
+}
+
+let monitorTime = () => {
+    let t = player.getCurrentTime();
+
+    // check for a seek
+    if (lastTime != -1) {
+        // a difference of over 500 ms counts as a seek
+        if (Math.abs(t - lastTime) > 0.5) {
+            // a seek occurred
+            console.log("seek!");
+            onSeek(t);
+        }
+    }
+    lastTime = t;
+
+    if (current_index >= description_data.length) return;
+    let current_description = description_data[current_index];
+
+    if (lastTime > current_description["start_time_sec"]) {
+        if (timeMonitoringIntervalID != null) clearInterval(timeMonitoringIntervalID);
+        isPlayingDescription = true;
+        triggerDescription();
+    }
+}
+
+let onSeek = (current_time) => {
+    for (let i = 0; i < description_data.length; i++) {
+        let this_description = description_data[i];
+        if (this_description["start_time_sec"] > current_time) {
+            current_index = i;
+            return;
+        }
+    }
+    current_index = description_data.length;
+}
+
+let triggerDescription = () => {
+    let current_description = description_data[current_index];
+    assignURLToAudioPlayer(current_description["url"]);
+
+    if (current_description["inline_extended"] === "extended") {
+        playExtendedDescription();
+    } else if (current_description["inline_extended"] === "inline") {
+        playInlineDescription();
+    }
+}
+
+let assignURLToAudioPlayer = (url) => {
+    audio_source.src = url;
+    description_player.load();
+}
+
+let playExtendedDescription = () => {
+    player.pauseVideo();
+    description_player.play();
+}
+
+let playInlineDescription = () => {
+    lastVolume = player.getVolume();
+    player.setVolume(lastVolume/10);
+    description_player.play();
+}
+
+let onDescriptionEnd = () => {
+    let description_that_just_ended = description_data[current_index];
+    current_index += 1;
+
+    if (description_that_just_ended["inline_extended"] === "extended") {
+        player.playVideo();
+    } else if (description_that_just_ended["inline_extended"] === "inline") {
+        player.setVolume(lastVolume);
+    }
+
+    isPlayingDescription = false;
+    timeMonitoringIntervalID = setInterval(monitorTime, 100);
+}
 
 </script>
