@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   get '/play/:id', to: 'video#play'
 
+  get 'video/:id/describe/:dtrack_id', to: 'video#describe'
+  get 'video/:id/delete/:dtrack_id', to: 'video#delete_description_track'
+
   # Description
   post '/description/new_generated', to: 'description#new_generated', as: 'new_generated'
   post '/description/new_recorded', to: 'description#new_recorded', as: 'new_recorded'

@@ -65,14 +65,10 @@ class VideoController < ApplicationController
       @video_id = params[:id]
       render "err"
     else
-      description_tracks = DescriptionTrack.where(video_id: @video.id)
-      desc_track_ids = description_tracks.pluck(:id)
-
-      @all_tracks = DescriptionTrack.where(id: params[:id])
-
-      @descriptions =  Description.where(desc_track_id: desc_track_ids)
+      @all_tracks = DescriptionTrack.where(video_id: @video.id)
       @yt_info = @video.video_info
-      render "request_video" if @descriptions.empty?
+      @langs = build_lang_list
+      render "request_video" if @all_tracks.empty?
     end
   end
 
@@ -101,7 +97,20 @@ class VideoController < ApplicationController
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # create or load the track for this video and this user
     # by default, generated is true and published is false, we need to modify it later when user clicks buttons
-    @track = DescriptionTrack.create_with(published: false).find_or_create_by!(video_id: params[:id], track_author_id: user.id)
+
+    # if a description track was not specified...
+    if params[:dtrack_id].nil?
+      @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+    else
+      # try to look for the specified track
+      this_track = DescriptionTrack.where(id: params[:dtrack_id]).first
+      if this_track.nil?
+        @track = DescriptionTrack.create(published: false, video_id: params[:id], track_author_id: user.id)
+      else
+        @track = this_track
+      end
+    end
+
     if request.get?
       # input: params[:id]
       # create only when there is **no** description track for the video
@@ -110,6 +119,7 @@ class VideoController < ApplicationController
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
       @voices = Voice.all.map { |v| [v.common_name, v.id] }
+      @langs = build_lang_list
       @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
     end
     if request.post?
@@ -120,6 +130,35 @@ class VideoController < ApplicationController
       @track.save
       redirect_to "/video/#{params[:id]}"
     end
+  end
+
+  def delete_description_track
+    # redirect to video page if not logged in
+    redirect_to "/video/#{params[:id]}" if session[:userinfo].nil?
+
+    this_user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    this_description_track = DescriptionTrack.find_by(id: params[:dtrack_id])
+
+    # redirect to video page if we can't find the requested user or description track
+    redirect_to "/video/#{params[:id]}" if this_description_track.nil? or this_user.nil?
+
+    dt_owner_id = this_description_track.track_author_id
+
+    # if this user is the owner of this description track...
+    if dt_owner_id == this_user.id
+      # delete each description's audio file from S3 and destroy the DB entry
+      all_descriptions_under_this_track = Description.where(desc_track_id: this_description_track.id)
+      all_descriptions_under_this_track.each do |d|
+        S3FileHelper.delete_file(d.audio_file_loc)
+        d.destroy
+      end
+
+      # then destroy the entry for this description track
+      this_description_track.destroy
+    end
+
+    # go back to the video page
+    redirect_to "/video/#{params[:id]}"
   end
 
   def play
