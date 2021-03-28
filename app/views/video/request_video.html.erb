@@ -1,13 +1,25 @@
 <h1><%=@yt_info["title"]%></h1>
-<h2>This video does not yet have audio descriptions.</h2>
+<p>This video does not yet have audio descriptions.</p>
+
+<br>
+
 <% if session[:userinfo].nil? %>
   <%= link_to "Login to request AD for this video", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
   <%= link_to "Login to describe this video", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
 <% else %>
-  <%= select 'target', 'lang', @langs, { disabled: '---' } %>
+  <h3>Request AD for this video</h3>
   <%= form_tag "/video/#{@video.id}/request", :method => :post do %>
-  <%= csrf_meta_tags %>
+    <%= csrf_meta_tags %>
+    <%= select_tag :lang, raw(@langs) %>
     <%= submit_tag 'Request AD for this video', :class => 'btn btn-primary' %>
   <% end %>
-  <%= button_to 'Describe this video', "/video/#{@video.id}/describe", :class => 'btn btn-primary', :method => :get, data: { turbolinks: 'false' } %>
+
+  <br>
+
+  <h3>Describe this video</h3>
+  <%= form_tag "/video/#{@video.id}/describe", :method => :get do %>
+    <%= csrf_meta_tags %>
+    <%= select_tag :lang, raw(@langs) %>
+    <%= submit_tag 'Describe this video', :class => 'btn btn-primary' %>
+  <% end %>
 <% end %>
