@@ -1,0 +1,43 @@
+<h1 class="page-title">My Dashboard</h1>
+
+<%= @user.username %>
+<%= @user.options %>
+
+<table class="table table-striped col-md-12" id="movies">
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td>
+          <%= request.video.video_info["title"] %>
+        </td>
+        <td>
+          <%= request.video.video_info["description"] %>
+        </td>
+      </tr>
+    <% end %>
+    <% @upvotes.each do |upvote| %>
+      <tr>
+        <td>
+          <%= upvote.video.video_info["title"] %>
+        </td>
+        <td>
+          <%= upvote.video.video_info["description"] %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% @comments.each do |comment| %>
+  <tr>
+    <td>
+      <%= comment.desc_track.video.video_info["title"] %>
+    </td>
+    <td>
+      <%= comment.desc_track.video.video_info["description"] %>
+    </td>
+    <td>
+      <%= comment.comment_text %>
+    </td>
+  </tr>
+<% end %>
