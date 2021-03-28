@@ -95,12 +95,22 @@ class VideoController < ApplicationController
   end
 
   def describe
+    # check if the user is logged in
+    if session[:userinfo].nil?
+      flash[:notice] = "Please log in first."
+      redirect_to root_path
+      return
+    end
+
     # get the logged in user
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    # TODO: redirect to login page if not logged in
 
     # redirect home if a video ID is not specified
-    redirect_to root_path if params[:id].nil?
+    if params[:id].nil?
+      flash[:notice] = "No video specified."
+      redirect_to root_path
+      return
+    end
 
     # create or load the track for this video and this user
     # by default, published is false, we need to modify it later when user clicks buttons
@@ -142,6 +152,12 @@ class VideoController < ApplicationController
     # redirect to video page if not logged in
     redirect_to "/video/#{params[:id]}" if session[:userinfo].nil?
 
+    if session[:userinfo].nil?
+      flash[:notice] = "Please log in first."
+      redirect_to "/video/#{params[:id]}"
+      return
+    end
+
     this_user = User.find_by(auth0_id: session[:userinfo]['sub'])
     this_description_track = DescriptionTrack.find_by(id: params[:dtrack_id])
 
@@ -149,6 +165,7 @@ class VideoController < ApplicationController
     redirect_to "/video/#{params[:id]}" if this_description_track.nil? or this_user.nil?
 
     dt_owner_id = this_description_track.track_author_id
+    this_track_id = this_description_track.id
 
     # if this user is the owner of this description track...
     if dt_owner_id == this_user.id
@@ -164,6 +181,7 @@ class VideoController < ApplicationController
     end
 
     # go back to the video page
+    flash[:notice] = "Successfully deleted track with ID #{this_track_id}."
     redirect_to "/video/#{params[:id]}"
   end
 
