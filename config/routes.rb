@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post '/video/:id/describe', to: 'video#describe'
   post '/video/:id/request', to: 'video#request_video'
 
-  get '/play/:id', to: 'video#play'
+  get '/play/:id/track/:dtrack_id', to: 'video#play'
 
   get '/video/:id/describe/:dtrack_id', to: 'video#describe'
   post '/video/:id/describe/:dtrack_id', to: 'video#describe'

@@ -166,15 +166,24 @@ class VideoController < ApplicationController
       # input: params[:id]
       # create only when there is **no** description track for the video
       # might change that later!
-      redirect_to "/video/#{params[:id]}" if params[:id] == nil
-      @video = Video.find(params[:id])
-      @yt_info = video_info @video.yt_video_id
-      @voices = Voice.all.map { |v| [v.common_name, v.id] }
+      redirect_to root_path if params[:id].nil? or params[:dtrack_id].nil?
+
       begin
-        @track = DescriptionTrack.where(id: params[:id]).first!
+        @video = Video.where(id: params[:id]).first!
+      rescue ActiveRecord::RecordNotFound
+        redirect_to root_path
+        return
+      end
+
+      @yt_info = video_info @video.yt_video_id
+
+      begin
+        @track = DescriptionTrack.where(id: params[:dtrack_id]).first!
       rescue ActiveRecord::RecordNotFound
         redirect_to "/video/#{params[:id]}"
+        return
       end
+
       @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
       render "play"
     end
