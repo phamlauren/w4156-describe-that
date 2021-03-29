@@ -9,24 +9,31 @@
 # All voices.
 
 # US voices.
-Voice.create!(common_name: "Voice US A", system_name: "en-US-Wavenet-A", provider: "google_tts")
-Voice.create!(common_name: "Voice US B", system_name: "en-US-Wavenet-B", provider: "google_tts")
-Voice.create!(common_name: "Voice US C", system_name: "en-US-Wavenet-C", provider: "google_tts")
-Voice.create!(common_name: "Voice US D", system_name: "en-US-Wavenet-D", provider: "google_tts")
-Voice.create!(common_name: "Voice US E", system_name: "en-US-Wavenet-E", provider: "google_tts")
-Voice.create!(common_name: "Voice US F", system_name: "en-US-Wavenet-F", provider: "google_tts")
-Voice.create!(common_name: "Voice US G", system_name: "en-US-Wavenet-G", provider: "google_tts")
-Voice.create!(common_name: "Voice US H", system_name: "en-US-Wavenet-H", provider: "google_tts")
-Voice.create!(common_name: "Voice US I", system_name: "en-US-Wavenet-I", provider: "google_tts")
-Voice.create!(common_name: "Voice US J", system_name: "en-US-Wavenet-J", provider: "google_tts")
+voice_us_a = Voice.create!(common_name: "Voice US A", system_name: "en-US-Wavenet-A", provider: "google_tts")
+voice_us_b = Voice.create!(common_name: "Voice US B", system_name: "en-US-Wavenet-B", provider: "google_tts")
+voice_us_c = Voice.create!(common_name: "Voice US C", system_name: "en-US-Wavenet-C", provider: "google_tts")
+voice_us_d = Voice.create!(common_name: "Voice US D", system_name: "en-US-Wavenet-D", provider: "google_tts")
+voice_us_e = Voice.create!(common_name: "Voice US E", system_name: "en-US-Wavenet-E", provider: "google_tts")
+voice_us_f = Voice.create!(common_name: "Voice US F", system_name: "en-US-Wavenet-F", provider: "google_tts")
+voice_us_g = Voice.create!(common_name: "Voice US G", system_name: "en-US-Wavenet-G", provider: "google_tts")
+voice_us_h = Voice.create!(common_name: "Voice US H", system_name: "en-US-Wavenet-H", provider: "google_tts")
+voice_us_i = Voice.create!(common_name: "Voice US I", system_name: "en-US-Wavenet-I", provider: "google_tts")
+voice_us_j = Voice.create!(common_name: "Voice US J", system_name: "en-US-Wavenet-J", provider: "google_tts")
 
 # GB voices.
-Voice.create!(common_name: "Voice GB A", system_name: "en-GB-Wavenet-A", provider: "google_tts")
-Voice.create!(common_name: "Voice GB B", system_name: "en-GB-Wavenet-B", provider: "google_tts")
-Voice.create!(common_name: "Voice GB C", system_name: "en-GB-Wavenet-C", provider: "google_tts")
-Voice.create!(common_name: "Voice GB D", system_name: "en-GB-Wavenet-D", provider: "google_tts")
-Voice.create!(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider: "google_tts")
-voice = Voice.create!(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
+voice_gb_a = Voice.create!(common_name: "Voice GB A", system_name: "en-GB-Wavenet-A", provider: "google_tts")
+voice_gb_b = Voice.create!(common_name: "Voice GB B", system_name: "en-GB-Wavenet-B", provider: "google_tts")
+voice_gb_c = Voice.create!(common_name: "Voice GB C", system_name: "en-GB-Wavenet-C", provider: "google_tts")
+voice_gb_d = Voice.create!(common_name: "Voice GB D", system_name: "en-GB-Wavenet-D", provider: "google_tts")
+voice_gb_e = Voice.create!(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider: "google_tts")
+voice_gb_f = Voice.create!(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
+
+# FR voices.
+voice_fr_a = Voice.create!(common_name: "Voice FR A", system_name: "fr-FR-Wavenet-A", provider: "google_tts")
+voice_fr_b = Voice.create!(common_name: "Voice FR B", system_name: "fr-FR-Wavenet-B", provider: "google_tts")
+voice_fr_c = Voice.create!(common_name: "Voice FR C", system_name: "fr-FR-Wavenet-C", provider: "google_tts")
+voice_fr_d = Voice.create!(common_name: "Voice FR D", system_name: "fr-FR-Wavenet-D", provider: "google_tts")
+voice_fr_e = Voice.create!(common_name: "Voice FR E", system_name: "fr-FR-Wavenet-E", provider: "google_tts")
 
 # YouTube videos
 v1 = Video.create!(yt_video_id: "Rk1MYMPDx3s") # Saxophone
@@ -48,12 +55,12 @@ d4 = DescriptionTrack.create!(video_id: v4.id, track_author_id: vishnu.id, publi
 d5 = DescriptionTrack.create!(video_id: v5.id, track_author_id: sheron.id, published: true)
 
 # Description
-d1_1 = Description.create!(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 1) walking around", voice_id: voice.id, voice_speed: 1.1)
-d1_2 = Description.create!(desc_track_id: d1.id, start_time_sec: 12, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 2) say hello", voice_id: voice.id, voice_speed: 1.1)
-d2_1 = Description.create!(desc_track_id: d2.id, start_time_sec: 23, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "is Waltz No. 8 in A-Flat Major, Op. 64, No.3 or fight me", voice_id: voice.id, voice_speed: 1.1)
-d3_1 = Description.create!(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say it five times fast pen pineapple apple pen pen pineapple apple pen", voice_id: voice.id, voice_speed: 1.1)
-d4_1 = Description.create!(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "hamtaro is that u uwu", voice_id: voice.id, voice_speed: 1.1)
-d5_1 = Description.create!(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "#90sKidsRemember og Disney", voice_id: voice.id, voice_speed: 1.1)
+d1_1 = Description.create!(desc_track_id: d1.id, start_time_sec: 1, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 1) walking around", voice_id: voice_gb_f.id, voice_speed: 1.1)
+d1_2 = Description.create!(desc_track_id: d1.id, start_time_sec: 12, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "(desc 2) say hello", voice_id: voice_gb_f.id, voice_speed: 1.1)
+d2_1 = Description.create!(desc_track_id: d2.id, start_time_sec: 23, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "is Waltz No. 8 in A-Flat Major, Op. 64, No.3 or fight me", voice_id: voice_gb_f.id, voice_speed: 1.1)
+d3_1 = Description.create!(desc_track_id: d3.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "say it five times fast pen pineapple apple pen pen pineapple apple pen", voice_id: voice_gb_f.id, voice_speed: 1.1)
+d4_1 = Description.create!(desc_track_id: d4.id, start_time_sec: 123, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "hamtaro is that u uwu", voice_id: voice_gb_f.id, voice_speed: 1.1)
+d5_1 = Description.create!(desc_track_id: d5.id, start_time_sec: 13, pause_at_start_time: false, desc_type: 'generated', audio_file_loc: "", desc_text: "#90sKidsRemember og Disney", voice_id: voice_gb_f.id, voice_speed: 1.1)
 
 # Description Track Comments
 # For some reason was having trouble finding d1, so added optional: true on FK in model
