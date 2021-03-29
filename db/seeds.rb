@@ -44,33 +44,33 @@ v2 = Video.create!(yt_video_id: "Jn09UdSb3aA") # The Best of Chopin
 user1 = User.create!(username: "test.user.1", auth0_id: "abcde")
 user2 = User.create!(username: "test.user.2", auth0_id: "edcba")
 
-# Description Track
-d1 = DescriptionTrack.create!(video_id: v1.id, track_author_id: user1.id, published: true, lang: "en")
-d2 = DescriptionTrack.create!(video_id: v1.id, track_author_id: user2.id, published: true, lang: "fr")
-
-# Description
-
-# # load voices list from seed DB
-# voice_info_file = File.read(File.join('./seed_files', 'voices.json'))
-# voice_info_hash = JSON.parse(voice_info_file)
-
+# Descriptions and tracks
+# info blocks for pre-seeded descriptions
 seed_desc_roots = [
   {
     :root => './db/seed_files/preseed1_frozen_eng',
     :target_prefix => 'ps1_',
-    :target_track => d1
+    :author => user1,
+    :video => v1,
+    :lang => "en"
   },
   {
     :root => './db/seed_files/preseed2_frozen_fra',
     :target_prefix => 'ps2_',
-    :target_track => d2
+    :author => user2,
+    :video => v1,
+    :lang => "fr"
   }
 ]
 
+# for each block
 seed_desc_roots.each do |info|
-  # prepare D1 descriptions -- "Frozen" trailer English descriptions
   root = info[:root]
   loc_prefix = info[:target_prefix]
+
+  # create track
+  dt = DescriptionTrack.create!(video_id: info[:video].id, track_author_id: info[:author].id, published: true, lang: info[:lang])
+  info[:created_track] = dt
 
   d1_info_file = File.read(File.join(root, 'info.json'))
   d1_info_hash = JSON.parse(d1_info_file)
@@ -81,7 +81,7 @@ seed_desc_roots.each do |info|
     S3FileHelper.upload_file(target_file_name, this_audio_file)
 
     Description.create!(
-      desc_track_id: info[:target_track].id,
+      desc_track_id: dt.id,
       start_time_sec: desc["start_time_sec"],
       pause_at_start_time: desc["pause_at_start_time"],
       desc_type: desc["desc_type"],
@@ -94,9 +94,13 @@ seed_desc_roots.each do |info|
 end
 
 # Description Track Comments
-# For some reason was having trouble finding d1, so added optional: true on FK in model
-c1 = DescriptionTrackComment.create!(desc_track_id: d1.id, comment_author_id: user1.id, comment_text: 'true story: in middle school, I wanted to learn the saxophone but everyone told me it was a boy\'s instrument so I didn\'t and I regret it to this day.')
-c2 = DescriptionTrackComment.create!(desc_track_id: d1.id, comment_author_id: user2.id, comment_text: 'very sad story indeed', parent_comment_id: c1.id)
+c1 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[0][:created_track].id,
+                                     comment_author_id: user1.id,
+                                     comment_text: 'true story: in middle school, I wanted to learn the saxophone but everyone told me it was a boy\'s instrument so I didn\'t and I regret it to this day.')
+c2 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[1][:created_track].id,
+                                     comment_author_id: user2.id,
+                                     comment_text: 'very sad story indeed',
+                                     parent_comment_id: c1.id)
 
 # Video requests
 r1 = VideoRequest.create!(video_id: v2.id, requested_lang: 'en', requester_id: user2.id)
