@@ -77,11 +77,11 @@ class VideoController < ApplicationController
 
   def request_video
     video = Video.find(params[:id])
-    video_request = VideoRequest.find_by(video_id: video.id)
+    video_request = VideoRequest.find_by(video_id: video.id, requested_lang: params[:lang])
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    # if a request does not exist, then make one
+    # if a request does not exist for this video and language, then make one
     if !video_request
-      VideoRequest.create!(video_id: video.id, requested_lang:'en', requester_id: user.id)
+      VideoRequest.create!(video_id: video.id, requested_lang: params[:lang], requester_id: user.id)
       flash[:notice] = "Your request has been saved!"
     # if a request exists and the user has not already upvoted, then upvote
     elsif !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
