@@ -5,11 +5,13 @@ Feature: describe videos
   First of all I want to find videos via a valid YouTube URL
   Then I want to add AD to them
 
-Background: existing YouTube videos
+Background: existing user
 
-    Given I can access the following YouTube videos:
-        | Title       | yt_video_id |
-        | Transitions | 40z9n1SgozU |
+    Given the following users exist:
+    | id | username    | auth0_id | options                |
+    | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+    | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+    | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
  
 Scenario: enter a valid URL to describe
 
@@ -45,7 +47,7 @@ Scenario: enter an invalid URL to describe
 
     Then I should see "Sorry, we couldn't find a video with that YouTube link."
 
-Scenario: add one description for the video I found
+Scenario: add one generated description for the video I found
     
     When I am on the home page
 
@@ -55,20 +57,30 @@ Scenario: add one description for the video I found
 
     Then I should be on the show page for "40z9n1SgozU"
 
+    And I should see "This video does not yet have audio descriptions."
+
     And I press "Describe this video"
 
-    And I should be on the description page for "40z9n1SgozU"
+    And I should see "Describe video: Transitions"
 
-    And I fill in "time" with "1\n157"
+    And I press "Add one new generated description at current time!"
 
-    And I fill in "description" with "people walking around\nwhatever"
+    Then I should see "time (sec):"
 
-    Then I press "Submit"
+    And I should see "Voice speed:"
+    
+    And I fill in "description" with "people walking around"
 
-    Then I am on the show page for "40z9n1SgozU"
+    And I fill in "time" with "3.1"
 
-    And I should see "Transitions"
+    And I fill in "voice_speed" with "1.5"
 
-    And I should see "people walking around"
+    And I select "extended" from "pause_at_start_time"
 
-    And I should see "whatever"
+    And I select "Voice US C" from "voice_id"
+
+    Then I press "Add"
+
+    Then should contain "3.1"
+
+    Then I should see "extended"
