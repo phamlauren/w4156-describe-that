@@ -154,14 +154,14 @@ const add_description_form = function(editable={}) {
       <% end %>
     </td></tr>`
 
-    description_data.push(e.detail[0]);
-    onSeek(player.getCurrentTime());
+    pushDataToDescriptionArr(e.detail[0]);
     
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
     new_audios.querySelector("#desc_id").value = e.detail[0].id;
     new_audios.querySelector(".edit-description").addEventListener("ajax:success", function (e) {
       add_description_form(e.detail[0])
+      deleteDataFromDescriptionArr(e.detail[0]["id"]);
       this.parentNode.parentNode.remove();
     });
     this.remove();
@@ -220,14 +220,14 @@ const add_record_description_form = function() {
       <% end %>
     </td></tr>`
 
-    description_data.push(e.detail[0]);
-    onSeek(player.getCurrentTime());
+    pushDataToDescriptionArr(e.detail[0]);
 
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
     new_audios.querySelector("#desc_id").value = e.detail[0].id;
     new_audios.querySelector(".delete-description").addEventListener("ajax:success", function (e) {
-      this.parentNode.parentNode.remove();
+        deleteDataFromDescriptionArr(e.detail[0]["id"]);
+        this.parentNode.parentNode.remove();
     });
 
     this.remove();
@@ -251,16 +251,32 @@ window.addEventListener("load", () => {
   // add listeners for edit (generated audios)
   const edit_description_forms = document.getElementsByClassName("edit-description");
   Array.prototype.forEach.call(edit_description_forms, (f) => f.addEventListener("ajax:success", function (e) {
-    add_description_form(e.detail[0])
+    add_description_form(e.detail[0]);
+    deleteDataFromDescriptionArr(e.detail[0]["id"]);
     this.parentNode.parentNode.remove();
   }));
 
   // add listeners for delete (recorded audios)
   const delete_recorded_description = document.getElementsByClassName("delete-description");
   Array.prototype.forEach.call(delete_recorded_description, (f) => f.addEventListener("ajax:success", function (e) {
+    deleteDataFromDescriptionArr(e.detail[0]["id"]);
     this.parentNode.parentNode.remove();
   }));
 });
+
+let pushDataToDescriptionArr = (data) => {
+    description_data.push(data);
+    description_data.sort((d1, d2) => (d1["start_time_sec"] < d2["start_time_sec"]) ? -1 : 1);
+    onSeek(player.getCurrentTime());
+}
+
+let deleteDataFromDescriptionArr = (id_to_delete) => {
+    for (var i = description_data.length - 1; i >= 0; --i) {
+        if (description_data[i].id === id_to_delete) {
+            description_data.splice(i,1);
+        }
+    }
+}
 
 function recorder_button_click_event(recorder_toggle_button, recording_div, commit_button) {
   media = {

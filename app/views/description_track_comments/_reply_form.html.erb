@@ -1,0 +1,12 @@
+<div class="card ml-5">
+  <div class="card-body">
+    <%= form_with(url: '/video/comment') do |f| %>
+      <%= f.hidden_field :parent_comment_id %>
+      <div class="form-group">
+        <%= f.label 'Reply' %>
+        <%= f.text_area :body, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

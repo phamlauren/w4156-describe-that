@@ -1,9 +1,17 @@
 <h1 class="page-title">My Dashboard</h1>
 
+<h3>About Me</h3>
 <%= @user.username %>
 <%= @user.options %>
 
-<table class="table table-striped col-md-12" id="movies">
+<h3>My Requests</h3>
+<table class="table table-striped col-md-12" id="requests">
+  <thead>
+    <tr>
+      <th>Video title</th>
+      <th>Video info</th>
+    </tr>
+  </thead>
   <tbody>
     <% @requests.each do |request| %>
       <tr>
@@ -28,16 +36,28 @@
   </tbody>
 </table>
 
-<% @comments.each do |comment| %>
+<h3>My Comments</h3>
+<table class="table table-striped col-md-12" id="comments">
+  <thead>
+    <tr>
+      <th>Video title</th>
+      <th>Video info</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @comments.each do |comment| %>
   <tr>
     <td>
-      <%= comment.desc_track.video.video_info["title"] %>
+      <%= comment.description_track.video.video_info["title"] %>
     </td>
     <td>
-      <%= comment.desc_track.video.video_info["description"] %>
+      <%= comment.description_track.video.video_info["description"] %>
     </td>
     <td>
       <%= comment.comment_text %>
     </td>
   </tr>
+  </tbody>
+</table>
 <% end %>

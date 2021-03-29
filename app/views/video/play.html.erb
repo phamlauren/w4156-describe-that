@@ -1,5 +1,5 @@
 <h1>Watch: <%=@yt_info["title"]%></h1>
-<p><strong>Track ID: <%=@track.id%> | Author: <%= @track.user.username %></strong></p>
+<p><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
 
 <br>
 
@@ -9,6 +9,9 @@
   <source id="audio-source" src="#" type="audio/wav">
   Your browser does not support the audio element.
 </audio>
+
+<h3>Comments</h3>
+<%= render @track.comments %>
 
 <script>
     var tag = document.createElement("script");

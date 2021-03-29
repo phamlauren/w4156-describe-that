@@ -1,0 +1,128 @@
+[
+    {
+        "id": 1,
+        "common_name": "Voice US A",
+        "system_name": "en-US-Wavenet-A",
+        "provider": "google_tts"
+    },
+    {
+        "id": 2,
+        "common_name": "Voice US B",
+        "system_name": "en-US-Wavenet-B",
+        "provider": "google_tts"
+    },
+    {
+        "id": 3,
+        "common_name": "Voice US C",
+        "system_name": "en-US-Wavenet-C",
+        "provider": "google_tts"
+    },
+    {
+        "id": 4,
+        "common_name": "Voice US D",
+        "system_name": "en-US-Wavenet-D",
+        "provider": "google_tts"
+    },
+    {
+        "id": 5,
+        "common_name": "Voice US E",
+        "system_name": "en-US-Wavenet-E",
+        "provider": "google_tts"
+    },
+    {
+        "id": 6,
+        "common_name": "Voice US F",
+        "system_name": "en-US-Wavenet-F",
+        "provider": "google_tts"
+    },
+    {
+        "id": 7,
+        "common_name": "Voice US G",
+        "system_name": "en-US-Wavenet-G",
+        "provider": "google_tts"
+    },
+    {
+        "id": 8,
+        "common_name": "Voice US H",
+        "system_name": "en-US-Wavenet-H",
+        "provider": "google_tts"
+    },
+    {
+        "id": 9,
+        "common_name": "Voice US I",
+        "system_name": "en-US-Wavenet-I",
+        "provider": "google_tts"
+    },
+    {
+        "id": 10,
+        "common_name": "Voice US J",
+        "system_name": "en-US-Wavenet-J",
+        "provider": "google_tts"
+    },
+    {
+        "id": 11,
+        "common_name": "Voice GB A",
+        "system_name": "en-GB-Wavenet-A",
+        "provider": "google_tts"
+    },
+    {
+        "id": 12,
+        "common_name": "Voice GB B",
+        "system_name": "en-GB-Wavenet-B",
+        "provider": "google_tts"
+    },
+    {
+        "id": 13,
+        "common_name": "Voice GB C",
+        "system_name": "en-GB-Wavenet-C",
+        "provider": "google_tts"
+    },
+    {
+        "id": 14,
+        "common_name": "Voice GB D",
+        "system_name": "en-GB-Wavenet-D",
+        "provider": "google_tts"
+    },
+    {
+        "id": 15,
+        "common_name": "Voice GB E",
+        "system_name": "en-GB-Wavenet-E",
+        "provider": "google_tts"
+    },
+    {
+        "id": 16,
+        "common_name": "Voice GB F",
+        "system_name": "en-GB-Wavenet-F",
+        "provider": "google_tts"
+    },
+    {
+        "id": 17,
+        "common_name": "Voice FR A",
+        "system_name": "fr-FR-Wavenet-A",
+        "provider": "google_tts"
+    },
+    {
+        "id": 18,
+        "common_name": "Voice FR B",
+        "system_name": "fr-FR-Wavenet-B",
+        "provider": "google_tts"
+    },
+    {
+        "id": 19,
+        "common_name": "Voice FR C",
+        "system_name": "fr-FR-Wavenet-C",
+        "provider": "google_tts"
+    },
+    {
+        "id": 20,
+        "common_name": "Voice FR D",
+        "system_name": "fr-FR-Wavenet-D",
+        "provider": "google_tts"
+    },
+    {
+        "id": 21,
+        "common_name": "Voice FR E",
+        "system_name": "fr-FR-Wavenet-E",
+        "provider": "google_tts"
+    }
+]

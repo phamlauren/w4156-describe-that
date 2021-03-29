@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post '/video/:id/request', to: 'video#request_video'
 
   get '/video/:id/play/:dtrack_id', to: 'video#play'
+  get '/comment', to: 'description_track_comment#comment'
 
   get '/video/:id/describe/:dtrack_id', to: 'video#describe'
   post '/video/:id/describe/:dtrack_id', to: 'video#describe'
