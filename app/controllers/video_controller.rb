@@ -6,8 +6,7 @@ class VideoController < ApplicationController
 
   # All of the video records that have a published DescriptionTrack
   def index
-    session[:userinfo] = {"name"=>"Sheron Wang", "sub"=>"fdsaasdf"} if Rails.env.test?
-    puts session[:userinfo]
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
