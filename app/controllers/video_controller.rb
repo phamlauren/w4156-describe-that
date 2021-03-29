@@ -67,10 +67,9 @@ class VideoController < ApplicationController
       @video_id = params[:id]
       render "err"
     else
-      @all_tracks = DescriptionTrack.where(video_id: @video.id)
+      @all_tracks = @video.get_all_desc_tracks
       @yt_info = @video.video_info
       @langs = build_lang_list_as_html
-      # @comments = DescriptionTrackComment.where(desc_track_id: desc_track_ids)
       render "request_video" if @all_tracks.empty?
     end
   end
@@ -163,7 +162,7 @@ class VideoController < ApplicationController
     # if this user is the owner of this description track...
     if dt_owner_id == this_user.id
       # delete each description's audio file from S3 and destroy the DB entry
-      all_descriptions_under_this_track = Description.where(desc_track_id: this_description_track.id)
+      all_descriptions_under_this_track = this_description_track.get_all_descriptions
       all_descriptions_under_this_track.each do |d|
         S3FileHelper.delete_file(d.audio_file_loc)
         d.destroy
