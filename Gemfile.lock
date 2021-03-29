@@ -383,9 +383,9 @@ DEPENDENCIES
   jquery-rails
   language_list
   listen (~> 3.3)
+  mimemagic (~> 0.3.8)
   omniauth-auth0 (~> 2.5)
   omniauth-rails_csrf_protection (~> 0.1)
-  mimemagic (~> 0.3.8)
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
