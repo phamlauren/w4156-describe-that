@@ -4,7 +4,7 @@ Feature: see list of users
   So that I can grade this project
   I want to see the list of users
 
-Background: users in databse
+Background: users in database
 
     Given the following users exist:
     | id | username    | auth0_id | options                |
@@ -15,7 +15,7 @@ Background: users in databse
 Scenario: see list of users
   And I am on the home page
   And I go to the Users index page
-  Then I should see "lyp2106"
+  Then I should see "vishnu.nair"
 
 # NOTICE: THIS FEATURE IS NOW OBSOLETE.
 # Describe-That uses Auth0 for authentication
