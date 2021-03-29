@@ -1,5 +1,6 @@
 # ./app/controllers/auth0_controller.rb
 class Auth0Controller < ApplicationController
+  # :nocov:
   def callback
     # OmniAuth stores the informatin returned from Auth0 and the IdP in request.env['omniauth.auth'].
     # In this code, you will pull the raw_info supplied from the id_token and assign it to the session.
@@ -17,20 +18,25 @@ class Auth0Controller < ApplicationController
     # Redirect to the URL you want after successful auth
     redirect_to '/'
   end
+  # :nocov:
 
+  # :nocov:
   def failure
     # Handles failed authentication -- Show a failure page (you can also handle with a redirect)
     @error_msg = request.params['message']
   end
+  # :nocov:
 
+  # :nocov:
   def logout
     reset_session
     redirect_to logout_url
   end
+  # :nocov:
 
   private
   # AUTH0_CONFIG = Rails.application.config_for(:auth0)
-
+  # :nocov:
   def logout_url
     request_params = {
       returnTo: root_url,
@@ -39,9 +45,12 @@ class Auth0Controller < ApplicationController
 
     URI::HTTPS.build(host: ENV['AUTH0_DOMAIN'], path: '/v2/logout', query: to_query(request_params)).to_s
   end
+  # :nocov:
 
+  # :nocov:
   def to_query(hash)
     hash.map { |k, v| "#{k}=#{CGI.escape(v)}" unless v.nil? }.reject(&:nil?).join('&')
   end
+  # :nocov:
 
 end
