@@ -131,8 +131,7 @@ const add_description_form = function(editable={}) {
       <% end %>
     </td></tr>`
 
-    description_data.push(e.detail[0]);
-    onSeek(player.getCurrentTime());
+    pushDataToDescriptionArr(e.detail[0]);
     
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
@@ -197,8 +196,7 @@ const add_record_description_form = function() {
       <% end %>
     </td></tr>`
 
-    description_data.push(e.detail[0]);
-    onSeek(player.getCurrentTime());
+    pushDataToDescriptionArr(e.detail[0]);
 
     description_audios.insertAdjacentHTML("beforeend", desc_audio_html);
     const new_audios = description_audios.lastChild;
@@ -238,6 +236,12 @@ window.addEventListener("load", () => {
     this.parentNode.parentNode.remove();
   }));
 });
+
+let pushDataToDescriptionArr = (data) => {
+    description_data.push(data);
+    description_data.sort((d1, d2) => (d1["start_time_sec"] < d2["start_time_sec"]) ? -1 : 1);
+    onSeek(player.getCurrentTime());
+}
 
 function recorder_button_click_event(recorder_toggle_button, recording_div, commit_button) {
   media = {
