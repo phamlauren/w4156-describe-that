@@ -43,6 +43,8 @@ rescue NameError
 end
 
 Capybara.server = :puma
+#Capybara.default_driver = :selenium
+#Capybara.javascript_driver = :webkit
 Capybara.default_max_wait_time = 10
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
