@@ -12,6 +12,19 @@ Background: existing user
     | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
     | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
     | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
+
+    Given the following voices exist:
+    | id| common_name  | system_name       | provider     |
+    | 1 | "Voice US A" | "en-US-Wavenet-A" | "google_tts" |
+    | 2 | "Voice US B" | "en-US-Wavenet-B" | "google_tts" |
+    | 3 | "Voice US C" | "en-US-Wavenet-C" | "google_tts" |
+    | 4 | "Voice US D" | "en-US-Wavenet-D" | "google_tts" |
+    | 5 | "Voice US E" | "en-US-Wavenet-E" | "google_tts" |
+    | 6 | "Voice US F" | "en-US-Wavenet-F" | "google_tts" |
+    | 7 | "Voice US G" | "en-US-Wavenet-G" | "google_tts" |
+    | 8 | "Voice US H" | "en-US-Wavenet-H" | "google_tts" |
+    | 9 | "Voice US I" | "en-US-Wavenet-I" | "google_tts" |
+    | 10| "Voice US J" | "en-US-Wavenet-J" | "google_tts" |
  
 Scenario: enter a valid URL to describe
 
@@ -47,8 +60,9 @@ Scenario: enter an invalid URL to describe
 
     Then I should see "Sorry, we couldn't find a video with that YouTube link."
 
+@javascript
 Scenario: add one generated description for the video I found
-    
+
     When I am on the home page
 
     And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU"
@@ -62,6 +76,12 @@ Scenario: add one generated description for the video I found
     And I press "Describe this video"
 
     And I should see "Describe video: Transitions"
+
+    And I press "Publish Description Track"
+
+    Then "Publish Description Track" should be disabled
+
+    And "Unpublish Description Track" should be enabled
 
     And I press "Add one new generated description at current time!"
 
@@ -81,6 +101,6 @@ Scenario: add one generated description for the video I found
 
     Then I press "Add"
 
-    Then should contain "3.1"
+    Then I should see "3.1"
 
     Then I should see "extended"
