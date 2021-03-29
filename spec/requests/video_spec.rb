@@ -50,14 +50,14 @@ RSpec.describe "Videos", type: :request do
   end
   describe "POST /video/:id/describe" do
     it "creates a description for an existing video" do
-      post '/video/9/describe', params: { id: 0, time: '00:00:00', description: 'of all the creatures in the sea my favorite is the bass' }
+      post '/video/9/describe', params: { id: 9, lang: 'en' }
       expect(DescriptionTrack.exists?(:video_id=>9)).to eq(true)
     end
   end
   describe "POST /video/:id/request" do
     it "makes a request to the video that does not have any descriptions" do
       post '/video/9/request'
-      expect(flash[:notice]).to eq("This feature is not implemented yet. But if it was, you would have been notified: 'You have successfully requested AD for this video.'")
+      expect(flash[:notice]).to eq("Your request has been saved!")
     end
   end
 end
