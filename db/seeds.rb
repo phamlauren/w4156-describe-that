@@ -97,7 +97,7 @@ end
 c1 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[0][:created_track].id,
                                      comment_author_id: user1.id,
                                      comment_text: 'true story: in middle school, I wanted to learn the saxophone but everyone told me it was a boy\'s instrument so I didn\'t and I regret it to this day.')
-c2 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[1][:created_track].id,
+c2 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[0][:created_track].id,
                                      comment_author_id: user2.id,
                                      comment_text: 'very sad story indeed',
                                      parent_comment_id: c1.id)
