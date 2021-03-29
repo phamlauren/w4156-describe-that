@@ -59,15 +59,9 @@ Scenario: publish and unpublish description Track
 
 
 @javascript
-Scenario: add generated descriptions for the video I found
+Scenario: add and edit generated descriptions for the video I found
 
-    And I should see "Transitions"
-
-    And I should see "This video does not yet have audio descriptions."
-
-    And I press "Describe this video"
-
-    And I should see "Describe video: Transitions"
+    When I press "Describe this video"
 
     And I press "Add one new generated description at current time!"
 
@@ -85,11 +79,31 @@ Scenario: add generated descriptions for the video I found
 
     And I select "Voice US C" from "voice_id"
 
-    Then I press "Add"
+    And I press "Add"
 
     Then I should see "3.1"
 
     Then I should see "extended"
+
+    Then I press "edit"
+
+    Then the "description" field should contain "people walking around"
+
+    Then I fill in "time" with "2.5"
+
+    Then I fill in "description" with "people not walking around"
+
+    Then I press "Add"
+
+    Then I should see "2.5"
+
+    Then I press "edit"
+
+    Then the "description" field should contain "people not walking around"
+
+    Then I press "Remove"
+
+    Then I should not see "people not walking around"
 
     And I press "Add one new generated description at current time!"
 
@@ -103,3 +117,8 @@ Scenario: add generated descriptions for the video I found
 
 @javascript
 Scenario: add recorded descriptions for the video I found
+
+    And I press "Describe this video"
+
+    And I press "Add one new recorded description at current time!"
+
