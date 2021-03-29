@@ -23,7 +23,7 @@ class VideoRequestController < ApplicationController
     # if the user is not the requester and has not already upvoted, then upvote
     if video_request.requester_id != user.id && !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
-      flash[:notice] = "You request has been saved!"
+      flash[:notice] = "Your request has been saved!"
     # else the user has already upvoted
     else
       flash[:notice] = "You have already requested this video."

@@ -31,6 +31,7 @@ Background: existing YouTube videos
     | 2             | 2              | false               | loc2           | This is AD for video 2 | 2           | generated |
     | 3             | 3              | true                | loc3           | This is AD for video 3 | 3           | generated |
 
+    And I am on the home page
 
 # Checks that we can find the video through the YouTube API
 # Scenario: find the video I want
@@ -58,7 +59,7 @@ Scenario: find a video without AD (sad) which I can then request (happy)
   When I am on the view page for the YouTube link "4"
   Then I should see "This video does not yet have audio descriptions"
   And I press "Request AD for this video"
-  Then I should see "You have successfully requested AD for this video"
+  Then I should see "Your request has been saved!"
 
 Scenario: upvote / downvote a video request
 
