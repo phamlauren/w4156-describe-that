@@ -49,13 +49,13 @@ RSpec.describe Video, type: :model do
         video_id: 1,
         track_author_id: 1,
         lang: 'en',
-        is_generated: 1
+        published: true
       },
       {
         video_id: 2,
         track_author_id: 2,
         lang: 'en',
-        is_generated: true
+        published: true
       },
     ]
     desc_track_table.each do |desc_track|
@@ -94,13 +94,13 @@ RSpec.describe Video, type: :model do
           video_id: 3,
           track_author_id: 3,
           lang: 'en',
-          is_generated: true
+          published: true
         },
         {
           video_id: 4,
           track_author_id: 1,
           lang: 'en',
-          is_generated: true
+          published: true
         },
       ]
       desc_track_table.each do |desc_track|
