@@ -26,6 +26,7 @@ module NavigationHelpers
       when /^my dashboard$/ then '/dashboard'
 
       # For videos
+      when /^the video index page$/ then '/video/undescribed'
       when /^the view page for the video id "(.*)"$/ then "/video/#{$1}"
       when /^the upvote request page for the video request id "(.*)"$/ then "/video_requests/#{$1}"
 
