@@ -15,3 +15,13 @@ Given /the following descriptions exist/ do |descriptions_table|
       Description.create! description
     end
 end
+
+Given /the following video requests exist/ do |requests_table|
+  requests_table.hashes.each do |request|
+    VideoRequest.create! request
+  end
+end
+
+Given /I click "Upvote this request" for the video request id "(.*)"/ do |video_id|
+  step "I am on the upvote request page for the video request id \"#{video_id}\""
+end

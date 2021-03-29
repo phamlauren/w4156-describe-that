@@ -19,16 +19,16 @@ module NavigationHelpers
       
       when /^the description page for "(.+)"$/ then "/video/#{Video.find_by(yt_video_id: $1).id}/describe"
   
-
+      when /^the Video Requests page$/ then '/video_requests'
+        
       # For users
       when /^the Users index page$/ then '/user'
       when /^my dashboard$/ then '/dashboard'
 
       # For videos
-      # Since we don't store the YouTube id, we will need to GET the yt_video_id
-      # and then pass the yt_video_id to /video/yt_video_id
-      when /^the view page for the YouTube link "(.*)"$/ then "/video/#{$1}"
-        
+      when /^the view page for the video id "(.*)"$/ then "/video/#{$1}"
+      when /^the upvote request page for the video request id "(.*)"$/ then "/video_requests/#{$1}"
+
       else
         begin
           page_name =~ /^the (.*) page$/
