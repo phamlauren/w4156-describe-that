@@ -11,7 +11,7 @@ Background: existing user
 
     Given the following users exist:
     | id | username    | auth0_id | options                |
-    | 1  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+    | 99 | xw2765      | fdsaasdf | {"default_lang": "en"} |
 
     Given the following voices exist:
     | id| common_name| system_name     | provider   |
