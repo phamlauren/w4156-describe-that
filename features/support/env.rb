@@ -45,7 +45,7 @@ end
 Capybara.server = :puma
 #Capybara.default_driver = :selenium
 #Capybara.javascript_driver = :webkit
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 60
 
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
