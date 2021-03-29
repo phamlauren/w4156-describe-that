@@ -21,7 +21,7 @@ Background: existing YouTube videos
 
     Given the following video requests exist:
     | id | video_id | requested_lang | requester_id |
-    | 1  | 1        | en             | 1            |
+    | 2  | 1        | en             | 1            |
 
     And I am on the home page
 
@@ -33,6 +33,6 @@ Scenario: find a video without AD (sad) which I can then request (happy)
 
 Scenario: upvote / downvote a video request from the request page
   When I am on the Video Requests page
-  And I click "Upvote this request" for the video request id "1"
+  And I click "Upvote this request" for the video request id "2"
   And I should be on the Video Requests page
 
