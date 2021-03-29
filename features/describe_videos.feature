@@ -116,9 +116,18 @@ Scenario: add and edit generated descriptions for the video I found
     Then I should see "inline"
 
 @javascript
-Scenario: add recorded descriptions for the video I found
+Scenario: add one recorded description form
 
     And I press "Describe this video"
 
     And I press "Add one new recorded description at current time!"
+
+    Then the "time" field should contain "0.0"
+
+    Then I should see "Get Rec Permission"
+    
+    And I should see "Add"
+
+    Then "Add" should be disabled
+
 
