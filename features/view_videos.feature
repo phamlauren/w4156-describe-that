@@ -33,26 +33,6 @@ Background: existing YouTube videos
 
     And I am on the home page
 
-# Checks that we can find the video through the YouTube API
-# Scenario: find the video I want
-#   When I go to the home page
-#   And I fill in "YouTube link" with ""
-#   Then I should be on the "" page
-#   And I should see ""
-
-# Add step for getting the video from the YouTube API
-# Replace "yt_vide_id: \"1\"" with YouTube link
-Scenario: find a video with AD (happy path)
-  When I am on the view page for the YouTube link "1"
-  Then I should see "This is AD for video 1"
-
-
-# Add step for getting the video from the YouTube API
-# Replace "yt_vide_id: \"1\"" with YouTube link
-Scenario: unable to find video (sad path)
-  When I am on the view page for the YouTube link "12345"
-  Then I should see "Sorry, we couldn't find a video with that YouTube link."
-  
 # Add step for geting the video from the YouTube API
 # Replace "yt_vide_id: \"1\"" with YouTube link
 Scenario: find a video without AD (sad) which I can then request (happy)
