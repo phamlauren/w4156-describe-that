@@ -10,8 +10,8 @@ class DescriptionTrack < ApplicationRecord
     Description.where(desc_track_id: id).order('start_time_sec ASC').to_a
   end
 
-  def get_all_comments
-    DescriptionTrackComment.where(desc_track_id: id)
+  def get_all_root_comments
+    DescriptionTrackComment.where(desc_track_id: id, parent_comment_id: nil)
   end
 
   # used by iter-1: generates all descriptions for a list of times and texts
