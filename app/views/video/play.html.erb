@@ -11,27 +11,7 @@
 </audio>
 
 <h3>Comments</h3>
-
-<table class="table table-striped col-md-12" id="comments">
-  <thead>
-    <tr>
-      <th>Comment</th>
-      <th>User</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @track.comments.each do |comment| %>
-      <tr>
-        <td>
-          <%= comment["comment_text"] %>
-        </td>
-        <td>
-          <%= comment.comment_author.username %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render @track.comments %>
 
 <script>
     var tag = document.createElement("script");

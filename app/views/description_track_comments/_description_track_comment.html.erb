@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-body">
+    <%= description_track_comment.comment_text %>
+  </div>
+</div>
+<% if description_track_comment.replies.any? %>
+  <% description_track_comment.replies.each do |reply| %>
+    <%= render partial: 'description_track_comments/reply', locals: { reply: reply } %>
+  <% end %>
+<% end %>
+<div id="reply-form-<%= description_track_comment.id %>"></div>
+
+<script>
+document.querySelector("#reply-form-<%= description_track_comment.parent_comment_id %>").innerHTML = ("<%= j render 'description_track_comments/reply_form', description_track_comment: @description_track_comment %>")
+</script>
