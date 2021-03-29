@@ -75,6 +75,7 @@ class VideoController < ApplicationController
   end
 
   def request_video
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     video = Video.find(params[:id])
     video_request = VideoRequest.find_by(video_id: video.id, requested_lang: params[:lang])
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
@@ -96,6 +97,7 @@ class VideoController < ApplicationController
 
   def describe
     # check if the user is logged in
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     if session[:userinfo].nil?
       flash[:notice] = "Please log in first."
       redirect_to root_path
