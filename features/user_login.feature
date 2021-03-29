@@ -1,3 +1,22 @@
+Feature: see list of users
+
+  As a TA
+  So that I can grade this project
+  I want to see the list of users
+
+Background: users in databse
+
+    Given the following users exist:
+    | id | username    | auth0_id | options                |
+    | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+    | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+    | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
+
+Scenario: see list of users
+  And I am on the home page
+  And I go to the Users index page
+  Then I should see "lyp2106"
+
 # NOTICE: THIS FEATURE IS NOW OBSOLETE.
 # Describe-That uses Auth0 for authentication
 
