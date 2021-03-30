@@ -1,0 +1,26 @@
+/usr/local/Cellar/ruby@2.6/2.6.6_1/bin/ruby -I/usr/local/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/lib:/usr/local/lib/ruby/gems/2.6.0/gems/rspec-support-3.10.2/lib /usr/local/lib/ruby/gems/2.6.0/gems/rspec-core-3.10.1/exe/rspec --pattern spec/\*\*\{,/\*/\*\*\}/\*_spec.rb
+ set_config 
+------------
+ 
+(1 row)
+
+***....................
+
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+  1) DescriptionTrackComment add some examples to (or delete) /Users/laurenpham/Desktop/w4156-describe-that/spec/models/description_track_comment_spec.rb
+     # Not yet implemented
+     # ./spec/models/description_track_comment_spec.rb:4
+
+  2) VideoRequest add some examples to (or delete) /Users/laurenpham/Desktop/w4156-describe-that/spec/models/video_request_spec.rb
+     # Not yet implemented
+     # ./spec/models/video_request_spec.rb:4
+
+  3) VideoRequestUpvote add some examples to (or delete) /Users/laurenpham/Desktop/w4156-describe-that/spec/models/video_request_upvote_spec.rb
+     # Not yet implemented
+     # ./spec/models/video_request_upvote_spec.rb:4
+
+Finished in 4.55 seconds (files took 7.46 seconds to load)
+23 examples, 0 failures, 3 pending
+
+Coverage report generated for Cucumber Features, RSpec to /Users/laurenpham/Desktop/w4156-describe-that/public/coverage. 264 / 328 LOC (80.49%) covered.
