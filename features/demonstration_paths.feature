@@ -22,7 +22,7 @@ Background: users in database
 Scenario: see list of users
   And I am on the home page
   And I go to the Users index page
-  Then I should see "vishnu.nair"
+  Then I should see "xw2765"
 
 Scenario: see list of undescribed videos
   And I am on the home page

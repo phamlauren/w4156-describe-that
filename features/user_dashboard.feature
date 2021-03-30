@@ -15,4 +15,4 @@ Background: users in database
 Scenario: see dashboard
   Given I am on the home page
   And I go to my dashboard
-  Then I should see "vishnu.nair"
+  Then I should see "xw2765"
