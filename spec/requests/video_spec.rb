@@ -82,6 +82,12 @@ RSpec.describe "Videos", type: :request do
   end
   describe "POST /video_requests/:id" do
     it "makes an upvote request" do
+      get '/video_requests/1'
+      expect(flash[:notice]).to eq("Your request has been saved!")
+    end
+  end
+  describe "POST /video_requests/:id" do
+    it "prevents a user from upvoting more than once" do
       get '/video_requests/2'
       expect(flash[:notice]).to eq("You have already requested this video.")
     end
