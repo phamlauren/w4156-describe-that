@@ -1,0 +1,216 @@
+/usr/local/Cellar/ruby@2.6/2.6.6_1/bin/ruby -S bundle exec cucumber --profile default
+ set_config 
+------------
+ 
+(1 row)
+
+WARNING: You have set Rails' config.cache_classes to false
+    (Spring needs cache_classes set to false). This is known to cause problems
+    with database transactions. Set config.cache_classes to true if you want to use transactions.
+Using the default profile...
+Feature: see list of users
+  As a TA
+  So that I can grade this project
+  I want to see the list of users and videos
+
+  Background: users in database               # features/demonstration_paths.feature:7
+    Given the following users exist:          # features/step_definitions/user_steps.rb:1
+      | id | username    | auth0_id | options                |
+      | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+      | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+      | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
+    Given the following YouTube videos exist: # features/step_definitions/video_steps.rb:1
+      | id | yt_video_id |
+      | 1  | Rk1MYMPDx3s |
+      | 2  | Jn09UdSb3aA |
+      | 3  | Ct6BUPvE2sM |
+      | 4  | l1heD4T8Yco |
+
+  Scenario: see list of users        # features/demonstration_paths.feature:22
+    And I am on the home page        # features/step_definitions/web_steps.rb:44
+    And I go to the Users index page # features/step_definitions/web_steps.rb:48
+DEPRECATION: Using `should` from rspec-expectations' old `:should` syntax without explicitly enabling the syntax is deprecated. Use the new `:expect` syntax or explicitly enable `:should` with `config.expect_with(:rspec) { |c| c.syntax = :should }` instead. Called from /Users/laurenpham/Desktop/w4156-describe-that/features/step_definitions/web_steps.rb:107:in `block in <top (required)>'.
+    Then I should see "xw2765"       # features/step_definitions/web_steps.rb:105
+
+  Scenario: see list of undescribed videos # features/demonstration_paths.feature:27
+    And I am on the home page              # features/step_definitions/web_steps.rb:44
+    And I go to the video index page       # features/step_definitions/web_steps.rb:48
+    Then I should see "The Best of Chopin" # features/step_definitions/web_steps.rb:105
+
+Feature: describe videos
+  As a volunteer
+  So that I can provide audio descriptions for my friends
+  First of all I want to find videos via a valid YouTube URL
+  Then I want to add generated ADs to them
+  Then I want to add recorded ADs to them
+  Lastly I want to set it published or unpublished anytime I want
+
+  Background: existing user                                                   # features/describe_videos.feature:10
+    Given the following users exist:                                          # features/step_definitions/user_steps.rb:1
+      | id | username    | auth0_id | options                |
+      | 99 | xw2765      | fdsaasdf | {"default_lang": "en"} |
+    Given the following voices exist:                                         # features/step_definitions/voice_steps.rb:1
+      | id| common_name| system_name     | provider   |
+      | 1 | Voice US A | en-US-Wavenet-A | google_tts |
+      | 2 | Voice US B | en-US-Wavenet-B | google_tts |
+      | 3 | Voice US C | en-US-Wavenet-C | google_tts |
+      | 4 | Voice US D | en-US-Wavenet-D | google_tts |
+      | 5 | Voice US E | en-US-Wavenet-E | google_tts |
+      | 6 | Voice US F | en-US-Wavenet-F | google_tts |
+      | 7 | Voice US G | en-US-Wavenet-G | google_tts |
+      | 8 | Voice US H | en-US-Wavenet-H | google_tts |
+      | 9 | Voice US I | en-US-Wavenet-I | google_tts |
+      | 10| Voice US J | en-US-Wavenet-J | google_tts |
+Capybara starting Puma...
+* Version 5.2.2 , codename: Fettisdagsbulle
+* Min threads: 0, max threads: 4
+* Listening on http://127.0.0.1:56839
+    And I am on the home page                                                 # features/step_definitions/web_steps.rb:44
+    And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU" # features/step_definitions/web_steps.rb:60
+    And I press "Describe"                                                    # features/step_definitions/web_steps.rb:52
+    Then I should be on the show page for "40z9n1SgozU"                       # features/step_definitions/web_steps.rb:234
+
+  @javascript
+  Scenario: publish and unpublish description Track                     # features/describe_videos.feature:38
+    And I should see "Transitions"                                      # features/step_definitions/web_steps.rb:105
+    And I should see "This video does not yet have audio descriptions." # features/step_definitions/web_steps.rb:105
+    And I press "Describe this video"                                   # features/step_definitions/web_steps.rb:52
+    And I should see "Describe video: Transitions"                      # features/step_definitions/web_steps.rb:105
+    And I press "Publish Description Track"                             # features/step_definitions/web_steps.rb:52
+    Then "Publish Description Track" should be disabled                 # features/step_definitions/web_steps.rb:113
+    And "Unpublish Description Track" should be enabled                 # features/step_definitions/web_steps.rb:113
+    And I press "Unpublish Description Track"                           # features/step_definitions/web_steps.rb:52
+    Then "Unpublish Description Track" should be disabled               # features/step_definitions/web_steps.rb:113
+    And "Publish Description Track" should be enabled                   # features/step_definitions/web_steps.rb:113
+
+  @javascript
+  Scenario: add and edit generated descriptions for the video I found       # features/describe_videos.feature:62
+    When I press "Describe this video"                                      # features/step_definitions/web_steps.rb:52
+    And I press "Add one new generated description at current time!"        # features/step_definitions/web_steps.rb:52
+    Then I should see "time (sec):"                                         # features/step_definitions/web_steps.rb:105
+    And I should see "Voice speed:"                                         # features/step_definitions/web_steps.rb:105
+    And I fill in "description" with "people walking around"                # features/step_definitions/web_steps.rb:60
+    And I fill in "time" with "3.1"                                         # features/step_definitions/web_steps.rb:60
+    And I fill in "voice_speed" with "1.5"                                  # features/step_definitions/web_steps.rb:60
+    And I select "extended" from "pause_at_start_time"                      # features/step_definitions/web_steps.rb:85
+    And I select "Voice US C" from "voice_id"                               # features/step_definitions/web_steps.rb:85
+    And I press "Add"                                                       # features/step_definitions/web_steps.rb:52
+    Then I should see "3.1"                                                 # features/step_definitions/web_steps.rb:105
+    Then I should see "extended"                                            # features/step_definitions/web_steps.rb:105
+    Then I press "edit"                                                     # features/step_definitions/web_steps.rb:52
+    Then the "description" field should contain "people walking around"     # features/step_definitions/web_steps.rb:145
+    Then I fill in "time" with "2.5"                                        # features/step_definitions/web_steps.rb:60
+    Then I fill in "description" with "people not walking around"           # features/step_definitions/web_steps.rb:60
+    Then I press "Add"                                                      # features/step_definitions/web_steps.rb:52
+    Then I should see "2.5"                                                 # features/step_definitions/web_steps.rb:105
+    Then I press "edit"                                                     # features/step_definitions/web_steps.rb:52
+    Then the "description" field should contain "people not walking around" # features/step_definitions/web_steps.rb:145
+    Then I press "Remove"                                                   # features/step_definitions/web_steps.rb:52
+    Then I should not see "people not walking around"                       # features/step_definitions/web_steps.rb:127
+    And I press "Add one new generated description at current time!"        # features/step_definitions/web_steps.rb:52
+    And I fill in "description" with "using default values"                 # features/step_definitions/web_steps.rb:60
+    Then I press "Add"                                                      # features/step_definitions/web_steps.rb:52
+    Then I should see "0.0"                                                 # features/step_definitions/web_steps.rb:105
+    Then I should see "inline"                                              # features/step_definitions/web_steps.rb:105
+
+  @javascript
+  Scenario: add one recorded description form                       # features/describe_videos.feature:119
+    And I press "Describe this video"                               # features/step_definitions/web_steps.rb:52
+    And I press "Add one new recorded description at current time!" # features/step_definitions/web_steps.rb:52
+    Then the "time" field should contain "0.0"                      # features/step_definitions/web_steps.rb:145
+    Then I should see "Get Rec Permission"                          # features/step_definitions/web_steps.rb:105
+    And I should see "Add"                                          # features/step_definitions/web_steps.rb:105
+    Then "Add" should be disabled                                   # features/step_definitions/web_steps.rb:113
+
+Feature: describe videos
+  As a user
+  I need to check if a YouTube video is available
+  So that I could listen or provide audio descriptions for it
+
+  Scenario: enter a valid URL to describe                                     # features/find_videos_by_url.feature:7
+    When I am on the home page                                                # features/step_definitions/web_steps.rb:44
+    And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU" # features/step_definitions/web_steps.rb:60
+    And I press "Describe"                                                    # features/step_definitions/web_steps.rb:52
+    Then I should be on the show page for "40z9n1SgozU"                       # features/step_definitions/web_steps.rb:234
+    And I should see "Transitions"                                            # features/step_definitions/web_steps.rb:105
+
+  Scenario: enter a valid URL generated by Share to describe # features/find_videos_by_url.feature:19
+    When I am on the home page                               # features/step_definitions/web_steps.rb:44
+    And I fill in "yt_url" with "youtu.be/40z9n1SgozU?t=57"  # features/step_definitions/web_steps.rb:60
+    And I press "Describe"                                   # features/step_definitions/web_steps.rb:52
+    Then I should be on the show page for "40z9n1SgozU"      # features/step_definitions/web_steps.rb:234
+    And I should see "Transitions"                           # features/step_definitions/web_steps.rb:105
+
+  Scenario: enter an invalid URL to describe                                    # features/find_videos_by_url.feature:31
+    When I am on the home page                                                  # features/step_definitions/web_steps.rb:44
+    And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n"         # features/step_definitions/web_steps.rb:60
+    And I press "Describe"                                                      # features/step_definitions/web_steps.rb:52
+    Then I should see "Sorry, we couldn't find a video with that YouTube link." # features/step_definitions/web_steps.rb:105
+
+Feature: view videos
+  As a person with visual impairments
+  So that I can understand a video with more context than its sound
+  I want to find videos with audio descriptions
+
+  Background: existing YouTube videos         # features/request_upvote.feature:7
+    Given the following users exist:          # features/step_definitions/user_steps.rb:1
+      | id | username    | auth0_id | options                |
+      | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+      | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+      | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
+    Given the following YouTube videos exist: # features/step_definitions/video_steps.rb:1
+      | id | yt_video_id |
+      | 1  | 1           |
+      | 2  | 2           |
+      | 3  | 3           |
+      | 4  | 4           |
+    Given the following video requests exist: # features/step_definitions/video_steps.rb:19
+      | id | video_id | requested_lang | requester_id |
+      | 2  | 1        | en             | 1            |
+    And I am on the home page                 # features/step_definitions/web_steps.rb:44
+
+  Scenario: find a video without AD (sad) which I can then request (happy) # features/request_upvote.feature:28
+    When I am on the view page for the video id "4"                        # features/step_definitions/web_steps.rb:44
+    Then I should see "This video does not yet have audio descriptions"    # features/step_definitions/web_steps.rb:105
+    And I press "Request AD for this video"                                # features/step_definitions/web_steps.rb:52
+    Then I should see "Your request has been saved!"                       # features/step_definitions/web_steps.rb:105
+
+  Scenario: upvote / downvote a video request from the request page # features/request_upvote.feature:34
+    When I am on the Video Requests page                            # features/step_definitions/web_steps.rb:44
+    And I click "Upvote this request" for the video request id "2"  # features/step_definitions/video_steps.rb:25
+    And I should be on the Video Requests page                      # features/step_definitions/web_steps.rb:234
+
+Feature: see list of users
+  As a user
+  So that I can see my requests, upvotes, and descriptions
+  I want to see my dashboard
+
+  Background: users in database      # features/user_dashboard.feature:7
+    Given the following users exist: # features/step_definitions/user_steps.rb:1
+      | id | username    | auth0_id | options                |
+      | 1  | vishnu.nair | asdffdsa | {"default_lang": "en"} |
+      | 2  | xw2765      | fdsaasdf | {"default_lang": "en"} |
+      | 3  | lyp2106     | jkl;;lkj | {"default_lang": "en"} |
+
+  Scenario: see dashboard       # features/user_dashboard.feature:15
+    Given I am on the home page # features/step_definitions/web_steps.rb:44
+    And I go to my dashboard    # features/step_definitions/web_steps.rb:48
+    Then I should see "xw2765"  # features/step_definitions/web_steps.rb:105
+
+11 scenarios (11 passed)
+104 steps (104 passed)
+0m29.212s
+┌──────────────────────────────────────────────────────────────────────────┐
+│ Share your Cucumber Report with your team at https://reports.cucumber.io │
+│                                                                          │
+│ Command line option:    --publish                                        │
+│ Environment variable:   CUCUMBER_PUBLISH_ENABLED=true                    │
+│ cucumber.yml:           default: --publish                               │
+│                                                                          │
+│ More information at https://reports.cucumber.io/docs/cucumber-ruby       │
+│                                                                          │
+│ To disable this message, specify CUCUMBER_PUBLISH_QUIET=true or use the  │
+│ --publish-quiet option. You can also add this to your cucumber.yml:      │
+│ default: --publish-quiet                                                 │
+└──────────────────────────────────────────────────────────────────────────┘
+Coverage report generated for Cucumber Features, RSpec to /Users/laurenpham/Desktop/w4156-describe-that/public/coverage. 272 / 328 LOC (82.93%) covered.

@@ -21,7 +21,7 @@ RSpec.describe "Demonstration Paths", type: :request do
   describe "Get /dashboard" do
     it "renders user's dashboard" do
       get '/dashboard'
-      expect(assigns(:user).username).to eq('xw2765')
+      expect(assigns(:user).auth0_id).to eq('fdsaasdf')
     end
   end
 end
