@@ -1,3 +1,4 @@
+# :nocov:
 # ./app/controllers/auth0_controller.rb
 class Auth0Controller < ApplicationController
   def callback
@@ -30,7 +31,6 @@ class Auth0Controller < ApplicationController
 
   private
   # AUTH0_CONFIG = Rails.application.config_for(:auth0)
-
   def logout_url
     request_params = {
       returnTo: root_url,
@@ -45,3 +45,4 @@ class Auth0Controller < ApplicationController
   end
 
 end
+# :nocov:

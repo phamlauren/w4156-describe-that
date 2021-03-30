@@ -9,7 +9,7 @@ module GoogleCloudTtsHelper
     json_to_transmit = form_json(to_say, speech_rate, voice_name)
     resp = HTTParty.post(target_url, body: json_to_transmit, headers: {'Content-Type' => "application/json"})
 
-    nil if resp.code != 200
+    nil if resp["code"] != 200
 
     data = resp["audioContent"]
     audio_content_bytes = Base64.decode64(data)

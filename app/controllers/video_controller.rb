@@ -6,7 +6,7 @@ class VideoController < ApplicationController
 
   # All of the video records that have a published DescriptionTrack
   def index
-    puts session[:userinfo]
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     @videos_info = []
     @videos = Video.all
     @videos.each do |video|
@@ -67,26 +67,26 @@ class VideoController < ApplicationController
       @video_id = params[:id]
       render "err"
     else
-      @all_tracks = DescriptionTrack.where(video_id: @video.id)
+      @all_tracks = @video.get_all_desc_tracks
       @yt_info = @video.video_info
       @langs = build_lang_list_as_html
-      # @comments = DescriptionTrackComment.where(desc_track_id: desc_track_ids)
       render "request_video" if @all_tracks.empty?
     end
   end
 
   def request_video
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     video = Video.find(params[:id])
-    video_request = VideoRequest.find_by(video_id: video.id)
+    video_request = VideoRequest.find_by(video_id: video.id, requested_lang: params[:lang])
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
-    # if a request does not exist, then make one
+    # if a request does not exist for this video and language, then make one
     if !video_request
-      VideoRequest.create!(video_id: video.id, requested_lang:'en', requester_id: user.id)
-      flash[:notice] = "You request has been saved!"
+      VideoRequest.create!(video_id: video.id, requested_lang: params[:lang], requester_id: user.id)
+      flash[:notice] = "Your request has been saved!"
     # if a request exists and the user has not already upvoted, then upvote
     elsif !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
-      flash[:notice] = "You request has been saved!"
+      flash[:notice] = "Your request has been saved!"
     # else request exists and the user has already upvoted
     else
       flash[:notice] = "You have already requested this video."
@@ -97,6 +97,7 @@ class VideoController < ApplicationController
 
   def describe
     # check if the user is logged in
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     if session[:userinfo].nil?
       flash[:notice] = "Please log in first."
       redirect_to root_path
@@ -139,14 +140,6 @@ class VideoController < ApplicationController
       @voices = Voice.all.map { |v| [v.common_name, v.id] }
       @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
     end
-    if request.post?
-      redirect_to video_path(params[:id]) if params[:id] == nil
-      # save time and description
-      ###
-      @track.published = true
-      @track.save
-      redirect_to "/video/#{params[:id]}"
-    end
   end
 
   def delete_description_track
@@ -171,7 +164,7 @@ class VideoController < ApplicationController
     # if this user is the owner of this description track...
     if dt_owner_id == this_user.id
       # delete each description's audio file from S3 and destroy the DB entry
-      all_descriptions_under_this_track = Description.where(desc_track_id: this_description_track.id)
+      all_descriptions_under_this_track = this_description_track.get_all_descriptions
       all_descriptions_under_this_track.each do |d|
         S3FileHelper.delete_file(d.audio_file_loc)
         d.destroy

@@ -104,10 +104,14 @@ end
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   if page.respond_to? :should
-    page.should have_content(text)
+    page.should have_text(text)
   else
-    assert page.has_content?(text)
+    assert page.has_text?(text)
   end
+end
+
+Then /^"([^"]*)" should be (dis|en)abled$/ do |btn, dis|
+  expect(page).to have_button(btn, disabled: dis=="dis")
 end
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
@@ -141,7 +145,7 @@ end
 Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
   with_scope(parent) do
     field = find_field(field)
-    field_value = (field.tag_name == 'textarea') ? field.text : field.value
+    field_value = field.value
     if field_value.respond_to? :should
       field_value.should =~ /#{value}/
     else

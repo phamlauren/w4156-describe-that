@@ -11,7 +11,7 @@
 </audio>
 
 <h3>Comments</h3>
-<%= render @track.comments %>
+<%= render @track.get_all_root_comments %>
 
 <script>
     var tag = document.createElement("script");

@@ -11,6 +11,7 @@
     <tr>
       <th>Title</th>
       <th>Votes</th>
+      <th>Requested language</th>
       <th></th>
       <th></th>
     </tr>
@@ -23,6 +24,9 @@
         </td>
         <td>
           <%= request["vote_count"] %>
+        </td>
+        <td>
+          <%= request["requested_lang"] %>
         </td>
         <% if session[:userinfo].nil? %>
         <td>

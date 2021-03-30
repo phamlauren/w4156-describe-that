@@ -1,3 +1,4 @@
+# :nocov:
 class DescriptionTrackCommentController < ApplicationController
 
   def comment
@@ -16,4 +17,5 @@ class DescriptionTrackCommentController < ApplicationController
   end
 
 end
+# :nocov:
   

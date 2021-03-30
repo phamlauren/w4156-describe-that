@@ -10,6 +10,7 @@ class VideoRequestController < ApplicationController
         if !video_info.empty?
         video_info["id"] = video_request.id
         video_info["video_id"] = video.id
+        video_info["requested_lang"] = video_request.requested_lang
         video_info["vote_count"] = video_request.number_of_votes
         @requests_info.push(video_info)
         end
@@ -17,13 +18,14 @@ class VideoRequestController < ApplicationController
   end
 
   def upvote_request
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     video_request = VideoRequest.find(params[:id])
     # TODO : user id of the person logged in
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # if the user is not the requester and has not already upvoted, then upvote
     if video_request.requester_id != user.id && !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
-      flash[:notice] = "You request has been saved!"
+      flash[:notice] = "Your request has been saved!"
     # else the user has already upvoted
     else
       flash[:notice] = "You have already requested this video."

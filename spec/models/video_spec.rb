@@ -10,12 +10,12 @@ RSpec.describe Video, type: :model do
         options: '{"default_lang": "en"}',
       },
       {
-        username: 'xw2765@columbia.edu',
+        username: 'xw2765',
         auth0_id: 'fdsaasdf',
         options: '{"default_lang": "en"}',
       },
       {
-        username: 'lyp2106@barnard.edu',
+        username: 'lyp2106',
         auth0_id: 'jkl;;lkj',
         options: '{"default_lang": "en"}',
       },
@@ -27,16 +27,16 @@ RSpec.describe Video, type: :model do
     # Videos must exist for description track to exist
     videos_table = [
       {
-        yt_video_id: 100
+        yt_video_id: 'WrdsotPDrRg' # Darwin Derby by Vulfpeck
       },
       {
-        yt_video_id: 200
+        yt_video_id: 'Cj-AL-J98U0' # Merry-Go-Round by Joe Hisaishi
       },
       {
-        yt_video_id: 300
+        yt_video_id: 'Qn5IpWXWub0' # Pretty Boy by Joji feat. Lil Yachty
       },
       {
-        yt_video_id: 400
+        yt_video_id: 'TvpJWAx_NkY' # Portrait of a Time by Pete Cat Recording Co.
       },
     ]
     videos_table.each do |video|
@@ -49,13 +49,13 @@ RSpec.describe Video, type: :model do
         video_id: 1,
         track_author_id: 1,
         lang: 'en',
-        is_generated: 1
+        published: true
       },
       {
         video_id: 2,
         track_author_id: 2,
         lang: 'en',
-        is_generated: true
+        published: true
       },
     ]
     desc_track_table.each do |desc_track|
@@ -94,13 +94,13 @@ RSpec.describe Video, type: :model do
           video_id: 3,
           track_author_id: 3,
           lang: 'en',
-          is_generated: true
+          published: true
         },
         {
           video_id: 4,
           track_author_id: 1,
           lang: 'en',
-          is_generated: true
+          published: true
         },
       ]
       desc_track_table.each do |desc_track|
@@ -134,31 +134,4 @@ RSpec.describe Video, type: :model do
     end
 
   end
-
-
-  # For a video, get_all_desc_tracks
-  describe "gets all description tracks for videos" do
-    
-  end
-
-  # For a video, get_all_desc_track_with_lang
-  describe "gets all description tracks with their language for videos" do
-    
-  end
-
-  # For a video, video_exists
-  describe "checks if video exists" do
-    
-  end
-
-  # For a description track, get_all_descriptions
-  describe "gets all descriptions for description tracks" do
-    
-  end
-
-  # For a description, assert generate_unique_name works
-  describe "checks generation of description track audio file names" do
-    
-  end
-
 end
