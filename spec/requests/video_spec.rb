@@ -45,7 +45,7 @@ RSpec.describe "Videos", type: :request do
   end
   describe "GET /video/:id/describe" do
     it "gets the video desciption page" do
-      get '/video/9/describe'
+      get '/video/9/describe', params: { id: 9, lang: 'en' }
     end
   end
   describe "POST /video/:id/describe" do
