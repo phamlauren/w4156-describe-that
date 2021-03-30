@@ -10,6 +10,13 @@ RSpec.describe "Demonstration Paths", type: :request do
       expect(response).to render_template('index')
     end
   end
+
+  describe "GET /video/undescribed" do
+    it "renders undescribed videos" do
+      get '/video/undescribed/'
+      expect(response).to render_template('index_undescribed')
+    end
+  end
   
   describe "Get /dashboard" do
     it "renders user's dashboard" do

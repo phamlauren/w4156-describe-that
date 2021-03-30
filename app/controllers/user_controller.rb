@@ -6,7 +6,7 @@ class UserController < ApplicationController
 
   def dashboard
     # Test with background seeded user having sub = auth0_id = abcde
-    session[:userinfo]['sub'] = "asdffdsa" if Rails.env.test?
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     @user = User.find_by(auth0_id: session[:userinfo]['sub'])
     @requests = VideoRequest.where(requester_id: @user.id)
     @upvotes = VideoRequestUpvote.where(upvoter_id: @user.id)
