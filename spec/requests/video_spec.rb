@@ -98,5 +98,11 @@ RSpec.describe "Videos", type: :request do
       expect(flash[:notice]).to eq("You have already requested this video.")
     end
   end
+  describe "POST /description_track/:id/switch_published" do
+    it "publishes or unpublishes a description track" do
+      post '/description_track/1/switch_published'
+      expect(DescriptionTrack.find(1).published).to eq(false)
+    end
+  end
 
 end
