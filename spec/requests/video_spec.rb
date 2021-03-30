@@ -50,7 +50,7 @@ RSpec.describe "Videos", type: :request do
   describe "GET /video/:id" do
     it "gets the show page for a video" do
       get '/video/4'
-      expect(assigns(:video).yt_video_id).to eq("TvpJWAx_NkY")
+      expect(assigns(:video).yt_video_id).to eq("Qn5IpWXWub0")
     end
     it "gets the err message for a video that does not exist" do
       get '/video/100'
@@ -88,13 +88,13 @@ RSpec.describe "Videos", type: :request do
   end
   describe "POST /video_requests/:id" do
     it "makes an upvote request" do
-      get '/video_requests/1'
+      get '/video_requests/2'
       expect(flash[:notice]).to eq("Your request has been saved!")
     end
   end
   describe "POST /video_requests/:id" do
     it "prevents a user from upvoting more than once" do
-      get '/video_requests/2'
+      get '/video_requests/1'
       expect(flash[:notice]).to eq("You have already requested this video.")
     end
   end
