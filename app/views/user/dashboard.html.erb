@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th>Video title</th>
-      <th>Video info</th>
+      <th>Requested language</th>
     </tr>
   </thead>
   <tbody>
@@ -19,17 +19,17 @@
           <%= request.video.video_info["title"] %>
         </td>
         <td>
-          <%= request.video.video_info["description"] %>
+          <%= request["requested_lang"] %>
         </td>
       </tr>
     <% end %>
     <% @upvotes.each do |upvote| %>
       <tr>
         <td>
-          <%= upvote.video.video_info["title"] %>
+          <%= upvote.video_request.video.video_info["title"] %>
         </td>
         <td>
-          <%= upvote.video.video_info["description"] %>
+          <%= upvote.video_request["requested_lang"] %>
         </td>
       </tr>
     <% end %>
