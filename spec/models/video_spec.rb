@@ -10,12 +10,12 @@ RSpec.describe Video, type: :model do
         options: '{"default_lang": "en"}',
       },
       {
-        username: 'xw2765@columbia.edu',
+        username: 'xw2765',
         auth0_id: 'fdsaasdf',
         options: '{"default_lang": "en"}',
       },
       {
-        username: 'lyp2106@barnard.edu',
+        username: 'lyp2106',
         auth0_id: 'jkl;;lkj',
         options: '{"default_lang": "en"}',
       },
