@@ -17,6 +17,8 @@ class DescriptionController < ApplicationController
     render :json => editable.to_json
   end
 
+# :nocov:
+# unable to implement asking for browser microphone permissions
   def new_recorded
     ### audio content is in params[audio_content] -- check of this is nil before proceeding!
     if params[:audio_content]!=nil
@@ -36,3 +38,4 @@ class DescriptionController < ApplicationController
     render :json => {id: this_id}
   end
 end
+# :nocov:
