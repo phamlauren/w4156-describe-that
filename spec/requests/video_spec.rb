@@ -74,6 +74,12 @@ RSpec.describe "Videos", type: :request do
       expect(flash[:notice]).to eq("Your request has been saved!")
     end
   end
+  describe "POST /video/:id/request" do
+    it "makes a request that already has a request, which becomes an upvote" do
+      post '/video/1/request', params: { id: 1, lang: 'en' }
+      expect(flash[:notice]).to eq("Your request has been saved!")
+    end
+  end
   describe "GET /video_requests" do
     it "list all video requests" do
       get '/video_requests'
