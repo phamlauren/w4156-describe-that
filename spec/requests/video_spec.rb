@@ -80,5 +80,11 @@ RSpec.describe "Videos", type: :request do
       expect(assigns(:requests_info).size).to eq(2)
     end
   end
+  describe "POST /video_requests/:id" do
+    it "makes an upvote request" do
+      get '/video_requests/2'
+      expect(flash[:notice]).to eq("You have already requested this video.")
+    end
+  end
 
 end

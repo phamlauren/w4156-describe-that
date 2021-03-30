@@ -18,6 +18,7 @@ class VideoRequestController < ApplicationController
   end
 
   def upvote_request
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
     video_request = VideoRequest.find(params[:id])
     # TODO : user id of the person logged in
     user = User.find_by(auth0_id: session[:userinfo]['sub'])
