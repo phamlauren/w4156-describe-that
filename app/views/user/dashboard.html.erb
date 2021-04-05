@@ -4,8 +4,52 @@
 <%= @user.username %>
 <%= @user.options %>
 
+<h3>My Favorites</h3>
+<table class="table col-md-12" id="favorites">
+  <thead>
+    <tr>
+      <th>Video title</th>
+      <th>Video info</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @user.video_favorites.each do |video_favorite| %>
+  <tr>
+    <td>
+      <%= video_favorite.video.video_info["title"] %>
+    </td>
+    <td>
+      <%= video_favorite.video.video_info["description"] %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h3>My Votes</h3>
+<table class="table col-md-12" id="votes">
+  <thead>
+    <tr>
+      <th>Video title</th>
+      <th>Video info</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @user.votes_on_tracks.each do |track_vote| %>
+  <tr>
+    <td>
+      <%= track_vote.description_track.video.video_info["title"] %>
+    </td>
+    <td>
+      <%= track_vote.description_track.video.video_info["description"] %>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
+
 <h3>My Requests</h3>
-<table class="table table-striped col-md-12" id="requests">
+<table class="table col-md-12" id="requests">
   <thead>
     <tr>
       <th>Video title</th>
@@ -13,7 +57,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @requests.each do |request| %>
+    <% @user.video_requests.each do |request| %>
       <tr>
         <td>
           <%= request.video.video_info["title"] %>
@@ -23,7 +67,7 @@
         </td>
       </tr>
     <% end %>
-    <% @upvotes.each do |upvote| %>
+    <% @user.video_request_upvotes.each do |upvote| %>
       <tr>
         <td>
           <%= upvote.video_request.video.video_info["title"] %>
@@ -37,7 +81,7 @@
 </table>
 
 <h3>My Comments</h3>
-<table class="table table-striped col-md-12" id="comments">
+<table class="table col-md-12" id="comments">
   <thead>
     <tr>
       <th>Video title</th>
@@ -46,7 +90,7 @@
     </tr>
   </thead>
   <tbody>
-  <% @comments.each do |comment| %>
+  <% @user.comments_on_tracks.each do |comment| %>
   <tr>
     <td>
       <%= comment.description_track.video.video_info["title"] %>
@@ -58,6 +102,6 @@
       <%= comment.comment_text %>
     </td>
   </tr>
+  <% end %>
   </tbody>
 </table>
-<% end %>
