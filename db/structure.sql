@@ -227,6 +227,38 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: video_favorites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.video_favorites (
+    id bigint NOT NULL,
+    video_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: video_favorites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.video_favorites_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: video_favorites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.video_favorites_id_seq OWNED BY public.video_favorites.id;
+
+
+--
 -- Name: video_request_upvotes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -391,6 +423,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Name: video_favorites id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_favorites ALTER COLUMN id SET DEFAULT nextval('public.video_favorites_id_seq'::regclass);
+
+
+--
 -- Name: video_request_upvotes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -472,6 +511,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: video_favorites video_favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_favorites
+    ADD CONSTRAINT video_favorites_pkey PRIMARY KEY (id);
 
 
 --
@@ -577,6 +624,27 @@ CREATE INDEX index_descriptions_on_voice_id ON public.descriptions USING btree (
 
 
 --
+-- Name: index_video_favorites_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_favorites_on_user_id ON public.video_favorites USING btree (user_id);
+
+
+--
+-- Name: index_video_favorites_on_video_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_video_favorites_on_video_id ON public.video_favorites USING btree (video_id);
+
+
+--
+-- Name: index_video_favorites_on_video_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_video_favorites_on_video_id_and_user_id ON public.video_favorites USING btree (video_id, user_id);
+
+
+--
 -- Name: index_video_request_upvotes_on_upvoter_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -665,6 +733,14 @@ ALTER TABLE ONLY public.video_request_upvotes
 
 
 --
+-- Name: video_favorites fk_rails_5802b7add1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_favorites
+    ADD CONSTRAINT fk_rails_5802b7add1 FOREIGN KEY (video_id) REFERENCES public.videos(id);
+
+
+--
 -- Name: description_tracks fk_rails_68bd8b88de; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -694,6 +770,14 @@ ALTER TABLE ONLY public.video_requests
 
 ALTER TABLE ONLY public.video_requests
     ADD CONSTRAINT fk_rails_90e184756e FOREIGN KEY (video_id) REFERENCES public.videos(id);
+
+
+--
+-- Name: video_favorites fk_rails_a1d41d9008; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.video_favorites
+    ADD CONSTRAINT fk_rails_a1d41d9008 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -766,6 +850,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210321234900'),
 ('20210324201847'),
 ('20210327002417'),
-('20210405200305');
+('20210405200305'),
+('20210405203911'),
+('20210405204425');
 
 
