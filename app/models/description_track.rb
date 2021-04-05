@@ -10,6 +10,10 @@ class DescriptionTrack < ApplicationRecord
     Description.where(desc_track_id: id).order('start_time_sec ASC').to_a
   end
 
+  def number_of_votes
+    DescriptionTrackVote.where(desc_track_id: id).count
+  end
+
   def get_all_root_comments
     DescriptionTrackComment.where(desc_track_id: id, parent_comment_id: nil)
   end
