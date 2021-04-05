@@ -82,14 +82,14 @@ class VideoController < ApplicationController
     # if a request does not exist for this video and language, then make one
     if !video_request
       VideoRequest.create!(video_id: video.id, requested_lang: params[:lang], requester_id: user.id)
-      flash[:notice] = "Your request has been saved!"
+      flash[:notice] = "Your request for audio descriptions in #{LanguageList::LanguageInfo.find(params[:lang]).name} has been saved!"
     # if a request exists and the user has not already upvoted, then upvote
     elsif !VideoRequestUpvote.exists?(video_request_id: video_request.id, upvoter_id: user.id)
       VideoRequestUpvote.create!(video_request_id: video_request.id, upvoter_id: user.id)
-      flash[:notice] = "Your request has been saved!"
+      flash[:notice] = "Your request for audio descriptions in #{LanguageList::LanguageInfo.find(params[:lang]).name} has been saved!"
     # else request exists and the user has already upvoted
     else
-      flash[:notice] = "You have already requested this video."
+      flash[:notice] = "You have already requested audio descriptions in #{LanguageList::LanguageInfo.find(params[:lang]).name} for this video."
     end
 
     redirect_to '/video_requests'
