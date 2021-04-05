@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   # Description track
   post '/description_track/:id/switch_published', to: 'description_track#switch_published'
+  post '/description_track/:id/vote', to: 'description_track#vote'
 
   # Video request
   get '/video_requests', to: 'video_request#index'
