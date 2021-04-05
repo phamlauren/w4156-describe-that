@@ -1,5 +1,9 @@
+<%= flash[:notice] %>
 <h1 class="text-center page-title">Watch: <%=@yt_info["title"]%></h1>
-<p class="text-center"><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
+<p class="text-center">
+    <strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong>
+    | <%= link_to "Vote on this track!", "/description_track/#{params[:id]}/vote", method: :post, data: { turbolinks: 'false' } %>
+</p>
 
 <div class="text-center">
     <div id="player"></div>
