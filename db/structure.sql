@@ -123,7 +123,7 @@ CREATE TABLE public.description_tracks (
     lang character(2) DEFAULT 'en'::bpchar NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    published boolean DEFAULT false NOT NULL
+    published boolean NOT NULL
 );
 
 
@@ -268,7 +268,8 @@ CREATE TABLE public.video_requests (
     requested_lang character(2),
     requester_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    is_fulfilled boolean DEFAULT false NOT NULL
 );
 
 
@@ -764,6 +765,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318012725'),
 ('20210321234900'),
 ('20210324201847'),
-('20210327002417');
+('20210327002417'),
+('20210405200305');
 
 
