@@ -16,16 +16,15 @@
         <div id="page-nav" class="container">
           <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4 text-center"><h1>DescribeThat!</h1></div>
+            <div class="col-md-4 text-center"><h1><%= link_to "DescribeThat!", '/', :class => 'nav-link' %></h1></div>
             <div class="col-md-4">
-              <%= link_to "Home", '/', :class => 'btn btn-primary' %>
-              <%= link_to "Video requests", video_requests_path, :class => 'btn btn-primary' %>
+              <%= link_to "Video requests", video_requests_path, :class => 'nav-link' %>
               <% if session[:userinfo].nil? %>
-              <%= link_to "Login", '/auth/auth0', method: :post, :class => 'btn btn-primary' %>
+              <%= link_to "Login", '/auth/auth0', method: :post, :class => 'nav-link' %>
               <% else %>
-              <%= link_to "Dashboard", '/dashboard', method: :get, :class => 'btn btn-primary' %>
+              <%= link_to "Dashboard", '/dashboard', method: :get, :class => 'nav-link' %>
               <% end %>
-              <%= link_to "Logout", '/auth/logout', method: :get, :class => 'btn btn-primary' %>
+              <%= link_to "Logout", '/auth/logout', method: :get, :class => 'nav-link' %>
             </div>
           </div>
         </div>

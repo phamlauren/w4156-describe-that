@@ -1,34 +1,25 @@
 <h2 class="text-center page-title"><%=@yt_info["title"]%></h2>
-<div id="player"></div>
 
-<br>
+<div>
+  <div class="text-center">
+    <div id="player"></div>
+  </div>
 
-<div><p><%= @all_tracks.size %> description track(s) found!</p></div>
-
-<table id="all-description-tracks">
-  <tr>
-    <th>ID</th>
-    <th>Author</th>
-    <th>Lang</th>
-    <th>Published?</th>
-    <th>Link</th>
-  </tr>
-  <% @all_tracks.each do |dtrack| %>
-    <tr>
-      <td><%= dtrack.id %></td>
-      <td><%= dtrack.author.username %></td>
-      <td><%= LanguageList::LanguageInfo.find(dtrack.lang).name %></td>
-      <td><%= dtrack.published ? "Yes" : "No" %></td>
-      <td>
-        <%= link_to "Watch!", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "btn btn-primary #{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>
-        <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.author.username %>
-          <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
-          <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+  <div>
+  <p class="text-center"><%= @all_tracks.size %> description track(s) found!</p>
+  <div class="table-list text-center">
+    <% @all_tracks.each do |dtrack| %>
+    <div class="table-list-item">
+      <%= link_to "#{LanguageList::LanguageInfo.find(dtrack.lang).name} descriptions by #{dtrack.author.username}", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "#{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>
+      <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.author.username %>
+        <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
+        <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+  </div>
+</div>
 
 <br>
 

@@ -8,12 +8,17 @@ html {
     font: $primary-font;
     background-color: $primary-color;
     padding: 20px;
+    font-size: 1.25rem;
+}
+
+body {
+    border-radius: 25px;
 }
 
 .page-title {
     text-align: center;
     color: $primary-color;
-    margin-top: 30px;
+    margin: 2rem 0 1rem 0;
 }
 
 .text-center {
@@ -32,4 +37,16 @@ html {
 
 #page-nav {
     margin: 0 0 10px 0;
+}
+
+.nav-link {
+    display: inline-block;
+}
+
+.table-list {
+    margin-bottom: 2rem;
+}
+
+.table-list-item {
+    display: block;
 }

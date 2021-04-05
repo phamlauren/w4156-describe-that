@@ -1,9 +1,9 @@
-<h1>Watch: <%=@yt_info["title"]%></h1>
-<p><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
+<h1 class="text-center page-title">Watch: <%=@yt_info["title"]%></h1>
+<p class="text-center"><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
 
-<br>
-
-<div id="player"></div>
+<div class="text-center">
+    <div id="player"></div>
+</div>
 
 <audio controls style="display: none" id="description-player" onEnded="onDescriptionEnd()">
   <source id="audio-source" src="#" type="audio/wav">
