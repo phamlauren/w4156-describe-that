@@ -95,6 +95,22 @@ class VideoController < ApplicationController
     redirect_to '/video_requests'
   end
 
+  def favorite
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
+    video = Video.find(params[:id])
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
+    # if theres isn't a favorite for this video and this user, then make one
+    if !VideoFavorite.exists?(video_id: video.id, user_id: user.id)
+      VideoFavorite.create!(video_id: video.id, user_id: user.id)
+      flash[:notice] = "Saved! You can find all your favorites on your dashboard."
+    # else favorite exists and the user has already favorited
+    else
+      flash[:notice] = "You have already favorited this video. You can find all your favorites on your dashboard."
+    end
+
+    redirect_to "/video/#{video.id}"
+  end
+
   def describe
     # check if the user is logged in
     session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?

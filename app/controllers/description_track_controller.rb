@@ -7,7 +7,6 @@ class DescriptionTrackController < ApplicationController
 
     def vote
         desc_track = DescriptionTrack.find(params[:id])
-        puts desc_track.id
         session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
         user = User.find_by(auth0_id: session[:userinfo]['sub'])
         # if the user has not already upvoted, then upvote

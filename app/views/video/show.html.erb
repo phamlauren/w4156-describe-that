@@ -1,4 +1,13 @@
+<%= flash[:notice] %>
 <h2 class="text-center page-title"><%=@yt_info["title"]%></h2>
+
+<p class="text-center">
+    <% if session[:userinfo].nil? %>
+        <%= link_to "Login to favorite this video", '/auth/auth0', method: :post %>
+    <% else %>
+        <%= link_to "Favorite this video", "/video/#{@video.id}/favorite", method: :post, data: { turbolinks: 'false' } %>
+    <% end %>
+</p>
 
 <div>
   <div class="text-center">
