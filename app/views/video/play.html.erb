@@ -9,6 +9,9 @@
     <% end %>
 </p>
 
+<div class="volume-container">
+  <input type="range" min="0" max="100" value="100" class="slider" id="volume">
+</div>
 <div class="text-center">
     <div id="player"></div>
 </div>
@@ -47,6 +50,12 @@
 
     let description_data = <%= @descriptions.to_json.html_safe %>;
     let description_player = id("description-player");
+
+    const description_volume = id("volume");
+    description_volume.oninput = function() {
+        description_player.volume = this.value/100;
+    }
+
     let audio_source = id("audio-source");
 
     let current_index = 0;
