@@ -85,6 +85,31 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
+const conflictIntervals = function() {
+  const descriptions = Array.prototype.slice.call(document.querySelectorAll("#description-audios tr")).slice(1).map(x=>{
+    let starttime = parseFloat(x.children[0].innerText);
+    let duration = x.children[1].innerText=="inline" ? x.querySelector("audio").duration : 0;
+    return {start: starttime, inline: x.children[1].innerText=="inline", end: starttime+duration};
+  });
+  // sort
+  descriptions.sort((a,b)=>[a.start-b.start,a.end-b.end]);
+  console.log(descriptions);
+
+  conflicts = [];
+  if (descriptions.length==0) {
+    return conflicts;
+  }
+  
+  lastEnds = descriptions[0].end;
+  for (let i=1; i< descriptions.length; i++) {
+    if (descriptions[i].start < lastEnds) {
+      conflicts.push(i.start);
+    }
+    lastEnds = Math.max(descriptions[i].end,lastEnds);
+  }
+  return conflicts;
+};  
+
 // add listener for publish & unpublish
 const publish = document.querySelector(".publish-track");
 const publish_btn = publish.querySelector("input[name='commit']")
@@ -92,9 +117,16 @@ const unpublish = document.querySelector(".unpublish-track");
 const unpublish_btn = unpublish.querySelector("input[name='commit']");
 console.log("<%=@track.published%>");
 publish.addEventListener("click", function(e) {
-  this.submit();
-  publish_btn.disabled = true;
-  unpublish_btn.disabled = false;
+  let intervals = conflictIntervals();
+  if (intervals==[]) {
+    this.submit();
+    publish_btn.disabled = true;
+    unpublish_btn.disabled = false;
+  }
+  else {
+    alert("The following intervals (denoted by start time) start eariler than one previous description's end time: " + intervals.toString());
+    console.log(intervals);
+  }
 });
 unpublish.addEventListener("click", function(e) {
   this.submit();
