@@ -3,7 +3,9 @@ class DescriptionTrackController < ApplicationController
         track = DescriptionTrack.find(params[:id])
         track.published = params[:published]=="true" ? true : false
         track.save
-        redirect_to "/video/#{track.video_id}/play/#{track.id}"
+        if track.published
+          redirect_to "/video/#{track.video_id}/play/#{track.id}"
+        end
     end
 
     def vote
