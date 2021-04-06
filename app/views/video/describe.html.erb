@@ -103,7 +103,7 @@ const conflictIntervals = function() {
   lastEnds = descriptions[0].end;
   for (let i=1; i< descriptions.length; i++) {
     if (descriptions[i].start < lastEnds) {
-      conflicts.push(i.start);
+      conflicts.push(descriptions[i].start);
     }
     lastEnds = Math.max(descriptions[i].end,lastEnds);
   }
@@ -117,6 +117,7 @@ const unpublish = document.querySelector(".unpublish-track");
 const unpublish_btn = unpublish.querySelector("input[name='commit']");
 console.log("<%=@track.published%>");
 publish.addEventListener("click", function(e) {
+  e.preventDefault();
   let intervals = conflictIntervals();
   if (intervals==[]) {
     this.submit();
@@ -124,7 +125,7 @@ publish.addEventListener("click", function(e) {
     unpublish_btn.disabled = false;
   }
   else {
-    alert("The following intervals (denoted by start time) start eariler than one previous description's end time: " + intervals.toString());
+    alert("Descriptions have time conflicts around time: " + intervals.toString());
     console.log(intervals);
   }
 });
