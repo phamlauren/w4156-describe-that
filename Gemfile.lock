@@ -332,6 +332,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    streamio-ffmpeg (3.0.2)
+      multi_json (~> 1.8)
     sys-uname (1.2.2)
       ffi (~> 1.1)
     thor (1.1.0)
@@ -396,6 +398,7 @@ DEPENDENCIES
   selenium-webdriver
   simplecov
   spring
+  streamio-ffmpeg
   turbolinks (~> 5)
   tzinfo-data
   unf_ext (~> 0.0.7.7)
