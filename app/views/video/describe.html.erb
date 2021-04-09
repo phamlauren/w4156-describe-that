@@ -5,7 +5,7 @@
 <br>
 
 <div class="volume-container">
-  <p>Description Track Volume</p>
+  <label>Description Track Volume: </label>
   <input type="range" min="0" max="100" value="100" class="slider" id="volume">
 </div>
 
@@ -101,7 +101,6 @@ const conflictIntervals = function() {
   });
   // sort
   descriptions.sort((a,b)=>[a.start-b.start,a.end-b.end]);
-  console.log(descriptions);
 
   conflicts = [];
   if (descriptions.length==0) {
@@ -123,18 +122,16 @@ const publish = document.querySelector(".publish-track");
 const publish_btn = publish.querySelector("input[name='commit']")
 const unpublish = document.querySelector(".unpublish-track");
 const unpublish_btn = unpublish.querySelector("input[name='commit']");
-console.log("<%=@track.published%>");
 publish.addEventListener("click", function(e) {
   e.preventDefault();
   let intervals = conflictIntervals();
-  if (intervals==[]) {
+  if (intervals.length==0) {
     this.submit();
     publish_btn.disabled = true;
     unpublish_btn.disabled = false;
   }
   else {
     alert("Descriptions have time conflicts around time: " + intervals.toString());
-    console.log(intervals);
   }
 });
 unpublish.addEventListener("click", function(e) {
@@ -185,7 +182,6 @@ const add_description_form = function(editable={}) {
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
     this.parentNode.parentNode.remove();
   });
-  console.log(new_description.querySelector("select[name='pause_at_start_time'] option[selected='selected']").innerHTML);
   new_description.addEventListener("ajax:success", function (e) {
     const desc_audio_html = `<tr>
     <td>${new_description.querySelector("input[name='time']").value}</td>
