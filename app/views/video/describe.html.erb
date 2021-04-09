@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag params[:controller] %>
 <h1>Describe video: <%=@yt_info["title"]%></h1>
 <p><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
 
@@ -7,6 +8,7 @@
   <p>Description Track Volume</p>
   <input type="range" min="0" max="100" value="100" class="slider" id="volume">
 </div>
+
 <div id="player"></div>
 
 <!-- Hidden description audio player. -->
@@ -15,9 +17,13 @@
   Your browser does not support the audio element.
 </audio>
 
-<button type="button" id="add-description-button">Add one new generated description at current time!</button>
-<button type="button" id="record-description-button">Add one new recorded description at current time!</button>
+<div class="add-description-container">
+  <button type="button" id="add-description-button">Add one new generated description at current time!</button>
+  <button type="button" id="record-description-button">Add one new recorded description at current time!</button>
+</div>
+
 <div id="description-forms"></div>
+
 <table id="description-audios">
   <tr>
     <th>start time (sec)</th>
@@ -53,14 +59,16 @@
   <% end %>
 </table>
 
-<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
-  <%= form.hidden_field :published, value: true %>
-  <%= form.submit "Publish Description Track", disabled: @track.published %>
-<% end %>
-<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
-  <%= form.hidden_field :published, value: false %>
-  <%= form.submit "Unpublish Description Track", disabled: !@track.published %>
-<% end %>
+<div class="publish-container">
+  <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
+    <%= form.hidden_field :published, value: true %>
+    <%= form.submit "Publish Description Track", disabled: @track.published %>
+  <% end %>
+  <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
+    <%= form.hidden_field :published, value: false %>
+    <%= form.submit "Unpublish Description Track", disabled: !@track.published %>
+  <% end %>
+</div>
 
 
 <script>

@@ -1,0 +1,27 @@
+#content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-description-container {
+  margin: 1em;
+}
+
+.add-description-container button {
+  margin-inline: 0.5em;
+}
+
+#description-audios th,
+#description-audios td {
+  padding-left: 2rem;
+}
+
+.publish-container {
+  display: flex;
+  margin: 1em;
+}
+
+.publish-container input {
+  margin-inline: 0.5em;
+}
