@@ -31,6 +31,11 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+When /^I go back$/ do
+  page.go_back
+  page.driver.browser.navigate.refresh
+end
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }

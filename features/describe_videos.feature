@@ -47,6 +47,8 @@ Scenario: publish and unpublish description Track
 
     And I press "Publish Description Track"
 
+    Then I go back
+
     Then "Publish Description Track" should be disabled
 
     And "Unpublish Description Track" should be enabled
