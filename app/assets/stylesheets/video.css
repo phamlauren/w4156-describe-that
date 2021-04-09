@@ -1,4 +1,5 @@
-#content {
+#content,
+#description-forms {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +11,12 @@
 
 .add-description-container button {
   margin-inline: 0.5em;
+}
+
+.new-description {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem;
 }
 
 #description-audios th,
