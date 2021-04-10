@@ -1,20 +1,18 @@
 <%= flash[:notice] %>
 <h1 class="page-title">Videos with audio descriptions</h1>
 
-<table class="table col-md-12 text-center" id="videos">
-  <tbody>
-    <% @videos_info.each do |video| %>
-      <tr>
-        <td>
-          <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' } %>
-        </td>
-        <td>
-          <%= image_tag video["thumbnails"]["default"]["url"] %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="videos" class="flex-box">
+  <% @videos_info.each do |video| %>
+  <div class="flex-item">
+    <div class="text-center">
+      <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' } %>
+    </div>
+    <div class="text-center">
+      <%= image_tag video["thumbnails"]["default"]["url"] %>
+    </div>
+  </div>
+  <% end %>
+</div>
 
 <script>
 </script>
