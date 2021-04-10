@@ -2,7 +2,7 @@
   <div class="card-body">
     <strong>@<%= reply.comment_author.username %></strong>: <%= reply.comment_text %>
     <span style="float: right; color: gray;">
-      <%= reply.created_at.strftime('%H:%M %Y-%m-%d ') %>
+      <%= reply.time_est.strftime('%l:%M %P est, %b %e %Y') %>
     </span>
   </div>
 </div>

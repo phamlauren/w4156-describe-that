@@ -2,7 +2,7 @@
   <div class="card-body">
     <strong>@<%= description_track_comment.comment_author.username %></strong>: <%= description_track_comment.comment_text %>
     <span style="float: right; color: gray;">
-      <%= description_track_comment.created_at.strftime('%H:%M %Y-%m-%d ') %>
+      <%= description_track_comment.time_est.strftime('%l:%M %P est, %b %e %Y') %>
     </span>
   </div>
 </div>
