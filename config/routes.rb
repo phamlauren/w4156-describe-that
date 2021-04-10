@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   post '/video/:id/favorite', to: 'video#favorite'
 
   get '/video/:id/play/:dtrack_id', to: 'video#play'
-  get '/comment', to: 'description_track_comment#comment'
+  post '/video/:id/play/comment', to: 'description_track_comment#comment'
 
   get '/video/:id/describe/:dtrack_id', to: 'video#describe'
   post '/video/:id/describe/:dtrack_id', to: 'video#describe'
