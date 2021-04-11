@@ -59,9 +59,16 @@
 </table>
 
 <div class="publish-container">
-  <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
-    <%= form.hidden_field :published, value: true %>
-    <%= form.submit "Publish Description Track", disabled: @track.published %>
+  <% if @track.published %>
+    <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
+      <%= form.hidden_field :published, value: true %>
+      <%= form.submit "Save Description Track" %>
+    <% end %>
+  <% else %>
+    <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
+      <%= form.hidden_field :published, value: true %>
+      <%= form.submit "Publish Description Track", disabled: @track.published %>
+    <% end %>
   <% end %>
   <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
     <%= form.hidden_field :published, value: false %>
