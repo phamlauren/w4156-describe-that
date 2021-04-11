@@ -15,11 +15,11 @@
     </div>
     <% if session[:userinfo].nil? %>
     <div class="text-center">
-        <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post, :class => 'inline-link' %>
+        <%= link_to "Login to upvote", '/auth/auth0', method: :post, :class => 'inline-link' %>
     </div>
     <% else %>
     <div class="text-center">
-      <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+      <%= link_to "Upvote", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
     <% end %>
   </div>
