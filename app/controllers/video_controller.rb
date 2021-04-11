@@ -198,7 +198,7 @@ class VideoController < ApplicationController
     end
 
     # go back to the video page
-    flash[:notice] = "Successfully deleted track with ID #{this_track_id}."
+    flash[:notice] = "Successfully deleted track."
     redirect_to "/video/#{params[:id]}"
   end
 
