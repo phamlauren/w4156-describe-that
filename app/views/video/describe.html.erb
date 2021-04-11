@@ -155,14 +155,19 @@ const add_description_form = function(editable={}) {
   const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
     <%= form.hidden_field :track_id, value: @track.id %>
     <div class="left-container">
-      <%= form.label :description, "time (sec):" %>
+      <%= form.label :time, "Start time (sec):" %>
       <%= form.number_field :time %>
+      <%= form.label :description, "Description text:" %>
       <%= form.text_area :description, required: true %>
     </div>
     <div class="right-container">
       <%= form.label :voice_speed, "Voice speed:" %>
       <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
+      <%= form.label :pause_at_start_time, "Description type:" %>
       <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <%= form.label :video_vol_inline, "Video volume % (inline only):" %>
+      <%= form.number_field :video_vol_inline, in: 5..100, step: 5, value: 100 %>
+      <%= form.label :voice_id, "Voice:" %>
       <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
       <button type="button" id="remove-description">Remove</button>
       <%= form.submit "Add" %>
@@ -179,6 +184,7 @@ const add_description_form = function(editable={}) {
   if (editable.desc_text) new_description.querySelector("#pause_at_start_time").value = editable.pause_at_start_time;
   if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
   if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
+  if (editable.desc_text) new_description.querySelector("#video_vol_inline").value = editable.video_vol_inline;
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
     this.parentNode.parentNode.remove();
   });
@@ -219,7 +225,7 @@ const add_record_description_form = function() {
   const des_html = `<%= form_with(url: "/description/new_recorded", class: "new-description", local: false) do |form| %>
     <%= form.hidden_field :track_id, value: @track.id %>
     <div class="left-container">
-      <%= form.label :description, "time (sec):" %>
+      <%= form.label :description, "Start time (sec):" %>
       <%= form.number_field :time %>
       <div id="media-record-div">
         <%= button_tag "Get Rec Permission", type: 'button', id: "toggle-recording-button", class: "btn-primary" %>
@@ -227,7 +233,10 @@ const add_record_description_form = function() {
     </div>
     <%= form.hidden_field :audio_content, id: "recorded-audio-content", required: true %>
     <div class="right-container">
+      <%= form.label :pause_at_start_time, "Description type:" %>
       <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <%= form.label :video_vol_inline, "Video volume % (inline only):" %>
+      <%= form.number_field :video_vol_inline, in: 5..100, step: 5, value: 100 %>
       <button type="button" id="remove-description">Remove</button>
       <%= form.submit "Add", disabled: true %>
     </div><% end %>`;
