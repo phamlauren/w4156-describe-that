@@ -1,91 +1,94 @@
-<h1 class="page-title">My Dashboard</h1>
+<h1 class="page-title" style="margin-bottom: 0;">My Dashboard</h1>
+<p class="text-center">Username: <strong>@<%= @user.username %></strong></p>
 
-<h3>About Me</h3>
-<div class="card">
-  <p><strong>Username:</strong> <%= @user.username %></p>
-  <p><strong>Default language:</strong> <%= @user.options %></p>
+<div class="section">
+  <h3>My Favorites</h3>
+  <div id="favorites" class="flex-box left">
+    <% @user.video_favorites.each do |video_favorite| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag video_favorite.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to video_favorite.video.video_info["title"], "/video/#{video_favorite.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+      </div>
+    </div>
+    <% end %>
+    <% if @user.video_favorites.empty? %>
+    No favorites.
+    <% end %>
+  </div>
 </div>
 
-<h3>My Favorites</h3>
-<div id="favorites" class="flex-box left">
-  <% @user.video_favorites.each do |video_favorite| %>
-  <div class="card flex-item">
-    <div class="text-center">
-      <%= image_tag video_favorite.video.video_info["thumbnails"]["default"]["url"] %>
+<div class="section">
+  <h3>My Votes</h3>
+  <div id="votes" class="flex-box left">
+    <% @user.votes_on_tracks.each do |track_vote| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag track_vote.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+      </div>
     </div>
-    <div class="text-center">
-      <%= link_to video_favorite.video.video_info["title"], "/video/#{video_favorite.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
-    </div>
+    <% end %>
+    <% if @user.votes_on_tracks.empty? %>
+    No votes.
+    <% end %>
   </div>
-  <% end %>
-  <% if @user.video_favorites.empty? %>
-  No favorites.
-  <% end %>
 </div>
 
-<h3>My Votes</h3>
-<div id="votes" class="flex-box left">
-  <% @user.votes_on_tracks.each do |track_vote| %>
-  <div class="card flex-item">
-    <div class="text-center">
-      <%= image_tag track_vote.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+<div class="section">
+  <h3>My Requests</h3>
+  <div id="requests" class="flex-box left">
+    <% @user.video_requests.each do |request| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag request.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
+        Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
+      </div>
     </div>
-    <div class="text-center">
-      <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+    <% end %>
+    <% @user.video_request_upvotes.each do |upvote| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag upvote.video_request.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
+        Requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
+      </div>
     </div>
+    <% end %>
+    <% if @user.video_requests.empty? && @user.video_request_upvotes.empty? %>
+    No requests.
+    <% end %>
   </div>
-  <% end %>
-  <% if @user.votes_on_tracks.empty? %>
-  No votes.
-  <% end %>
 </div>
 
-<h3>My Requests</h3>
-<div id="requests" class="flex-box left">
-  <% @user.video_requests.each do |request| %>
-  <div class="card flex-item">
-    <div class="text-center">
-      <%= image_tag request.video.video_info["thumbnails"]["default"]["url"] %>
+<div class="section">
+  <h3>My Comments</h3>
+  <div id="comments" class="flex-box left">
+  <% @user.commented_tracks %>
+    <% @user.comments_on_tracks.each do |comment| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag comment.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to comment.description_track.video.video_info["title"], "/video/#{comment.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+      </div>
+      <div style="color: gray;">
+        "<%= comment.comment_text %>"
+      </div>
     </div>
-    <div class="text-center">
-      <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
-      Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
-    </div>
+    <% end %>
+    <% if @user.comments_on_tracks.empty? %>
+    No comments.
+    <% end %>
   </div>
-  <% end %>
-  <% @user.video_request_upvotes.each do |upvote| %>
-  <div class="card flex-item">
-    <div class="text-center">
-      <%= image_tag upvote.video_request.video.video_info["thumbnails"]["default"]["url"] %>
-    </div>
-    <div class="text-center">
-      <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
-      Requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
-    </div>
-  </div>
-  <% end %>
-  <% if @user.video_requests.empty? && @user.video_request_upvotes.empty? %>
-  No requests.
-  <% end %>
-</div>
-
-<h3>My Comments</h3>
-<div id="comments" class="flex-box left">
-<% @user.commented_tracks %>
-  <% @user.comments_on_tracks.each do |comment| %>
-  <div class="card flex-item">
-    <div class="text-center">
-      <%= image_tag comment.description_track.video.video_info["thumbnails"]["default"]["url"] %>
-    </div>
-    <div class="text-center">
-      <%= link_to comment.description_track.video.video_info["title"], "/video/#{comment.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
-    </div>
-    <div style="color: gray;">
-      "<%= comment.comment_text %>"
-    </div>
-  </div>
-  <% end %>
-  <% if @user.comments_on_tracks.empty? %>
-  No comments.
-  <% end %>
 </div>
