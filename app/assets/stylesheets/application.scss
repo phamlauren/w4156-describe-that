@@ -6,13 +6,12 @@ $primary-color: #9bddff;
 
 html {
     font: $primary-font;
-    background-color: $primary-color;
     padding: 20px;
     font-size: 1.25rem;
 }
 
 body {
-    border-radius: 25px;
+    background-color: $primary-color;
 }
 
 .page-title {
@@ -28,6 +27,8 @@ body {
 /* Styling for wrapper */
 #main-wrapper {
     margin: 20px;
+    border-radius: 25px;
+    background-color: white;
 }
 
 #main-wrapper > #content {
@@ -39,8 +40,18 @@ body {
     margin: 0 0 10px 0;
 }
 
+#footer {
+    margin-top: 2rem;
+}
+
 .nav-link {
     display: inline-block;
+}
+
+.inline-link {
+    display: inline-block;
+    padding: 0;
+    text-decoration: none;
 }
 
 .table-list {
