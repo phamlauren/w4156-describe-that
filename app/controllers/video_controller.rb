@@ -14,6 +14,13 @@ class VideoController < ApplicationController
       # show if video has description track and if we successfully get video info from youtube API
       if video.has_published_desc_track && !video_info.empty?
         video_info["id"] = video.id
+        lang_list = []
+        video.get_all_desc_tracks.each do |track|
+          if track.published
+            lang_list.push(track.lang)
+          end
+        end
+        video_info["lang_list"] = lang_list
         @videos_info.push(video_info)
       end
     end

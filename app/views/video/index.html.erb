@@ -10,6 +10,16 @@
     <div class="text-center">
       <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
+    <div class="text-center">
+      Descriptions in 
+      <% video["lang_list"].each do |lang| %>
+        <% if lang == video["lang_list"].last %>
+          <%= LanguageList::LanguageInfo.find(lang).name %>
+        <% else %>
+          <%= LanguageList::LanguageInfo.find(lang).name %>,
+        <% end %>
+      <% end %>
+    </div>
   </div>
   <% end %>
 </div>
