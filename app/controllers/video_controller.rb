@@ -44,7 +44,7 @@ class VideoController < ApplicationController
 
   def fetch_from_api
     # handle the YouTube and get redirect
-    if params[:commit] == "Describe" && params[:yt_url]!=nil
+    if params[:commit] == "Go" && params[:yt_url]!=nil
       ytid = get_ytid_from_url params[:yt_url]
       if video_info(ytid) != {}
         video = Video.find_or_create_by(yt_video_id: ytid)
