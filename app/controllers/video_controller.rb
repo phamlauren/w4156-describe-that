@@ -218,7 +218,16 @@ class VideoController < ApplicationController
         return
       end
 
-      @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
+      @descriptions = @track.get_all_descriptions.map { |d|
+        {
+          id: d.id,
+          start_time_sec: d.start_time_sec,
+          url: d.get_download_url_for_audio_file,
+          generated: d.desc_type=='generated',
+          inline_extended: d.pause_at_start_time ? "extended" : "inline",
+          video_vol_inline: d.video_volume_inline.nil? ? 100 : d.video_volume_inline
+        }
+      }
       render "play"
     end
   end
