@@ -74,18 +74,20 @@
 <div class="section">
   <h3>My Comments</h3>
   <div id="comments" class="flex-box left">
-  <% @user.commented_tracks %>
-    <% @user.comments_on_tracks.each do |comment| %>
+  <% @user.get_all_track_comments.each do |track| %>
     <div class="card flex-item">
       <div class="text-center">
-        <%= image_tag comment.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+        <%= image_tag track.video.video_info["thumbnails"]["default"]["url"] %>
       </div>
       <div class="text-center">
-        <%= link_to comment.description_track.video.video_info["title"], "/video/#{comment.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+        <%= link_to track.video.video_info["title"], "/video/#{track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
+        audio descriptions in <%= LanguageList::LanguageInfo.find(track.lang).name %>
       </div>
+      <% track.get_comments_by_user(@user.id).each do |comment| %>
       <div style="color: gray;">
         "<%= comment.comment_text %>"
       </div>
+      <% end %>
     </div>
     <% end %>
     <% if @user.comments_on_tracks.empty? %>

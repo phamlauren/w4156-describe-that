@@ -5,4 +5,11 @@ class User < ApplicationRecord
   has_many :video_request_upvotes, class_name: 'VideoRequestUpvote', foreign_key: 'upvoter_id'
   has_many :votes_on_tracks, class_name: 'DescriptionTrackVote', foreign_key: 'voter_id'
   has_many :video_favorites, class_name: "VideoFavorite", foreign_key: 'user_id'
+
+
+  def get_all_track_comments
+    all_comments = DescriptionTrackComment.where(comment_author_id: id)
+    DescriptionTrack.where(id: all_comments.pluck('desc_track_id'))
+  end
+
 end

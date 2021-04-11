@@ -18,4 +18,8 @@ class DescriptionTrack < ApplicationRecord
     DescriptionTrackComment.where(desc_track_id: id, parent_comment_id: nil)
   end
 
+  def get_comments_by_user(user_id)
+    DescriptionTrackComment.where(desc_track_id: id, comment_author_id: user_id)
+  end
+
 end
