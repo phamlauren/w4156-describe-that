@@ -1,7 +1,7 @@
 <%= flash[:notice] %>
 <h1 class="text-center page-title">Watch: <%=@yt_info["title"]%></h1>
 <p class="text-center">
-    <strong>Track ID: <%=@track.id%></strong>&nbsp; | &nbsp;<strong>Author: <%= @track.author.username %></strong>
+    Author: <strong>@<%= @track.author.username %></strong>
     <% if session[:userinfo].nil? %>
         &nbsp; | &nbsp;<%= link_to "Login to vote on this track", '/auth/auth0', method: :post, :class => 'inline-link' %>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square-fill" viewBox="0 0 16 16">
