@@ -50,3 +50,14 @@ body {
 .table-list-item {
     display: block;
 }
+
+.flex-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.flex-item {
+    width: 25%;
+}

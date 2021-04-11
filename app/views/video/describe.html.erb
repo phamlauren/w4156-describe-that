@@ -1,12 +1,14 @@
+<%= stylesheet_link_tag params[:controller] %>
 <h1>Describe video: <%=@yt_info["title"]%></h1>
 <p><strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong></p>
 
 <br>
 
 <div class="volume-container">
-  <p>Description Track Volume</p>
+  <label>Description Track Volume: </label>
   <input type="range" min="0" max="100" value="100" class="slider" id="volume">
 </div>
+
 <div id="player"></div>
 
 <!-- Hidden description audio player. -->
@@ -15,9 +17,13 @@
   Your browser does not support the audio element.
 </audio>
 
-<button type="button" id="add-description-button">Add one new generated description at current time!</button>
-<button type="button" id="record-description-button">Add one new recorded description at current time!</button>
+<div class="add-description-container">
+  <button type="button" id="add-description-button">Add one new generated description at current time!</button>
+  <button type="button" id="record-description-button">Add one new recorded description at current time!</button>
+</div>
+
 <div id="description-forms"></div>
+
 <table id="description-audios">
   <tr>
     <th>start time (sec)</th>
@@ -53,14 +59,16 @@
   <% end %>
 </table>
 
-<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
-  <%= form.hidden_field :published, value: true %>
-  <%= form.submit "Publish Description Track", disabled: @track.published %>
-<% end %>
-<%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
-  <%= form.hidden_field :published, value: false %>
-  <%= form.submit "Unpublish Description Track", disabled: !@track.published %>
-<% end %>
+<div class="publish-container">
+  <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "publish-track", local: false) do |form| %>
+    <%= form.hidden_field :published, value: true %>
+    <%= form.submit "Publish Description Track", disabled: @track.published %>
+  <% end %>
+  <%= form_with(url: "/description_track/#{@track.id}/switch_published", class: "unpublish-track", local: false) do |form| %>
+    <%= form.hidden_field :published, value: false %>
+    <%= form.submit "Unpublish Description Track", disabled: !@track.published %>
+  <% end %>
+</div>
 
 
 <script>
@@ -93,7 +101,6 @@ const conflictIntervals = function() {
   });
   // sort
   descriptions.sort((a,b)=>[a.start-b.start,a.end-b.end]);
-  console.log(descriptions);
 
   conflicts = [];
   if (descriptions.length==0) {
@@ -115,18 +122,16 @@ const publish = document.querySelector(".publish-track");
 const publish_btn = publish.querySelector("input[name='commit']")
 const unpublish = document.querySelector(".unpublish-track");
 const unpublish_btn = unpublish.querySelector("input[name='commit']");
-console.log("<%=@track.published%>");
 publish.addEventListener("click", function(e) {
   e.preventDefault();
   let intervals = conflictIntervals();
-  if (intervals==[]) {
+  if (intervals.length==0) {
     this.submit();
     publish_btn.disabled = true;
     unpublish_btn.disabled = false;
   }
   else {
     alert("Descriptions have time conflicts around time: " + intervals.toString());
-    console.log(intervals);
   }
 });
 unpublish.addEventListener("click", function(e) {
@@ -149,15 +154,19 @@ const add_description_form = function(editable={}) {
   const description_forms = document.getElementById("description-forms");
   const des_html = `<%= form_with(url: "/description/new_generated", class: "new-description", local: false) do |form| %>
     <%= form.hidden_field :track_id, value: @track.id %>
-    <%= form.label :description, "time (sec):" %>
-    <%= form.number_field :time %>
-    <%= form.text_area :description, size: "70x2", required: true %>
-    <%= form.label :voice_speed, "Voice speed:" %>
-    <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
-    <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
-    <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
-    <button type="button" id="remove-description">Remove</button>
-    <%= form.submit "Add" %><% end %>`;
+    <div class="left-container">
+      <%= form.label :description, "time (sec):" %>
+      <%= form.number_field :time %>
+      <%= form.text_area :description, required: true %>
+    </div>
+    <div class="right-container">
+      <%= form.label :voice_speed, "Voice speed:" %>
+      <%= form.number_field :voice_speed, in: 0.25..4, step: 0.01, value: 1.0 %>
+      <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
+      <button type="button" id="remove-description">Remove</button>
+      <%= form.submit "Add" %>
+    </div><% end %>`;
   description_forms.insertAdjacentHTML("beforeend", des_html);
   const new_description = description_forms.lastChild;
   // set time range
@@ -171,9 +180,8 @@ const add_description_form = function(editable={}) {
   if (editable.desc_text) new_description.querySelector("#voice_id").value = editable.voice_id;
   if (editable.desc_text) new_description.querySelector("#voice_speed").value = editable.voice_speed;
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
-    this.parentNode.remove();
+    this.parentNode.parentNode.remove();
   });
-  console.log(new_description.querySelector("select[name='pause_at_start_time'] option[selected='selected']").innerHTML);
   new_description.addEventListener("ajax:success", function (e) {
     const desc_audio_html = `<tr>
     <td>${new_description.querySelector("input[name='time']").value}</td>
@@ -210,15 +218,19 @@ const add_record_description_form = function() {
   const description_forms = document.getElementById("description-forms");
   const des_html = `<%= form_with(url: "/description/new_recorded", class: "new-description", local: false) do |form| %>
     <%= form.hidden_field :track_id, value: @track.id %>
-    <%= form.label :description, "time (sec):" %>
-    <%= form.number_field :time %>
-    <div id="media-record-div">
-      <%= button_tag "Get Rec Permission", type: 'button', id: "toggle-recording-button", class: "btn-primary" %>
+    <div class="left-container">
+      <%= form.label :description, "time (sec):" %>
+      <%= form.number_field :time %>
+      <div id="media-record-div">
+        <%= button_tag "Get Rec Permission", type: 'button', id: "toggle-recording-button", class: "btn-primary" %>
+      </div>
     </div>
     <%= form.hidden_field :audio_content, id: "recorded-audio-content", required: true %>
-    <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
-    <button type="button" id="remove-description">Remove</button>
-    <%= form.submit "Add", disabled: true %><% end %>`;
+    <div class="right-container">
+      <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
+      <button type="button" id="remove-description">Remove</button>
+      <%= form.submit "Add", disabled: true %>
+    </div><% end %>`;
   description_forms.insertAdjacentHTML("beforeend", des_html);
   const new_description = description_forms.lastChild;
 
@@ -237,7 +249,7 @@ const add_record_description_form = function() {
   new_description.querySelector("#time").value = player.getCurrentTime().toFixed(1);
 
   new_description.querySelector("#remove-description").addEventListener("click", function (e) {
-    this.parentNode.remove();
+    this.parentNode.parentNode.remove();
   });
 
   new_description.addEventListener("ajax:success", function (e) {

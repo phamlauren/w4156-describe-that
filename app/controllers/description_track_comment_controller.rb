@@ -13,7 +13,7 @@ class DescriptionTrackCommentController < ApplicationController
       parent_comment_id: params[:parent_comment_id]
     )
     # Redirect to the play page for the description track
-    redirect_to "/play/#{description_track.video_id}/track/#{description_track.id}"
+    redirect_to "/video/#{description_track.video_id}/play/#{description_track.id}"
   end
 
 end

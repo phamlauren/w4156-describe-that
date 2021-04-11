@@ -5,103 +5,85 @@
 <%= @user.options %>
 
 <h3>My Favorites</h3>
-<table class="table col-md-12" id="favorites">
-  <thead>
-    <tr>
-      <th>Video title</th>
-      <th>Video info</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="favorites" class="flex-box">
   <% @user.video_favorites.each do |video_favorite| %>
-  <tr>
-    <td>
+  <div class="flex-item">
+    <div class="text-center">
       <%= video_favorite.video.video_info["title"] %>
-    </td>
-    <td>
-      <%= video_favorite.video.video_info["description"] %>
-    </td>
-  </tr>
+    </div>
+    <div class="text-center">
+      <%= image_tag video_favorite.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+  </div>
   <% end %>
-  </tbody>
-</table>
+  <% if @user.video_favorites.empty? %>
+  No favorites.
+  <% end %>
+</div>
 
 <h3>My Votes</h3>
-<table class="table col-md-12" id="votes">
-  <thead>
-    <tr>
-      <th>Video title</th>
-      <th>Video info</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="votes" class="flex-box">
   <% @user.votes_on_tracks.each do |track_vote| %>
-  <tr>
-    <td>
+  <div class="flex-item">
+    <div class="text-center">
       <%= track_vote.description_track.video.video_info["title"] %>
-    </td>
-    <td>
-      <%= track_vote.description_track.video.video_info["description"] %>
-    </td>
-  </tr>
+    </div>
+    <div class="text-center">
+      <%= image_tag track_vote.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+  </div>
   <% end %>
-  </tbody>
-</table>
+  <% if @user.votes_on_tracks.empty? %>
+  No votes.
+  <% end %>
+</div>
 
 <h3>My Requests</h3>
-<table class="table col-md-12" id="requests">
-  <thead>
-    <tr>
-      <th>Video title</th>
-      <th>Requested language</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.video_requests.each do |request| %>
-      <tr>
-        <td>
-          <%= request.video.video_info["title"] %>
-        </td>
-        <td>
-          <%= request["requested_lang"] %>
-        </td>
-      </tr>
-    <% end %>
-    <% @user.video_request_upvotes.each do |upvote| %>
-      <tr>
-        <td>
-          <%= upvote.video_request.video.video_info["title"] %>
-        </td>
-        <td>
-          <%= upvote.video_request["requested_lang"] %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="requests" class="flex-box">
+  <% @user.video_requests.each do |request| %>
+  <div class="flex-item">
+    <div class="text-center">
+      <%= request.video.video_info["title"] %>
+    </div>
+    <div class="text-center">
+      <%= image_tag request.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
+      <%= request["requested_lang"] %>
+    </div>
+  </div>
+  <% end %>
+  <% @user.video_request_upvotes.each do |upvote| %>
+  <div class="flex-item">
+    <div class="text-center">
+      <%= upvote.video_request.video.video_info["title"] %>, requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
+    </div>
+    <div class="text-center">
+      <%= image_tag upvote.video_request.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+  </div>
+  <% end %>
+  <% if @user.video_requests.empty? && @user.video_request_upvotes.empty? %>
+  No requests.
+  <% end %>
+</div>
 
 <h3>My Comments</h3>
-<table class="table col-md-12" id="comments">
-  <thead>
-    <tr>
-      <th>Video title</th>
-      <th>Video info</th>
-      <th>Comment</th>
-    </tr>
-  </thead>
-  <tbody>
+<div id="comments" class="flex-box">
   <% @user.comments_on_tracks.each do |comment| %>
-  <tr>
-    <td>
+  <div class="flex-item">
+    <div class="text-center">
       <%= comment.description_track.video.video_info["title"] %>
-    </td>
-    <td>
-      <%= comment.description_track.video.video_info["description"] %>
-    </td>
-    <td>
+    </div>
+    <div class="text-center">
+      <%= image_tag comment.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
       <%= comment.comment_text %>
-    </td>
-  </tr>
+    </div>
+  </div>
   <% end %>
-  </tbody>
-</table>
+  <% if @user.comments_on_tracks.empty? %>
+  No comments.
+  <% end %>
+</div>

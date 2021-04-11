@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-body">
-    <%= description_track_comment.comment_text %>
+    <strong>@<%= description_track_comment.comment_author.username %></strong>: <%= description_track_comment.comment_text %>
+    <span style="float: right; color: gray;">
+      <%= description_track_comment.time_est.strftime('%l:%M %P est, %b %e %Y') %>
+    </span>
   </div>
 </div>
 <% if description_track_comment.replies.any? %>
@@ -8,8 +11,16 @@
     <%= render partial: 'description_track_comments/reply', locals: { reply: reply } %>
   <% end %>
 <% end %>
-<!-- <div id="reply-form-<%= description_track_comment.id %>"></div> -->
-
-<script>
-document.querySelector("#reply-form-<%= description_track_comment.parent_comment_id %>").innerHTML = ("<%= j render 'description_track_comments/reply_form', description_track_comment: @description_track_comment %>")
-</script>
+<div class="card" style="margin-left: 2rem;">
+  <div class="card-body">
+  <%= form_with(url: "/video/#{@track.video.id}/play/comment") do |f| %>
+      <%= f.hidden_field :dtrack_id, :value => description_track_comment.description_track.id %>
+      <%= f.hidden_field :parent_comment_id, :value => description_track_comment.id %>
+      <div class="form-group">
+      <%= f.label 'Reply' %>
+      <%= f.text_area :comment_text, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Post', method: :post, class: 'btn btn-primary' %>
+  <% end %>
+  </div>
+</div>

@@ -96,10 +96,10 @@ end
 # Description Track Comments
 c1 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[0][:created_track].id,
                                      comment_author_id: user1.id,
-                                     comment_text: 'true story: in middle school, I wanted to learn the saxophone but everyone told me it was a boy\'s instrument so I didn\'t and I regret it to this day.')
+                                     comment_text: 'if you value your sanity, do not show your kids "Frozen" because they will become obsessed')
 c2 = DescriptionTrackComment.create!(desc_track_id: seed_desc_roots[0][:created_track].id,
                                      comment_author_id: user2.id,
-                                     comment_text: 'very sad story indeed',
+                                     comment_text: '^^ can confirm that this is true',
                                      parent_comment_id: c1.id)
 
 # Video requests

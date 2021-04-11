@@ -4,4 +4,10 @@ class DescriptionTrackComment < ApplicationRecord
 
   belongs_to :parent_comment, class_name: 'DescriptionTrackComment', foreign_key: 'parent_comment_id', optional: true
   has_many :replies, class_name: 'DescriptionTrackComment', foreign_key: "parent_comment_id"
+
+  def time_est
+    require 'time'
+    t = created_at + Time.zone_offset('EST')
+  end
+
 end

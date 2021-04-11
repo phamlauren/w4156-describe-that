@@ -1,5 +1,8 @@
-<div class="card ml-5">
+<div class="card" style="margin-left: 2rem;">
   <div class="card-body">
-    <%= reply.comment_text %>
+    <strong>@<%= reply.comment_author.username %></strong>: <%= reply.comment_text %>
+    <span style="float: right; color: gray;">
+      <%= reply.time_est.strftime('%l:%M %P est, %b %e %Y') %>
+    </span>
   </div>
 </div>
