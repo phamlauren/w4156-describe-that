@@ -2,6 +2,26 @@
 <p class="text-center">Username: <strong>@<%= @user.username %></strong></p>
 
 <div class="section">
+  <h3>My Description Tracks</h3>
+  <div id="description_tracks" class="flex-box left">
+    <% @user.authored_description_tracks.each do |dtrack| %>
+    <div class="card flex-item">
+      <div class="text-center">
+        <%= image_tag dtrack.video.video_info["thumbnails"]["default"]["url"] %>
+      </div>
+      <div class="text-center">
+        <%= link_to dtrack.video.video_info["title"], "/video/#{dtrack.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+        described in <%= LanguageList::LanguageInfo.find(dtrack.lang).name %>
+      </div>
+    </div>
+    <% end %>
+    <% if @user.authored_description_tracks.empty? %>
+    No descriptions.
+    <% end %>
+  </div>
+</div>
+
+<div class="section">
   <h3>My Favorites</h3>
   <div id="favorites" class="flex-box left">
     <% @user.video_favorites.each do |video_favorite| %>
