@@ -41,8 +41,8 @@ v1 = Video.create!(yt_video_id: "S1x76DoACB8") # "Frozen" teaser trailer
 v2 = Video.create!(yt_video_id: "Jn09UdSb3aA") # The Best of Chopin
 
 # User
-user1 = User.create!(username: "test.user.1", auth0_id: "abcde")
-user2 = User.create!(username: "test.user.2", auth0_id: "edcba")
+user1 = User.create!(username: "worlds-best-dad", auth0_id: "abcde")
+user2 = User.create!(username: "better-than-worlds-best-dad", auth0_id: "edcba")
 
 # Descriptions and tracks
 # info blocks for pre-seeded descriptions
