@@ -8,18 +8,18 @@
       <%= image_tag request["thumbnails"]["default"]["url"] %>
     </div>
     <div class="text-center">
-      <%= link_to request["title"], "/video/#{request["video_id"]}", data: { turbolinks: 'false' }, :class => 'nav-link' %>
+      <%= link_to request["title"], "/video/#{request["video_id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
     <div class="text-center">
       Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>, <%= request["vote_count"] %> votes
     </div>
     <% if session[:userinfo].nil? %>
     <div class="text-center">
-        <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post, :class => 'nav-link' %>
+        <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post, :class => 'inline-link' %>
     </div>
     <% else %>
     <div class="text-center">
-      <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' }, :class => 'nav-link' %>
+      <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
     <% end %>
   </div>

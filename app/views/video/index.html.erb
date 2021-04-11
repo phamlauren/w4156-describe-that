@@ -8,7 +8,7 @@
       <%= image_tag video["thumbnails"]["default"]["url"] %>
     </div>
     <div class="text-center">
-      <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' }, :class => 'nav-link' %>
+      <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
   </div>
   <% end %>

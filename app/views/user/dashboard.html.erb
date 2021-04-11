@@ -1,18 +1,20 @@
 <h1 class="page-title">My Dashboard</h1>
 
 <h3>About Me</h3>
-<%= @user.username %>
-<%= @user.options %>
+<div class="card">
+  <p><strong>Username:</strong> <%= @user.username %></p>
+  <p><strong>Default language:</strong> <%= @user.options %></p>
+</div>
 
 <h3>My Favorites</h3>
-<div id="favorites" class="flex-box">
+<div id="favorites" class="flex-box left">
   <% @user.video_favorites.each do |video_favorite| %>
-  <div class="flex-item">
-    <div class="text-center">
-      <%= video_favorite.video.video_info["title"] %>
-    </div>
+  <div class="card flex-item">
     <div class="text-center">
       <%= image_tag video_favorite.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
+      <%= link_to video_favorite.video.video_info["title"], "/video/#{video_favorite.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
   </div>
   <% end %>
@@ -22,14 +24,14 @@
 </div>
 
 <h3>My Votes</h3>
-<div id="votes" class="flex-box">
+<div id="votes" class="flex-box left">
   <% @user.votes_on_tracks.each do |track_vote| %>
-  <div class="flex-item">
-    <div class="text-center">
-      <%= track_vote.description_track.video.video_info["title"] %>
-    </div>
+  <div class="card flex-item">
     <div class="text-center">
       <%= image_tag track_vote.description_track.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
+      <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
     </div>
   </div>
   <% end %>
@@ -39,27 +41,26 @@
 </div>
 
 <h3>My Requests</h3>
-<div id="requests" class="flex-box">
+<div id="requests" class="flex-box left">
   <% @user.video_requests.each do |request| %>
-  <div class="flex-item">
-    <div class="text-center">
-      <%= request.video.video_info["title"] %>
-    </div>
+  <div class="card flex-item">
     <div class="text-center">
       <%= image_tag request.video.video_info["thumbnails"]["default"]["url"] %>
     </div>
     <div class="text-center">
-      <%= request["requested_lang"] %>
+      <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
+      Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
     </div>
   </div>
   <% end %>
   <% @user.video_request_upvotes.each do |upvote| %>
-  <div class="flex-item">
-    <div class="text-center">
-      <%= upvote.video_request.video.video_info["title"] %>, requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
-    </div>
+  <div class="card flex-item">
     <div class="text-center">
       <%= image_tag upvote.video_request.video.video_info["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
+      <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
+      Requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
     </div>
   </div>
   <% end %>
@@ -69,17 +70,18 @@
 </div>
 
 <h3>My Comments</h3>
-<div id="comments" class="flex-box">
+<div id="comments" class="flex-box left">
+<% @user.commented_tracks %>
   <% @user.comments_on_tracks.each do |comment| %>
-  <div class="flex-item">
-    <div class="text-center">
-      <%= comment.description_track.video.video_info["title"] %>
-    </div>
+  <div class="card flex-item">
     <div class="text-center">
       <%= image_tag comment.description_track.video.video_info["thumbnails"]["default"]["url"] %>
     </div>
     <div class="text-center">
-      <%= comment.comment_text %>
+      <%= link_to comment.description_track.video.video_info["title"], "/video/#{comment.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+    </div>
+    <div style="color: gray;">
+      "<%= comment.comment_text %>"
     </div>
   </div>
   <% end %>
