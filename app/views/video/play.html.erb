@@ -29,6 +29,9 @@
 </audio>
 
 <h3>Comments</h3>
+<% if session[:userinfo].nil? %>
+<%= link_to "Login to comment or reply", '/auth/auth0', method: :post, :class => 'inline-link' %>
+<% else %>
 <%= form_with(url: "/video/#{@track.video.id}/play/comment") do |f| %>
     <%= f.hidden_field :dtrack_id, :value => @track.id %>
     <div class="form-group">
@@ -36,6 +39,7 @@
     <%= f.text_area :comment_text, class: 'form-control' %>
     </div>
     <%= f.submit 'Post', method: :post, class: 'btn btn-primary' %>
+<% end %>
 <% end %>
 <br>
 

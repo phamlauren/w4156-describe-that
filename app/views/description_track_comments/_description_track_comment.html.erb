@@ -11,6 +11,9 @@
     <%= render partial: 'description_track_comments/reply', locals: { reply: reply } %>
   <% end %>
 <% end %>
+
+<% if session[:userinfo].nil? %>
+<% else %>
 <div class="card" style="margin-left: 2rem;">
   <div class="card-body">
   <%= form_with(url: "/video/#{@track.video.id}/play/comment") do |f| %>
@@ -24,3 +27,4 @@
   <% end %>
   </div>
 </div>
+<% end %>
