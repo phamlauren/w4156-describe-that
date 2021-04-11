@@ -3,9 +3,15 @@
 
 <p class="text-center">
     <% if session[:userinfo].nil? %>
-        <%= link_to "Login to favorite this video", '/auth/auth0', method: :post %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart-fill" viewBox="0 0 16 16">
+        <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+      </svg> 
+      <%= link_to "Login to favorite", '/auth/auth0', method: :post, :class => 'inline-link' %>
     <% else %>
-        <%= link_to "Favorite this video", "/video/#{@video.id}/favorite", method: :post, data: { turbolinks: 'false' } %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart-fill" viewBox="0 0 16 16">
+        <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+      </svg> 
+      <%= link_to "Favorite", "/video/#{@video.id}/favorite", method: :post, data: { turbolinks: 'false' }, :class => 'inline-link' %>
     <% end %>
 </p>
 
@@ -19,7 +25,7 @@
   <div class="table-list text-center">
     <% @all_tracks.each do |dtrack| %>
     <div class="table-list-item">
-      <%= link_to "#{LanguageList::LanguageInfo.find(dtrack.lang).name} descriptions by #{dtrack.author.username}", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "#{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>, <%= dtrack.number_of_votes %> votes
+      <%= link_to "#{LanguageList::LanguageInfo.find(dtrack.lang).name} descriptions by #{dtrack.author.username}", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "#{'disabled' unless dtrack.published}", data: { turbolinks: 'false' }, :class => 'inline-link' %>, <%= dtrack.number_of_votes %> votes
       <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.author.username %>
         <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
         <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>

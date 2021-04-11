@@ -1,11 +1,17 @@
 <%= flash[:notice] %>
 <h1 class="text-center page-title">Watch: <%=@yt_info["title"]%></h1>
 <p class="text-center">
-    <strong>Track ID: <%=@track.id%> | Author: <%= @track.author.username %></strong>
+    <strong>Track ID: <%=@track.id%></strong>&nbsp; | &nbsp;<strong>Author: <%= @track.author.username %></strong>
     <% if session[:userinfo].nil? %>
-        | <%= link_to "Login to vote on this track", '/auth/auth0', method: :post %>
+        &nbsp; | &nbsp;<%= link_to "Login to vote on this track", '/auth/auth0', method: :post, :class => 'inline-link' %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z"/>
+        </svg>
     <% else %>
-        | <%= link_to "Vote on this track!", "/description_track/#{@track.id}/vote", method: :post, data: { turbolinks: 'false' } %>
+        &nbsp; | &nbsp;<%= link_to "Vote on this track!", "/description_track/#{@track.id}/vote", method: :post, data: { turbolinks: 'false' }, :class => 'inline-link' %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square-fill" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z"/>
+        </svg>
     <% end %>
 </p>
 
@@ -23,6 +29,9 @@
 </audio>
 
 <h3>Comments</h3>
+<% if session[:userinfo].nil? %>
+<%= link_to "Login to comment or reply", '/auth/auth0', method: :post, :class => 'inline-link' %>
+<% else %>
 <%= form_with(url: "/video/#{@track.video.id}/play/comment") do |f| %>
     <%= f.hidden_field :dtrack_id, :value => @track.id %>
     <div class="form-group">
@@ -30,6 +39,7 @@
     <%= f.text_area :comment_text, class: 'form-control' %>
     </div>
     <%= f.submit 'Post', method: :post, class: 'btn btn-primary' %>
+<% end %>
 <% end %>
 <br>
 

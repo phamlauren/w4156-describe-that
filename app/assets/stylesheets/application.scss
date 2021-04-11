@@ -24,6 +24,10 @@ body {
     text-align: center;
 }
 
+.text-right {
+    text-align: right;
+}
+
 /* Styling for wrapper */
 #main-wrapper {
     margin: 20px;
@@ -79,4 +83,8 @@ body {
 .flex-item {
     width: 25%;
     padding: 1rem;
+}
+
+.section {
+    margin: 2rem 0;
 }

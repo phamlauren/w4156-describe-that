@@ -15,14 +15,17 @@
       <div id="content">
         <div id="page-nav" class="container">
           <div class="row">
-            <div class="col-md-4" style="padding: 10px 20px">
+            <div class="col-md-3" style="padding: 10px 20px">
               <%= form_with url: video_path, method: :get do |form| %>
                 <%= form.text_field :yt_url, placeholder: "YouTube URL" %>
-                <%= form.submit "Describe" %>
+                <%= form.submit "Go" %>
               <% end %>
             </div>
-            <div class="col-md-4 text-center"><h1><%= link_to "DescribeThat!", '/', :class => 'nav-link' %></h1></div>
-            <div class="col-md-4">
+            <div class="col-md-5 text-center">
+              <h5 style="display:inline;"><%= link_to "DescribeThat!", '/', :class => 'nav-link' %></h5>
+              <span style="color: gray;">YouTube with audio descriptions.</span>
+            </div>
+            <div class="col-md-4 text-right float-right">
               <%= link_to "Requests", video_requests_path, :class => 'nav-link' %>
               <% if session[:userinfo].nil? %>
               <%= link_to "Login", '/auth/auth0', method: :post, :class => 'nav-link' %>
