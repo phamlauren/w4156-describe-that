@@ -29,7 +29,8 @@
         <%= image_tag track_vote.description_track.video.video_info["thumbnails"]["default"]["url"] %>
       </div>
       <div class="text-center">
-        <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+        <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
+        audio descriptions in <%= LanguageList::LanguageInfo.find(track_vote.description_track.lang).name %>
       </div>
     </div>
     <% end %>
@@ -48,8 +49,8 @@
         <%= image_tag request.video.video_info["thumbnails"]["default"]["url"] %>
       </div>
       <div class="text-center">
-        <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
-        Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
+        <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
+        requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
       </div>
     </div>
     <% end %>
@@ -59,8 +60,8 @@
         <%= image_tag upvote.video_request.video.video_info["thumbnails"]["default"]["url"] %>
       </div>
       <div class="text-center">
-        <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %><br>
-        Requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
+        <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
+        requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
       </div>
     </div>
     <% end %>
