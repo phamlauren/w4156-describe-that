@@ -10,7 +10,8 @@
         "desc_text": "Texte blanc sur fond vert: L'aperçu suivant a été approuvé pour accompagner cette fonctionnalité par la Motion Picture Association of America.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": null
     },
     {
         "id": 38,
@@ -23,7 +24,8 @@
         "desc_text": "Par les créateurs de Raiponce et Les Mondes de Ralph.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 39,
@@ -36,7 +38,8 @@
         "desc_text": "Disney.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 41,
@@ -49,7 +52,8 @@
         "desc_text": "Il prend un reniflement profond.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 42,
@@ -62,7 +66,8 @@
         "desc_text": "Son nez atterrit sur un étang gelé.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 43,
@@ -75,7 +80,8 @@
         "desc_text": "Un renne lève les yeux et pantalon comme un chien.",
         "voice_id": 21,
         "voice_speed": 1.3,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 70,
@@ -88,7 +94,8 @@
         "desc_text": "Le bonhomme de neige utilise son bras comme béquille. Le renne pagaie ses pattes avant.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 55,
@@ -101,7 +108,8 @@
         "desc_text": "La langue du renne colle à la glace.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 60
     },
     {
         "id": 56,
@@ -114,7 +122,8 @@
         "desc_text": "Le bonhomme de neige lance la tête. Un bras de brindille et des lèvres de renne tirent sur la carotte.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 60
     },
     {
         "id": 57,
@@ -127,7 +136,8 @@
         "desc_text": "La carotte s'envole et atterrit dans la neige molle.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 58,
@@ -140,7 +150,8 @@
         "desc_text": "Le renne le poursuit, le bonhomme de neige et les parties de son corps accrochés à sa queue.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 60
     },
     {
         "id": 59,
@@ -153,7 +164,8 @@
         "desc_text": "Le bonhomme de neige se remet en place et contemple tristement son état sans nez.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 60,
@@ -166,7 +178,8 @@
         "desc_text": "Le renne bloque la carotte en place et pantalon comme un chiot fier.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 61,
@@ -179,7 +192,8 @@
         "desc_text": "Le bonhomme de neige le tapote avec un bâton qui est son bras, puis va éternuer.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 60
     },
     {
         "id": 62,
@@ -192,7 +206,8 @@
         "desc_text": "Il attrape son nez à deux mains.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 71,
@@ -205,7 +220,8 @@
         "desc_text": "La tête aux pieds, le bonhomme de neige rampe sur la glace. Le renne fait la brasse.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 64,
@@ -218,7 +234,8 @@
         "desc_text": "Sa tête se détache.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 65,
@@ -231,7 +248,8 @@
         "desc_text": "La Reine Des Neiges. À venir cet hiver. ",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 67,
@@ -244,7 +262,8 @@
         "desc_text": "Un bonhomme de neige aux yeux charbonneux au nez de carotte se traîne jusqu'à une fleur violette jaillissant de la neige profonde.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 68,
@@ -257,7 +276,8 @@
         "desc_text": "Voyant le renne glisser sur la glace, le bonhomme de neige sourit et se dirige vers lui.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 69,
@@ -270,7 +290,8 @@
         "desc_text": "Le renne tombe sur son menton.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 100
     },
     {
         "id": 72,
@@ -283,6 +304,7 @@
         "desc_text": "Le bonhomme de neige roule son corps, mais se retourne sur le dos.",
         "voice_id": 21,
         "voice_speed": 1.5,
-        "desc_type": "generated"
+        "desc_type": "generated",
+        "video_volume_inline": 60
     }
 ]

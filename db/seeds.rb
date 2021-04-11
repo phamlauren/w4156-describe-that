@@ -88,7 +88,8 @@ seed_desc_roots.each do |info|
       audio_file_loc: target_file_name,
       desc_text: desc["desc_text"],
       voice_id: desc["voice_id"],
-      voice_speed: desc["voice_speed"]
+      voice_speed: desc["voice_speed"],
+      video_volume_inline: desc["video_volume_inline"]
     )
   end
 end
