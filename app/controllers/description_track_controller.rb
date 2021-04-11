@@ -3,6 +3,15 @@ class DescriptionTrackController < ApplicationController
         track = DescriptionTrack.find(params[:id])
         track.published = params[:published]=="true" ? true : false
         track.save
+
+        # handle video requests
+        vid_request_with_this_lang = VideoRequest.where(video_id: track.video_id, requested_lang: track.lang, is_fulfilled: !track.published).first
+        unless vid_request_with_this_lang.nil?
+            vid_request_with_this_lang.is_fulfilled = track.published
+            vid_request_with_this_lang.save
+        end
+
+        # redirect to play page on publish
         if track.published
           redirect_to "/video/#{track.video_id}/play/#{track.id}"
         end

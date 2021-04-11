@@ -680,6 +680,13 @@ CREATE INDEX index_video_requests_on_video_id ON public.video_requests USING btr
 
 
 --
+-- Name: index_video_requests_on_video_id_and_requested_lang; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_video_requests_on_video_id_and_requested_lang ON public.video_requests USING btree (video_id, requested_lang);
+
+
+--
 -- Name: index_videos_on_yt_video_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -852,6 +859,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210327002417'),
 ('20210405200305'),
 ('20210405203911'),
-('20210405204425');
+('20210405204425'),
+('20210409022357'),
+('20210409024744');
 
 

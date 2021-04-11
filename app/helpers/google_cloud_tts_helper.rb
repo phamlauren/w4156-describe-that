@@ -14,14 +14,12 @@ module GoogleCloudTtsHelper
     data = resp["audioContent"]
     audio_content_bytes = Base64.decode64(data)
 
-    StringIO.new(audio_content_bytes)
+    AudioHelper.trim_silence(StringIO.new(audio_content_bytes))
   end
 
-  # GoogleCloudTtsHelper.synthesize("This is a test sentence.", 1.0, "en-US-Wavenet-F")
+  # io = GoogleCloudTtsHelper.synthesize("This is a test sentence.", 1.0, "en-US-Wavenet-F")
   # puts Dir.getwd
-  # File.open('out.wav', 'wb') do |f|
-  #   f.puts(io.read)
-  # end
+  # File.open('out.wav', 'wb') { |f| f.puts(io.read) }
 
   private
   def self.form_json(to_say, speech_rate, voice_name)
