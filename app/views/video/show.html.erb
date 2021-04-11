@@ -5,7 +5,7 @@
     <% if session[:userinfo].nil? %>
         <%= link_to "Login to favorite this video", '/auth/auth0', method: :post %>
     <% else %>
-        <%= link_to "Favorite this video", "/video/#{@video.id}/favorite", method: :post, data: { turbolinks: 'false' } %>
+        <%= link_to "Favorite this video", "/video/#{@video.id}/favorite", method: :post, data: { turbolinks: 'false' }, :class => 'inline-link' %>
     <% end %>
 </p>
 
@@ -19,7 +19,7 @@
   <div class="table-list text-center">
     <% @all_tracks.each do |dtrack| %>
     <div class="table-list-item">
-      <%= link_to "#{LanguageList::LanguageInfo.find(dtrack.lang).name} descriptions by #{dtrack.author.username}", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "#{'disabled' unless dtrack.published}", data: { turbolinks: 'false' } %>, <%= dtrack.number_of_votes %> votes
+      <%= link_to "#{LanguageList::LanguageInfo.find(dtrack.lang).name} descriptions by #{dtrack.author.username}", "/video/#{params[:id]}/play/#{dtrack["id"]}", :class => "#{'disabled' unless dtrack.published}", data: { turbolinks: 'false' }, :class => 'inline-link' %>, <%= dtrack.number_of_votes %> votes
       <% if not session[:userinfo].nil? and session[:userinfo]["nickname"] ==  dtrack.author.username %>
         <%= link_to "Edit", "/video/#{params[:id]}/describe/#{dtrack.id}", :class => 'btn btn-primary', data: { turbolinks: 'false' } %>
         <%= link_to "Delete", "/video/#{params[:id]}/delete/#{dtrack.id}", :class => 'btn btn-danger', data: { turbolinks: 'false' } %>
