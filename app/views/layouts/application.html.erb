@@ -22,7 +22,7 @@
               <% end %>
             </div>
             <div class="col-md-4 text-center"><h1><%= link_to "DescribeThat!", '/', :class => 'nav-link' %></h1></div>
-            <div class="col-md-4">
+            <div class="col-md-4 text-right float-right">
               <%= link_to "Requests", video_requests_path, :class => 'nav-link' %>
               <% if session[:userinfo].nil? %>
               <%= link_to "Login", '/auth/auth0', method: :post, :class => 'nav-link' %>
