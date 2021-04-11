@@ -1,41 +1,27 @@
 <%= flash[:notice] %>
-<h1 class="page-title">Video requests</h1>
+<h1 class="page-title">Video Requests</h1>
 
-<table class="table col-md-12" id="video_requests">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Votes</th>
-      <th>Requested language</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @requests_info.each do |request| %>
-      <tr>
-        <td>
-          <%= request["title"] %>
-        </td>
-        <td>
-          <%= request["vote_count"] %>
-        </td>
-        <td>
-          <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
-        </td>
-        <% if session[:userinfo].nil? %>
-        <td>
-            <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post %>
-        </td>
-        <% else %>
-        <td>
-          <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' } %>
-        </td>
-        <% end %>
-        <td>
-          <%= link_to "Show", "/video/#{request["video_id"]}", data: { turbolinks: 'false' } %>
-        </td>
-      </tr>
+<div id="video_requests" class="flex-box left">
+  <% @requests_info.each do |request| %>
+  <div class="card flex-item">
+    <div class="text-center">
+      <%= image_tag request["thumbnails"]["default"]["url"] %>
+    </div>
+    <div class="text-center">
+      <%= link_to request["title"], "/video/#{request["video_id"]}", data: { turbolinks: 'false' }, :class => 'nav-link' %>
+    </div>
+    <div class="text-center">
+      Requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>, <%= request["vote_count"] %> votes
+    </div>
+    <% if session[:userinfo].nil? %>
+    <div class="text-center">
+        <%= link_to "Login to upvote this request!", '/auth/auth0', method: :post, :class => 'nav-link' %>
+    </div>
+    <% else %>
+    <div class="text-center">
+      <%= link_to "Upvote this request!", "/video_requests/#{request["id"]}", data: { turbolinks: 'false' }, :class => 'nav-link' %>
+    </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <% end %>
+</div>
