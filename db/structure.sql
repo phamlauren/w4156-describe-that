@@ -161,7 +161,8 @@ CREATE TABLE public.descriptions (
     desc_text text,
     voice_id bigint,
     voice_speed double precision,
-    desc_type public.description_type
+    desc_type public.description_type,
+    video_volume_inline double precision
 );
 
 
@@ -861,6 +862,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210405203911'),
 ('20210405204425'),
 ('20210409022357'),
-('20210409024744');
+('20210409024744'),
+('20210411194245');
 
 
