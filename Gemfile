@@ -35,6 +35,9 @@ gem "httparty"
 # Use language_list to manage language codes
 gem "language_list"
 
+# Use countries to manage country codes
+gem "countries"
+
 # using Auth0 for authentication
 gem 'omniauth-auth0', '~> 2.5'
 gem 'omniauth-rails_csrf_protection', '~> 0.1' # prevents forged authentication requests

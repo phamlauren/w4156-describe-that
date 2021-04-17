@@ -365,7 +365,11 @@ CREATE TABLE public.voices (
     id bigint NOT NULL,
     common_name character varying NOT NULL,
     system_name character varying NOT NULL,
-    provider character varying NOT NULL
+    provider character varying NOT NULL,
+    language_code character varying,
+    country_code character varying,
+    gender character varying,
+    natural_sample_rate_hz integer DEFAULT 22050 NOT NULL
 );
 
 
@@ -863,6 +867,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210405204425'),
 ('20210409022357'),
 ('20210409024744'),
-('20210411194245');
+('20210411194245'),
+('20210417172447');
 
 
