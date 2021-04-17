@@ -160,7 +160,8 @@ class VideoController < ApplicationController
       # might change that later!
       @video = Video.find(params[:id])
       @yt_info = video_info @video.yt_video_id
-      @voices = Voice.all.map { |v| [v.common_name, v.id] }
+      @voices = Voice.where(language_code: @track.lang).map { |v| [v.common_name, v.id] }
+      @voices = @voices.sort_by { |l| l[0] }
       @descriptions = @track.get_all_descriptions.map { |d| {id: d.id, start_time_sec: d.start_time_sec, url: d.get_download_url_for_audio_file, generated: d.desc_type=='generated', inline_extended: d.pause_at_start_time ? "extended" : "inline"} }
     end
   end

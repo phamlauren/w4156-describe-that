@@ -17,7 +17,11 @@
 </audio>
 
 <div class="add-description-container">
-  <button type="button" id="add-description-button">Add one new generated description at current time!</button>
+  <% if @voices.length == 0 %>
+    <button type="button" id="add-description-button" disabled>No TTS voices available for <%= LanguageList::LanguageInfo.find(@track.lang).common_name %></button>
+  <% else %>
+    <button type="button" id="add-description-button">Add one new generated description at current time!</button>
+  <% end %>
   <button type="button" id="record-description-button">Add one new recorded description at current time!</button>
 </div>
 
@@ -173,8 +177,12 @@ const add_description_form = function(editable={}) {
       <%= form.select :pause_at_start_time, [["extended", 1], ["inline", 0]], selected: 0 %>
       <%= form.label :video_vol_inline, "Video volume % (inline only):" %>
       <%= form.number_field :video_vol_inline, in: 5..100, step: 5, value: 100 %>
-      <%= form.label :voice_id, "Voice:" %>
-      <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
+      <%= form.label :voice_id, "Voice (#{link_to "example clips here", "https://cloud.google.com/text-to-speech/docs/voices", target: :_blank}):".html_safe %>
+      <% if @voices.length == 0 %>
+        <%= form.select :voice_id, @voices %>
+      <% else %>
+        <%= form.select :voice_id, @voices, selected: @voices[0][1] %>
+      <% end %>
       <button type="button" id="remove-description">Remove</button>
       <%= form.submit "Add" %>
     </div><% end %>`;
