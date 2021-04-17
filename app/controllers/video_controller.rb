@@ -256,12 +256,35 @@ class VideoController < ApplicationController
 
   # language code helpers
   def build_lang_struct_list
-    all_langs = LanguageList::COMMON_LANGUAGES.collect { |l_info|
+    all_voice_langs = Voice.distinct.pluck(:language_code)
+    all_langs = []
+
+    all_voice_langs.each { |lang_code|
       this_lang = OpenStruct.new
-      this_lang.name = l_info.name
-      this_lang.code = l_info.iso_639_1
+      l_info = LanguageList::LanguageInfo.find(lang_code)
+
+      this_lang.name = l_info.common_name + " [TTS available]"
+      this_lang.code = lang_code
       this_lang.enabled = true
-      this_lang
+
+      all_langs.append(this_lang)
+    }
+
+    LanguageList::COMMON_LANGUAGES.each { |l_info|
+      search_in_existing = all_langs.select { |l| l.name.start_with?(l_info.common_name) }
+      next if search_in_existing.count > 0
+
+      this_lang = OpenStruct.new
+      this_lang.name = l_info.common_name
+
+      if l_info.iso_639_1.nil?
+        this_lang.code = l_info.iso_639_3
+      else
+        this_lang.code = l_info.iso_639_1
+      end
+
+      this_lang.enabled = true
+      all_langs.append(this_lang)
     }
 
     all_langs = all_langs.sort_by { |struct| struct.name }
@@ -272,7 +295,7 @@ class VideoController < ApplicationController
     skip_lang.enabled = false
     all_langs.insert(0, skip_lang)
 
-    this_index = all_langs.index { |l_info| l_info.name == "English" }
+    this_index = all_langs.index { |l_info| l_info.name.start_with?("English") }
     all_langs.insert(0, all_langs.delete_at(this_index))
 
     all_langs
