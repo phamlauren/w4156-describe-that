@@ -7,34 +7,43 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'json'
 
-# All voices.
+# Get and store all voices and associated locales (Wavenet voices only)
+target_url_voice_list = "https://texttospeech.googleapis.com/v1/voices?key=" + ENV["GOOGLE_TTS_API_KEY"]
+resp = HTTParty.get(target_url_voice_list)
 
-# US voices.
-voice_us_a = Voice.create!(common_name: "Voice US A", system_name: "en-US-Wavenet-A", provider: "google_tts")
-voice_us_b = Voice.create!(common_name: "Voice US B", system_name: "en-US-Wavenet-B", provider: "google_tts")
-voice_us_c = Voice.create!(common_name: "Voice US C", system_name: "en-US-Wavenet-C", provider: "google_tts")
-voice_us_d = Voice.create!(common_name: "Voice US D", system_name: "en-US-Wavenet-D", provider: "google_tts")
-voice_us_e = Voice.create!(common_name: "Voice US E", system_name: "en-US-Wavenet-E", provider: "google_tts")
-voice_us_f = Voice.create!(common_name: "Voice US F", system_name: "en-US-Wavenet-F", provider: "google_tts")
-voice_us_g = Voice.create!(common_name: "Voice US G", system_name: "en-US-Wavenet-G", provider: "google_tts")
-voice_us_h = Voice.create!(common_name: "Voice US H", system_name: "en-US-Wavenet-H", provider: "google_tts")
-voice_us_i = Voice.create!(common_name: "Voice US I", system_name: "en-US-Wavenet-I", provider: "google_tts")
-voice_us_j = Voice.create!(common_name: "Voice US J", system_name: "en-US-Wavenet-J", provider: "google_tts")
+if resp.code != 200
+  abort("Could not retrieve list of voices from Google Cloud TTS -- request returned code #{resp.code}")
+end
 
-# GB voices.
-voice_gb_a = Voice.create!(common_name: "Voice GB A", system_name: "en-GB-Wavenet-A", provider: "google_tts")
-voice_gb_b = Voice.create!(common_name: "Voice GB B", system_name: "en-GB-Wavenet-B", provider: "google_tts")
-voice_gb_c = Voice.create!(common_name: "Voice GB C", system_name: "en-GB-Wavenet-C", provider: "google_tts")
-voice_gb_d = Voice.create!(common_name: "Voice GB D", system_name: "en-GB-Wavenet-D", provider: "google_tts")
-voice_gb_e = Voice.create!(common_name: "Voice GB E", system_name: "en-GB-Wavenet-E", provider: "google_tts")
-voice_gb_f = Voice.create!(common_name: "Voice GB F", system_name: "en-GB-Wavenet-F", provider: "google_tts")
+# for each voice...
+all_voices = resp["voices"]
+all_voices.each do |v|
+  system_name = v["name"]
+  next unless system_name.include? "Wavenet" # only consider Wavenet voices
 
-# FR voices.
-voice_fr_a = Voice.create!(common_name: "Voice FR A", system_name: "fr-FR-Wavenet-A", provider: "google_tts")
-voice_fr_b = Voice.create!(common_name: "Voice FR B", system_name: "fr-FR-Wavenet-B", provider: "google_tts")
-voice_fr_c = Voice.create!(common_name: "Voice FR C", system_name: "fr-FR-Wavenet-C", provider: "google_tts")
-voice_fr_d = Voice.create!(common_name: "Voice FR D", system_name: "fr-FR-Wavenet-D", provider: "google_tts")
-voice_fr_e = Voice.create!(common_name: "Voice FR E", system_name: "fr-FR-Wavenet-E", provider: "google_tts")
+  target_locale_comps = v["languageCodes"][0].split('-')
+  language_code = target_locale_comps[0]
+  country_code = target_locale_comps[1]
+
+  if ISO3166::Country.new(country_code).nil?
+    country_code = nil
+  end
+
+  provider = "google_tts"
+  gender = v["ssmlGender"].downcase
+  natural_sample_rate_hz = v["naturalSampleRateHertz"]
+  common_name = "#{system_name} (#{gender}, Google TTS)"
+
+  Voice.create!(
+    common_name: common_name,
+    system_name: system_name,
+    provider: provider,
+    language_code: language_code,
+    country_code: country_code,
+    gender: gender,
+    natural_sample_rate_hz: natural_sample_rate_hz
+  )
+end
 
 # YouTube videos
 v1 = Video.create!(yt_video_id: "S1x76DoACB8") # "Frozen" teaser trailer
