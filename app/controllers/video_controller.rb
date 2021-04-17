@@ -47,7 +47,12 @@ class VideoController < ApplicationController
     if params[:commit] == "Go" && params[:yt_url]!=nil
       ytid = get_ytid_from_url params[:yt_url]
       if video_info(ytid) != {}
-        video = Video.find_or_create_by(yt_video_id: ytid)
+        video = Video.where(yt_video_id: ytid).first
+        if video.nil?
+          length_sec = video_length(ytid)
+          video = Video.create!(yt_video_id: ytid, length_sec: length_sec)
+        end
+
         id = video.id
         # if the url is valid then redirect
         redirect_to action: "show", id: id
@@ -230,7 +235,7 @@ class VideoController < ApplicationController
         {
           id: d.id,
           start_time_sec: d.start_time_sec,
-          url: d.get_download_url_for_audio_file,
+          url: d.get_download_url_for_audio_file(@video.length_sec * 4),
           generated: d.desc_type=='generated',
           inline_extended: d.pause_at_start_time ? "extended" : "inline",
           video_vol_inline: d.video_volume_inline.nil? ? 100 : d.video_volume_inline
@@ -253,6 +258,21 @@ class VideoController < ApplicationController
     response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "snippet", :id => ytid, :key => ENV["YT_API_KEY"]})
     result = JSON.parse(response)
     return result["items"].length()==1 ? result["items"][0]["snippet"] : {}
+  end
+
+  def video_length(ytid)
+    return -1 if ytid == nil
+    raise "no env key for YouTube!" if ENV["YT_API_KEY"]==nil
+    response = HTTP.get("https://youtube.googleapis.com/youtube/v3/videos", :params => {:part => "contentDetails", :id => ytid, :key => ENV["YT_API_KEY"]})
+    result = JSON.parse(response)
+
+    if result["items"].length()==1
+      returned_duration = result["items"][0]["contentDetails"]["duration"]
+      parsed_duration = ActiveSupport::Duration.parse(returned_duration)
+      parsed_duration.to_i
+    else
+      -1
+    end
   end
 
   # language code helpers

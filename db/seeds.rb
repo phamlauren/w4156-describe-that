@@ -48,8 +48,8 @@ all_voices.each do |v|
 end
 
 # YouTube videos
-v1 = Video.create!(yt_video_id: "S1x76DoACB8") # "Frozen" teaser trailer
-v2 = Video.create!(yt_video_id: "Jn09UdSb3aA") # The Best of Chopin
+v1 = Video.create!(yt_video_id: "S1x76DoACB8", length_sec: 96) # "Frozen" teaser trailer
+v2 = Video.create!(yt_video_id: "Jn09UdSb3aA", length_sec: 11526) # The Best of Chopin
 
 # User
 user1 = User.create!(username: "worlds-best-dad", auth0_id: "abcde")

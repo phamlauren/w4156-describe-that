@@ -334,7 +334,8 @@ CREATE TABLE public.videos (
     yt_video_id character varying NOT NULL,
     deleted boolean DEFAULT false NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    length_sec integer DEFAULT 3600 NOT NULL
 );
 
 
@@ -868,6 +869,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210409022357'),
 ('20210409024744'),
 ('20210411194245'),
-('20210417172447');
+('20210417172447'),
+('20210417213341');
 
 

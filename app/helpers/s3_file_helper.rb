@@ -1,6 +1,8 @@
 require 'aws-sdk-s3'
 
 module S3FileHelper
+  @@MAX_PRESIGNED_URL_VALIDITY = 7.day.to_i
+  @@MIN_PRESIGNED_URL_VALIDITY = 20.minute.to_i
 
   # Uploads a file to the S3 server defined in the environment variables.
   #
@@ -56,6 +58,16 @@ module S3FileHelper
   def self.get_presigned_dl_url_for_file(file_name, validity_sec = 300)
     s3 = Aws::S3::Client.new
     signer = Aws::S3::Presigner.new(client: s3)
+
+    # if the requested validity is over 1 week, cap it at 1 week
+    if validity_sec > @@MAX_PRESIGNED_URL_VALIDITY
+      validity_sec = @@MAX_PRESIGNED_URL_VALIDITY
+    end
+
+    # if the requested validity is under 20 minutes, force it to be 20 minutes
+    if validity_sec < @@MIN_PRESIGNED_URL_VALIDITY
+      validity_sec = @@MIN_PRESIGNED_URL_VALIDITY
+    end
 
     signer.presigned_url(
       :get_object,
