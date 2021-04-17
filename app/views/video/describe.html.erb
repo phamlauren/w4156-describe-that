@@ -18,7 +18,7 @@
 
 <div class="add-description-container">
   <% if @voices.length == 0 %>
-    <button type="button" id="add-description-button" disabled>No TTS voices available for <%= LanguageList::LanguageInfo.find(@track.lang).common_name %></button>
+    <button type="button" id="add-description-button" disabled>No TTS voices available for <%= LanguageList::LanguageInfo.find(@track.lang).common_name %>.</button>
   <% else %>
     <button type="button" id="add-description-button">Add one new generated description at current time!</button>
   <% end %>
