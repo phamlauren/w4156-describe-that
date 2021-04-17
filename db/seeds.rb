@@ -43,6 +43,8 @@ all_voices.each do |v|
     gender: gender,
     natural_sample_rate_hz: natural_sample_rate_hz
   )
+
+  puts "Seeded voice: #{common_name}"
 end
 
 # YouTube videos
@@ -89,6 +91,9 @@ seed_desc_roots.each do |info|
     this_audio_file = File.read(File.join(root, desc["audio_file_loc"]))
     S3FileHelper.upload_file(target_file_name, this_audio_file)
 
+    voice_system_name = desc["voice_system_name"]
+    voice = Voice.where(system_name: voice_system_name).first
+
     Description.create!(
       desc_track_id: dt.id,
       start_time_sec: desc["start_time_sec"],
@@ -96,11 +101,13 @@ seed_desc_roots.each do |info|
       desc_type: desc["desc_type"],
       audio_file_loc: target_file_name,
       desc_text: desc["desc_text"],
-      voice_id: desc["voice_id"],
+      voice_id: voice.id,
       voice_speed: desc["voice_speed"],
       video_volume_inline: desc["video_volume_inline"]
     )
   end
+
+  puts "Seeded description track: #{info[:root]}"
 end
 
 # Description Track Comments
