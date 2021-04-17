@@ -11,7 +11,7 @@
       </div>
       <div class="text-center">
         <%= link_to dtrack.video.video_info["title"], "/video/#{dtrack.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
-        described in <%= LanguageList::LanguageInfo.find(dtrack.lang).name %>
+        described in <%= LanguageList::LanguageInfo.find(dtrack.lang).common_name %>
       </div>
     </div>
     <% end %>
@@ -50,7 +50,7 @@
       </div>
       <div class="text-center">
         <%= link_to track_vote.description_track.video.video_info["title"], "/video/#{track_vote.description_track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
-        audio descriptions in <%= LanguageList::LanguageInfo.find(track_vote.description_track.lang).name %>
+        audio descriptions in <%= LanguageList::LanguageInfo.find(track_vote.description_track.lang).common_name %>
       </div>
     </div>
     <% end %>
@@ -70,7 +70,7 @@
       </div>
       <div class="text-center">
         <%= link_to request.video.video_info["title"], "/video/#{request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
-        requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).name %>
+        requested in <%= LanguageList::LanguageInfo.find(request["requested_lang"]).common_name %>
       </div>
     </div>
     <% end %>
@@ -81,7 +81,7 @@
       </div>
       <div class="text-center">
         <%= link_to upvote.video_request.video.video_info["title"], "/video/#{upvote.video_request.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
-        requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).name %>
+        requested in <%= LanguageList::LanguageInfo.find(upvote.video_request["requested_lang"]).common_name %>
       </div>
     </div>
     <% end %>
@@ -101,7 +101,7 @@
       </div>
       <div class="text-center">
         <%= link_to track.video.video_info["title"], "/video/#{track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>,<br>
-        audio descriptions in <%= LanguageList::LanguageInfo.find(track.lang).name %>
+        audio descriptions in <%= LanguageList::LanguageInfo.find(track.lang).common_name %>
       </div>
       <% track.get_comments_by_user(@user.id).each do |comment| %>
       <div style="color: gray;">
