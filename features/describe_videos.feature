@@ -129,4 +129,17 @@ Scenario: add one recorded description form
 
     Then "Add" should be disabled
 
+@javascript
+Scenario: no TTS button when no corresponding language is available
 
+    Given the following description tracks exist:
+    |video_id | track_author_id | published | lang |
+    | 1       | 99              | true      | en   |
+
+    Given I am on the show page for "40z9n1SgozU"
+
+    And I select "Urdu" from "lang"
+
+    And I press "Create new track!"
+
+    Then "No TTS voices available for Urdu." should be disabled
