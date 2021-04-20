@@ -106,15 +106,17 @@ $ rake db:seed
 
 > If you encounter an error like **_An error occurred while installing unf_ext (0.0.7.7), and Bundler cannot continue. Make sure that `gem install unf_ext -v '0.0.7.7' --source 'https://rubygems.org/'` succeeds before bundling._** and you are on Mac OS, you may need to install xcode. Do this by running `$ xcode-select --install`.
 
+> If you encounter an error like **Errno::ENOENT (No such file or directory - the ffprobe binary could not be found** and you are on Mac OS, you may need to install ffmpeg. Do this by running `$ brew install ffmpeg`.
+
 You will need to fill in the list of local env variables located at `w4156-describe-that/config/local_env.yml` with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.
 
 You should be remain on branch main. You should be able to access the app in your browser of choice at [localhost::3000](localhost::3000).
 
 ## 6. Running Cucumber and RSpec tests locally
 
-As we are testing some features related to Javascript, we enabled the Selenium driver in Capybara, and thus the **Firefox browser** is needed. Please install Firefox and get all credentials before running the Cucumber tests. When Cucumber encounters its first Javascript scenario, Firefox will be opened by the terminal and run the scenario automatically.  
+As we are testing some features related to Javascript, we enabled the Selenium driver in Capybara, and thus the **Firefox browser** is needed. Please install Firefox and get all credentials before running the Cucumber tests. When Cucumber encounters its first Javascript scenario, Firefox will be opened by the terminal and run the scenario automatically.
 
-Additionally, **sometimes the steps fail because the components rendered by Javascript haven't been created by the time Cucumber does the checking**. We have run the tests several times and all steps pass when the response time is under the maximum wait time we have specified, which is 60 seconds. We expect all steps to eventually pass given enough time, so you can rerun the Cucumber tests until all of them pass. You could also increase the max wait time in `features/support/env.rb` (line 48) which is already 60 seconds and try again. During our final run of the tests before submitting iteration 2, we logged the program outputs of ```rake cucumber``` and ```rake spec``` to two files in the root directory: `rake_cucumber_results` and `rake_spec_results`, so you can also see our expected output there.  
+Additionally, **sometimes the steps fail because the components rendered by Javascript haven't been created by the time Cucumber does the checking**. We have run the tests several times and all steps pass when the response time is under the maximum wait time we have specified, which is 60 seconds. We expect all steps to eventually pass given enough time, so you can rerun the Cucumber tests until all of them pass. You could also increase the max wait time in `features/support/env.rb` (line 48) which is already 60 seconds and try again. During our final run of the tests before submitting iteration 2, we logged the program outputs of `rake cucumber` and `rake spec` to two files in the root directory: `rake_cucumber_results` and `rake_spec_results`, so you can also see our expected output there.
 
 You can run all Cucumber tests using `$ rake cucumber`.
 You can run all rspec tests using `$ rake spec`. Note that because of our uniqueness constraints and foreign keys, between every run of either Cucumber or Rspec, you must also reset the temp_test database using `$ rake db:migrate:reset RAILS_ENV=temp_test `.
