@@ -30,7 +30,7 @@ Background: existing user
 
     And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU"
 
-    And I press "Describe"
+    And I press "Go"
 
     Then I should be on the show page for "40z9n1SgozU"
 
