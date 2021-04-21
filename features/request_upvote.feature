@@ -29,7 +29,7 @@ Scenario: find a video without AD (sad) which I can then request (happy)
   When I am on the view page for the video id "4"
   Then I should see "This video does not yet have audio descriptions"
   And I press "Request AD for this video"
-  Then I should see "Your request has been saved!"
+  Then I should see "Your request for audio descriptions in English has been saved!"
 
 Scenario: upvote / downvote a video request from the request page
   When I am on the Video Requests page

@@ -14,28 +14,21 @@ Background: existing user
     | 99 | xw2765      | fdsaasdf | {"default_lang": "en"} |
 
     Given the following voices exist:
-    | id| common_name| system_name     | provider   |
-    | 1 | Voice US A | en-US-Wavenet-A | google_tts |
-    | 2 | Voice US B | en-US-Wavenet-B | google_tts |
-    | 3 | Voice US C | en-US-Wavenet-C | google_tts |
-    | 4 | Voice US D | en-US-Wavenet-D | google_tts |
-    | 5 | Voice US E | en-US-Wavenet-E | google_tts |
-    | 6 | Voice US F | en-US-Wavenet-F | google_tts |
-    | 7 | Voice US G | en-US-Wavenet-G | google_tts |
-    | 8 | Voice US H | en-US-Wavenet-H | google_tts |
-    | 9 | Voice US I | en-US-Wavenet-I | google_tts |
-    | 10| Voice US J | en-US-Wavenet-J | google_tts |
+    | id| common_name                        | system_name     | provider   | language_code | country_code | gender | natural_sample_rate_hz
+    | 1 | en-US-Wavenet-A (male, Google TTS) | en-US-Wavenet-A | google_tts | en            | US           | male   | 24000
+    | 2 | en-US-Wavenet-B (male, Google TTS) | en-US-Wavenet-B | google_tts | en            | US           | male   | 24000
+
 
     And I am on the home page
 
     And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU"
 
-    And I press "Describe"
+    And I press "Go"
 
     Then I should be on the show page for "40z9n1SgozU"
 
 @javascript
-Scenario: publish and unpublish description Track
+Scenario: publish and unpublish description track
 
     And I should see "Transitions"
 
@@ -43,13 +36,13 @@ Scenario: publish and unpublish description Track
 
     And I press "Describe this video"
 
-    And I should see "Describe video: Transitions"
+    And I should see "Describe: Transitions"
 
     And I press "Publish Description Track"
 
     Then I go back
 
-    Then "Publish Description Track" should be disabled
+    Then "Save Description Track" should be enabled
 
     And "Unpublish Description Track" should be enabled
 
@@ -57,7 +50,11 @@ Scenario: publish and unpublish description Track
 
     Then "Unpublish Description Track" should be disabled
 
-    And "Publish Description Track" should be enabled
+    And I press "Save Description Track"
+
+    Then I go back
+
+    And "Unpublish Description Track" should be enabled
 
 
 @javascript
@@ -67,11 +64,11 @@ Scenario: add and edit generated descriptions for the video I found
 
     And I press "Add one new generated description at current time!"
 
-    Then I should see "time (sec):"
+    Then I should see "Start time (sec):"
 
     And I should see "Voice speed:"
     
-    And I fill in "description" with "people walking around"
+    And I fill in "Description text" with "people walking around"
 
     And I fill in "time" with "3.1"
 
@@ -79,7 +76,7 @@ Scenario: add and edit generated descriptions for the video I found
 
     And I select "extended" from "pause_at_start_time"
 
-    And I select "Voice US C" from "voice_id"
+    And I select "en-US-Wavenet-A (male, Google TTS)" from "voice_id"
 
     And I press "Add"
 
@@ -132,4 +129,17 @@ Scenario: add one recorded description form
 
     Then "Add" should be disabled
 
+@javascript
+Scenario: no TTS button when no corresponding language is available
 
+    Given the following description tracks exist:
+    |video_id | track_author_id | published | lang |
+    | 1       | 99              | true      | en   |
+
+    Given I am on the show page for "40z9n1SgozU"
+
+    And I select "Urdu" from "lang"
+
+    And I press "Create new track!"
+
+    Then "No TTS voices available for Urdu." should be disabled
