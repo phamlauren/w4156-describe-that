@@ -1,14 +1,17 @@
 <%= stylesheet_link_tag params[:controller] %>
-<h1 class="page-title">Describe: <%=@yt_info["title"]%></h1>
-
-<br>
+<h2 class="page-title">Describe: <%=@yt_info["title"]%></h2>
+<p class="text-center">
+  Author: <strong>@<%= @track.author.username %></strong>
+  | Language: <strong><%= LanguageList::LanguageInfo.find(@track.lang).common_name %></strong>
+</p>
 
 <div class="volume-container">
-  <label>Description Track Volume: </label>
-  <input type="range" min="0" max="100" value="100" class="slider" id="volume">
+  <label id="volume-slider-label">Description Track Volume</label><br>
+  <input type="range" min="0" max="100" value="100" class="slider" id="volume" aria-labelledby="volume-slider-label">
 </div>
-
-<div id="player"></div>
+<div class="text-center">
+  <div id="player"></div>
+</div>
 
 <!-- Hidden description audio player. -->
 <audio controls style="display: none" id="description-player" onEnded="onDescriptionEnd()">
@@ -16,7 +19,7 @@
   Your browser does not support the audio element.
 </audio>
 
-<div class="add-description-container">
+<div class="add-description-container text-center">
   <% if @voices.length == 0 %>
     <button type="button" id="add-description-button" disabled>No TTS voices available for <%= LanguageList::LanguageInfo.find(@track.lang).common_name %>.</button>
   <% else %>

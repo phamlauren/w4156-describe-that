@@ -1,11 +1,11 @@
 <%= flash[:notice] %>
-<h1 class="page-title">Videos</h1>
+<h2 class="page-title">Videos</h2>
 
 <div id="videos" class="flex-box left">
   <% @videos_info.each do |video| %>
   <div class="card flex-item">
     <div class="text-center">
-      <%= image_tag video["thumbnails"]["default"]["url"] %>
+      <%= image_tag video["thumbnails"]["default"]["url"], alt: "" %>
     </div>
     <div class="text-center">
       <%= link_to video["title"], "/video/#{video["id"]}", data: { turbolinks: 'false' }, :class => 'inline-link' %>

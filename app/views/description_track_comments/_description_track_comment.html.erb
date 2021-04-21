@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <strong>@<%= description_track_comment.comment_author.username %></strong>: <%= description_track_comment.comment_text %>
-    <span style="float: right; color: gray;">
+    <span style="float: right; color: #616161;">
       <%= description_track_comment.time_est.strftime('%l:%M %P est, %b %e %Y') %>
     </span>
   </div>
@@ -20,8 +20,7 @@
       <%= f.hidden_field :dtrack_id, :value => description_track_comment.description_track.id %>
       <%= f.hidden_field :parent_comment_id, :value => description_track_comment.id %>
       <div class="form-group">
-      <%= f.label 'Reply' %>
-      <%= f.text_area :comment_text, class: 'form-control' %>
+      <%= f.text_area :comment_text, placeholder: "Reply to @#{description_track_comment.comment_author.username}", class: 'form-control', aria: { "label": "Reply text box" } %>
       </div>
       <%= f.submit 'Post', method: :post, class: 'btn btn-primary' %>
   <% end %>

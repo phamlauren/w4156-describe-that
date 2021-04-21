@@ -2,7 +2,7 @@
 @import "bootstrap";
 
 $primary-font: Helvetica, sans-serif;
-$primary-color: #9bddff;
+$primary-color: #063A74;
 
 html {
     font: $primary-font;
@@ -12,6 +12,28 @@ html {
 
 body {
     background-color: $primary-color;
+}
+
+a {
+  color: #0072A3;
+}
+
+#footer p {
+  color: #ffffff;
+}
+
+#footer a {
+  color: #1FBCFF;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+ }
+
+.btn-primary :hover {
+  background-color: #0A60C2;
+  border-color: #0A60C2;
 }
 
 .page-title {
@@ -38,6 +60,12 @@ body {
 #main-wrapper > #content {
     padding: 20px;
     height: 80%;
+}
+
+#yielded-content {
+  margin-left: 35px;
+  margin-right: 35px;
+  margin-bottom: 20px;
 }
 
 #page-nav {

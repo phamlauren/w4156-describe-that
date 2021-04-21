@@ -1,25 +1,26 @@
 <%= flash[:notice] %>
-<h1 class="text-center page-title">Watch: <%=@yt_info["title"]%></h1>
+<h2 class="text-center page-title">Watch: <%=@yt_info["title"]%></h2>
 <p class="text-center">
     Author: <strong>@<%= @track.author.username %></strong>
+    | Language: <strong><%= LanguageList::LanguageInfo.find(@track.lang).common_name %></strong>
     <% if session[:userinfo].nil? %>
-        &nbsp; | &nbsp;<%= link_to "Login to vote on this track", '/auth/auth0', method: :post, :class => 'inline-link' %>
+         | <%= link_to "Login to vote on this track", '/auth/auth0', method: :post, :class => 'inline-link' %>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square-fill" viewBox="0 0 16 16">
             <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z"/>
         </svg>
     <% else %>
-        &nbsp; | &nbsp;<%= link_to "Vote on this track!", "/description_track/#{@track.id}/vote", method: :post, data: { turbolinks: 'false' }, :class => 'inline-link' %>
+        | <%= link_to "Vote on this track!", "/description_track/#{@track.id}/vote", method: :post, data: { turbolinks: 'false' }, :class => 'inline-link' %>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square-fill" viewBox="0 0 16 16">
             <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11z"/>
         </svg>
     <% end %>
-    &nbsp; | &nbsp;<%= link_to "See all tracks", "/video/#{@track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
+     | <%= link_to "See all tracks", "/video/#{@track.video.id}", data: { turbolinks: 'false' }, :class => 'inline-link' %>
 
 </p>
 
 <div class="volume-container">
-  <p>Description Track Volume</p>
-  <input type="range" min="0" max="100" value="100" class="slider" id="volume">
+  <label id="volume-slider-label">Description Track Volume</label><br>
+  <input type="range" min="0" max="100" value="100" class="slider" id="volume" aria-labelledby="volume-slider-label">
 </div>
 <div class="text-center">
     <div id="player"></div>
@@ -37,8 +38,7 @@
 <%= form_with(url: "/video/#{@track.video.id}/play/comment") do |f| %>
     <%= f.hidden_field :dtrack_id, :value => @track.id %>
     <div class="form-group">
-    <%= f.label 'New comment' %>
-    <%= f.text_area :comment_text, class: 'form-control' %>
+    <%= f.text_area :comment_text, placeholder: "New comment", class: 'form-control', aria: { "label" => "Comment text box" } %>
     </div>
     <%= f.submit 'Post', method: :post, class: 'btn btn-primary' %>
 <% end %>
