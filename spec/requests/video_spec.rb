@@ -34,6 +34,11 @@ RSpec.describe "Videos", type: :request do
     video_request_table.each do |video_request|
       VideoRequest.create! video_request
     end
+
+    # Seed some voices to test on
+    voice_en = Voice.find_or_create_by!(common_name: "en-US-Wavenet-A (male, Google TTS)", system_name: "en-US-Wavenet-A", language_code: 'en', country_code: 'us', gender: 'male', provider: "google_tts", natural_sample_rate_hz: '24000')
+    voice_fr = Voice.find_or_create_by!(common_name: "fr-CA-Wavenet-C (female, Google TTS)", system_name: "fr-CA-Wavenet-C", language_code: 'fr', country_code: 'ca', gender: 'female', provider: "google_tts", natural_sample_rate_hz: '24000')
+
   end
   describe "GET /" do
     it "renders index template" do
@@ -70,8 +75,8 @@ RSpec.describe "Videos", type: :request do
   end
   describe "POST /video/:id/request" do
     it "makes a request to the video that does not have any descriptions" do
-      post '/video/4/request'
-      expect(flash[:notice]).to eq("Your request has been saved!")
+      post '/video/4/request', params: { id: 4, lang: 'fr' }
+      expect(flash[:notice]).to eq("Your request for audio descriptions in French has been saved!")
     end
   end
   describe "POST /video/:id/request" do
