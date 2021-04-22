@@ -91,7 +91,7 @@ $ rake db:seed
 
 You will need to fill in the list of local env variables located at `w4156-describe-that/config/local_env.yml` with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.
 
-You should be on branch `main`. You should be able to access the app in your browser of choice at [localhost:3000](https://localhost:3000).
+You should be on branch `main`. You should be able to access the app in your browser of choice at [localhost:3000](http://localhost:3000).
 
 ## 5. Running Cucumber and RSpec tests locally
 
