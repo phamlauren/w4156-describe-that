@@ -24,11 +24,11 @@ Team members:
 
 > **DescribeThat!** is a community-driven platform where describers add audio descriptions (AD) to YouTube videos for visually impaired persons (VIPs).
 
-While other platforms that provide users the ability to add AD for YouTube videos exist, **DescribeThat!** uniquely gives describers the option to write text descriptions in addition to the traditional mode of recording spoken AD. **DescribeThat!** uses Google Text-To-Speech to generate AD from these text descriptions written by describers. The traditional option to record AD is also supported by **DescribeThat!**.
+While other platforms that provide users the ability to add AD for YouTube videos exist, **DescribeThat!** uniquely gives describers the option to write text descriptions in addition to the traditional mode of recording spoken AD. **DescribeThat!** uses Google Text-To-Speech to generate AD from these text descriptions written by describers. The traditional option to record AD using a microphone is also supported by **DescribeThat!**.
 
 > The option to write text descriptions to be generated into audio by Google TTS is uniquely inclusive to potential describers who otherwise would not contribute AD due to lack of equipment, differing verbal ability, or plain preference.
 
-**DescribeThat!** depends on **Auth0**, **YouTube API**, and **Google TTS API**, and **AWS SDK** to connect to an **S3 bucket** set up on Vishnu's personal server.
+**DescribeThat!** depends on **Auth0**, **YouTube API**, and **Google Cloud TTS API**, as well as the **AWS SDK** to connect to an **S3 bucket** set up on Vishnu's personal server (using [MinIO](https://min.io/)).
 
 ## 2. User stories
 
@@ -54,7 +54,7 @@ A VIP can:
 
 ### The user story
 
-A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user unless they want to request AD, favorite a video, upvote a description track, or comment on a description track. **Describe-That!** depends on **Auth0**, so users are redirected to **Auth0**'s login page to login. Upon first login, the user is stored in a local user database and the username becomes **Auth0**'s default username, which is the username before the domain name of the email they use to log into **Auth0**. When a user is logged in, they can see their dashboard, which includes all of the videos that they've favorited, all of the descriptions tracks they've written, all of the description tracks they've upvoted, all of the videos for which they have requested AD and in which language, and all of their comments.
+A user can be a VIP and/or a describer. A describer is required to be a user, while a VIP is not required to be a user unless they want to request AD, favorite a video, upvote a description track, or comment on a description track. **DescribeThat!** depends on **Auth0**, so users are redirected to **Auth0**'s login page to login. Upon first login, the user is stored in a local user database and the username becomes **Auth0**'s default username, which is the username before the domain name of the email they use to log into **Auth0**. When a user is logged in, they can see their dashboard, which includes all of the videos that they've favorited, all of the descriptions tracks they've written, all of the description tracks they've upvoted, all of the videos for which they have requested AD and in which language, and all of their comments.
 
 ## 3. Final status update from iter-2
 
@@ -65,7 +65,7 @@ Here follows a list of final items to implement:
 3. ~Allow users to upvote AD tracks.~ **Implemented.**
 4. ~Allow users to add comments and comment replies to AD tracks.~ **Implemented.**
 5. ~Validate descriptions so that there are no descriptions that overlap at any time.~ **Implemented.**
-8. ~Optimize interface for screen readers.~ **Implemented.**
+8. ~Improve accessibility of interface (for blind and low-vision users).~ **Implemented.**
 
 ## 4. Running DescribeThat! locally
 
@@ -87,11 +87,11 @@ $ rake db:seed
 
 > If you encounter an error like **_An error occurred while installing unf_ext (0.0.7.7), and Bundler cannot continue. Make sure that `gem install unf_ext -v '0.0.7.7' --source 'https://rubygems.org/'` succeeds before bundling._** and you are on Mac OS, you may need to install xcode. Do this by running `$ xcode-select --install`.
 
-**DescribeThat!** has one dependency for generating TTS that cannot be installed via `bundle install`: `FFmpeg`.  You should be able to grab it from whatever package manager you use (`brew`/`apt`/`scoop`/whatever).  
+**DescribeThat!** has one dependency for generating TTS that cannot be installed via `bundle`: **FFmpeg**.  You should be able to grab it from whatever package manager you use (`brew`/`apt`/`choco`/`scoop`/etc.). You may also be able to download a built version of FFmpeg directly from [the official website](https://ffmpeg.org/download.html). Regardless of installation method, ensure that `ffmpeg` is available from your PATH once you install it.
 
 You will need to fill in the list of local env variables located at `w4156-describe-that/config/local_env.yml` with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.
 
-You should remain on branch main. You should be able to access the app in your browser of choice at [localhost::3000](https://localhost::3000).
+You should be on branch `main`. You should be able to access the app in your browser of choice at [localhost:3000](https://localhost:3000).
 
 ## 5. Running Cucumber and RSpec tests locally
 
@@ -100,7 +100,7 @@ As we are testing some features related to Javascript, we enabled the Selenium d
 Additionally, **sometimes the steps fail because the components rendered by Javascript haven't been created by the time Cucumber does the checking, or alternatively our team has found discrepancies in the load time for FFmpeg to generate the AD**. We have run the tests several times and all steps pass when the response time is under the maximum wait time we have specified, which is 60 seconds. We expect all steps to eventually pass given enough time, so you can rerun the Cucumber tests until all of them pass. You could also increase the max wait time in `features/support/env.rb` (line 48) which is already 60 seconds and try again. During our final run of the tests before the final submission, we logged the program outputs of `rake cucumber` and `rake spec` to two files in the root directory: `rake_cucumber_results` and `rake_spec_results`, so you can also see our expected output there.
 
 You can run all Cucumber tests using `$ rake cucumber`.
-You can run all rspec tests using `$ rake spec`. Note that because of our uniqueness constraints and foreign keys, between every run of either Cucumber or Rspec, you must also reset the temp_test database using `$ rake db:migrate:reset RAILS_ENV=temp_test `.
+You can run all rspec tests using `$ rake spec`. Note that because of our uniqueness constraints and foreign keys, between every run of either Cucumber or Rspec, you must also reset the temp_test database using `$ rake db:migrate:reset`. This command resets both the development (`temp_development`) and test (`temp_test`) databases. If the development database has any data you would like to preserve, please append `RAILS_ENV=test` or `RAILS_ENV=temp_test` to that command.
 
 ## 6. Demonstration paths
 
