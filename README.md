@@ -8,9 +8,9 @@ Team members:
 - vn2287, Vishnu Nair
 - xw2765, Sheron Wang
 
-[Link](https://describe-that.herokuapp.com) to iteration 1 on Heroku.  
+[Link](https://describe-that.herokuapp.com) to final iteration on Heroku.  
 [Link](https://w4156.herokuapp.com) to iteration 2 on Heroku.  
-[Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.
+[Link](https://youtu.be/_Xu9e_M3s20) to project pitch given on February 25, 2021.  
 [Link](https://www.youtube.com/watch?v=FD_nxDqBhsU) to project demo given on April 15, 2021.
 
 1. Overview
