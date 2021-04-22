@@ -1,10 +1,10 @@
-# :nocov:
 class DescriptionTrackCommentController < ApplicationController
 
   def comment
+    session[:userinfo] = {"sub"=>"fdsaasdf"} if Rails.env.test?
+    user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # Get the description track and the user
     description_track = DescriptionTrack.find(params[:dtrack_id])
-    user = User.find_by(auth0_id: session[:userinfo]['sub'])
     # Create the description track
     DescriptionTrackComment.create!(
       desc_track_id: description_track.id,
@@ -17,5 +17,4 @@ class DescriptionTrackCommentController < ApplicationController
   end
 
 end
-# :nocov:
   

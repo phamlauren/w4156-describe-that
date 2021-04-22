@@ -109,5 +109,17 @@ RSpec.describe "Videos", type: :request do
       expect(DescriptionTrack.find(1).published).to eq(false)
     end
   end
+  describe "POST /description_track/:id/vote" do
+    it "adds a vote to a description track" do
+      post '/description_track/1/vote', params: { id: 1 }
+      expect(DescriptionTrack.find(1).number_of_votes).to eq(1)
+    end
+  end
+  describe "POST /video/:id/play/comment" do
+    it "adds a comment to a description track" do
+      post '/video/1/play/comment', params: { dtrack_id: 1, comment_text: 'this is a comment', parent_comment_id: nil }
+      expect(DescriptionTrack.find(1).comments.empty?).to eq(false)
+    end
+  end
 
 end
