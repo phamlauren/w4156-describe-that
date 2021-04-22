@@ -87,8 +87,6 @@ $ rake db:seed
 
 > If you encounter an error like **_An error occurred while installing unf_ext (0.0.7.7), and Bundler cannot continue. Make sure that `gem install unf_ext -v '0.0.7.7' --source 'https://rubygems.org/'` succeeds before bundling._** and you are on Mac OS, you may need to install xcode. Do this by running `$ xcode-select --install`.
 
-> If you encounter an error like **Errno::ENOENT (No such file or directory - the ffprobe binary could not be found** and you are on Mac OS, you may need to install ffmpeg. Do this by running `$ brew install ffmpeg`.
-
 **DescribeThat!** has one dependency for generating TTS that cannot be installed via `bundle install`: `FFmpeg`.  You should be able to grab it from whatever package manager you use (`brew`/`apt`/`scoop`/whatever).  
 
 You will need to fill in the list of local env variables located at `w4156-describe-that/config/local_env.yml` with the credentials we have given you for the API and S3 services. If we have not given them to you yet, please let us know and we will get them to you in a secure way.
