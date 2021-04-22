@@ -1,3 +1,8 @@
+ set_config 
+------------
+ 
+(1 row)
+
 Using the default profile...
 Feature: see list of users
   As a TA
@@ -20,7 +25,6 @@ Feature: see list of users
   Scenario: see list of users        # features/demonstration_paths.feature:22
     And I am on the home page        # features/step_definitions/web_steps.rb:49
     And I go to the Users index page # features/step_definitions/web_steps.rb:53
-DEPRECATION: Using `should` from rspec-expectations' old `:should` syntax without explicitly enabling the syntax is deprecated. Use the new `:expect` syntax or explicitly enable `:should` with `config.expect_with(:rspec) { |c| c.syntax = :should }` instead. Called from /Users/xuranwang/coding/homework/w4156-describe-that/features/step_definitions/web_steps.rb:112:in `block in <top (required)>'.
     Then I should see "xw2765"       # features/step_definitions/web_steps.rb:110
 
   Scenario: see list of undescribed videos # features/demonstration_paths.feature:27
@@ -47,7 +51,7 @@ Feature: describe videos
 Capybara starting Puma...
 * Version 5.2.2 , codename: Fettisdagsbulle
 * Min threads: 0, max threads: 4
-* Listening on http://127.0.0.1:54780
+* Listening on http://127.0.0.1:56721
     And I am on the home page                                                 # features/step_definitions/web_steps.rb:49
     And I fill in "yt_url" with "https://www.youtube.com/watch?v=40z9n1SgozU" # features/step_definitions/web_steps.rb:65
     And I press "Go"                                                          # features/step_definitions/web_steps.rb:57
@@ -81,10 +85,10 @@ Capybara starting Puma...
     And I select "extended" from "pause_at_start_time"                      # features/step_definitions/web_steps.rb:90
     And I select "en-US-Wavenet-A (male, Google TTS)" from "voice_id"       # features/step_definitions/web_steps.rb:90
     And I press "Add"                                                       # features/step_definitions/web_steps.rb:57
-I, [2021-04-21T20:15:33.358444 #10439]  INFO -- : Running transcoding...
-["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/e8a01f2f-f2f4-49b0-8da6-a6294e30e4bf_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/e8a01f2f-f2f4-49b0-8da6-a6294e30e4bf_tmp_OUT.wav"]
+I, [2021-04-21T23:26:01.755231 #15345]  INFO -- : Running transcoding...
+["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/79859b72-5e37-47e6-989f-cc26df765b2b_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/79859b72-5e37-47e6-989f-cc26df765b2b_tmp_OUT.wav"]
 
-I, [2021-04-21T20:15:33.429038 #10439]  INFO -- : Transcoding of tmp/e8a01f2f-f2f4-49b0-8da6-a6294e30e4bf_tmp.wav to tmp/e8a01f2f-f2f4-49b0-8da6-a6294e30e4bf_tmp_OUT.wav succeeded
+I, [2021-04-21T23:26:01.823866 #15345]  INFO -- : Transcoding of tmp/79859b72-5e37-47e6-989f-cc26df765b2b_tmp.wav to tmp/79859b72-5e37-47e6-989f-cc26df765b2b_tmp_OUT.wav succeeded
 
     Then I should see "3.1"                                                 # features/step_definitions/web_steps.rb:110
     Then I should see "extended"                                            # features/step_definitions/web_steps.rb:110
@@ -93,10 +97,10 @@ I, [2021-04-21T20:15:33.429038 #10439]  INFO -- : Transcoding of tmp/e8a01f2f-f2
     Then I fill in "time" with "2.5"                                        # features/step_definitions/web_steps.rb:65
     Then I fill in "description" with "people not walking around"           # features/step_definitions/web_steps.rb:65
     Then I press "Add"                                                      # features/step_definitions/web_steps.rb:57
-I, [2021-04-21T20:15:35.701787 #10439]  INFO -- : Running transcoding...
-["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/9a2a90ca-4ef7-4a41-b40b-8dd1638fd352_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/9a2a90ca-4ef7-4a41-b40b-8dd1638fd352_tmp_OUT.wav"]
+I, [2021-04-21T23:26:04.761574 #15345]  INFO -- : Running transcoding...
+["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/3413b620-ccd6-4663-96a4-21bec7911d77_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/3413b620-ccd6-4663-96a4-21bec7911d77_tmp_OUT.wav"]
 
-I, [2021-04-21T20:15:35.770128 #10439]  INFO -- : Transcoding of tmp/9a2a90ca-4ef7-4a41-b40b-8dd1638fd352_tmp.wav to tmp/9a2a90ca-4ef7-4a41-b40b-8dd1638fd352_tmp_OUT.wav succeeded
+I, [2021-04-21T23:26:04.830482 #15345]  INFO -- : Transcoding of tmp/3413b620-ccd6-4663-96a4-21bec7911d77_tmp.wav to tmp/3413b620-ccd6-4663-96a4-21bec7911d77_tmp_OUT.wav succeeded
 
     Then I should see "2.5"                                                 # features/step_definitions/web_steps.rb:110
     Then I press "edit"                                                     # features/step_definitions/web_steps.rb:57
@@ -106,10 +110,10 @@ I, [2021-04-21T20:15:35.770128 #10439]  INFO -- : Transcoding of tmp/9a2a90ca-4e
     And I press "Add one new generated description at current time!"        # features/step_definitions/web_steps.rb:57
     And I fill in "description" with "using default values"                 # features/step_definitions/web_steps.rb:65
     Then I press "Add"                                                      # features/step_definitions/web_steps.rb:57
-I, [2021-04-21T20:15:38.266378 #10439]  INFO -- : Running transcoding...
-["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/b045e72b-c4a8-453c-88ac-6079abaaf650_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/b045e72b-c4a8-453c-88ac-6079abaaf650_tmp_OUT.wav"]
+I, [2021-04-21T23:26:07.474675 #15345]  INFO -- : Running transcoding...
+["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/5ba97490-fb06-43c7-b155-40a1d0e8d4ab_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/5ba97490-fb06-43c7-b155-40a1d0e8d4ab_tmp_OUT.wav"]
 
-I, [2021-04-21T20:15:38.345252 #10439]  INFO -- : Transcoding of tmp/b045e72b-c4a8-453c-88ac-6079abaaf650_tmp.wav to tmp/b045e72b-c4a8-453c-88ac-6079abaaf650_tmp_OUT.wav succeeded
+I, [2021-04-21T23:26:07.548170 #15345]  INFO -- : Transcoding of tmp/5ba97490-fb06-43c7-b155-40a1d0e8d4ab_tmp.wav to tmp/5ba97490-fb06-43c7-b155-40a1d0e8d4ab_tmp_OUT.wav succeeded
 
     Then I should see "0.0"                                                 # features/step_definitions/web_steps.rb:110
     Then I should see "inline"                                              # features/step_definitions/web_steps.rb:110
@@ -128,7 +132,6 @@ I, [2021-04-21T20:15:38.345252 #10439]  INFO -- : Transcoding of tmp/b045e72b-c4
     Given the following description tracks exist:                     # features/step_definitions/video_steps.rb:7
       |video_id | track_author_id | published | lang |
       | 1       | 99              | true      | en   |
-/Users/xuranwang/coding/homework/w4156-describe-that/app/views/video/show.html.erb:28: warning: key :class is duplicated and overwritten on line 28
     Given I am on the show page for "40z9n1SgozU"                     # features/step_definitions/web_steps.rb:49
     And I select "Urdu" from "lang"                                   # features/step_definitions/web_steps.rb:90
     And I press "Create new track!"                                   # features/step_definitions/web_steps.rb:57
@@ -268,18 +271,5 @@ Feature: see list of users
 
 15 scenarios (15 passed)
 153 steps (153 passed)
-0m54.256s
-┌──────────────────────────────────────────────────────────────────────────┐
-│ Share your Cucumber Report with your team at https://reports.cucumber.io │
-│                                                                          │
-│ Command line option:    --publish                                        │
-│ Environment variable:   CUCUMBER_PUBLISH_ENABLED=true                    │
-│ cucumber.yml:           default: --publish                               │
-│                                                                          │
-│ More information at https://reports.cucumber.io/docs/cucumber-ruby       │
-│                                                                          │
-│ To disable this message, specify CUCUMBER_PUBLISH_QUIET=true or use the  │
-│ --publish-quiet option. You can also add this to your cucumber.yml:      │
-│ default: --publish-quiet                                                 │
-└──────────────────────────────────────────────────────────────────────────┘
-Coverage report generated for Cucumber Features to /Users/xuranwang/coding/homework/w4156-describe-that/public/coverage. 356 / 429 LOC (82.98%) covered.
+1m6.784s
+Coverage report generated for Cucumber Features to /Users/xuranwang/coding/homework/w4156-describe-that/public/coverage. 367 / 440 LOC (83.41%) covered.

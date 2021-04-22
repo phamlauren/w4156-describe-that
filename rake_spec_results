@@ -4,14 +4,14 @@
  
 (1 row)
 
-......I, [2021-04-21T20:17:46.881796 #10754]  INFO -- : Running transcoding...
-["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/5a71ef10-792c-4d77-ba4e-7d0bd3e25b0a_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/5a71ef10-792c-4d77-ba4e-7d0bd3e25b0a_tmp_OUT.wav"]
+......I, [2021-04-21T23:28:15.391442 #15608]  INFO -- : Running transcoding...
+["/usr/local/bin/ffmpeg", "-y", "-i", "tmp/481859b5-168d-47e3-8cbe-f0c0b8b61a79_tmp.wav", "-af", "silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse,silenceremove=start_periods=1:start_silence=0.1:start_threshold=-80dB,areverse", "tmp/481859b5-168d-47e3-8cbe-f0c0b8b61a79_tmp_OUT.wav"]
 
-I, [2021-04-21T20:17:46.948079 #10754]  INFO -- : Transcoding of tmp/5a71ef10-792c-4d77-ba4e-7d0bd3e25b0a_tmp.wav to tmp/5a71ef10-792c-4d77-ba4e-7d0bd3e25b0a_tmp_OUT.wav succeeded
+I, [2021-04-21T23:28:15.459532 #15608]  INFO -- : Transcoding of tmp/481859b5-168d-47e3-8cbe-f0c0b8b61a79_tmp.wav to tmp/481859b5-168d-47e3-8cbe-f0c0b8b61a79_tmp_OUT.wav succeeded
 
-..............
+................
 
-Finished in 8.1 seconds (files took 5.82 seconds to load)
-20 examples, 0 failures
+Finished in 9.25 seconds (files took 5.81 seconds to load)
+22 examples, 0 failures
 
-Coverage report generated for Cucumber Features, RSpec to /Users/xuranwang/coding/homework/w4156-describe-that/public/coverage. 369 / 429 LOC (86.01%) covered.
+Coverage report generated for Cucumber Features, RSpec to /Users/xuranwang/coding/homework/w4156-describe-that/public/coverage. 380 / 440 LOC (86.36%) covered.
